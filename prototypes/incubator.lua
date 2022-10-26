@@ -2,17 +2,17 @@ return function(ctx)
     data:extend({
         {
             type = "item",
-            name = "bp-biter-breeder",
+            name = "bp-biter-incubator",
             icon = "__base__/graphics/icons/assembling-machine-1.png",
             icon_size = 64, icon_mipmaps = 4,
             subgroup = "production-machine",
             order = "a[assembling-machine-1]",
-            place_result = "bp-biter-breeder",
+            place_result = "bp-biter-incubator",
             stack_size = 20
         },
         {
             type = "recipe",
-            name = "bp-biter-breeder",
+            name = "bp-biter-incubator",
             icon = "__base__/graphics/icons/uranium-processing.png",
             icon_size = 64, icon_mipmaps = 4,
             ingredients = {
@@ -20,7 +20,7 @@ return function(ctx)
                 {"pipe", 5},
                 {"iron-plate", 10}
             },
-            result = "bp-biter-breeder"
+            result = "bp-biter-incubator"
         },
         {
             type = "recipe-category",
@@ -29,7 +29,7 @@ return function(ctx)
         {
             type = "item",
             name = "bp-biter-egg",
-            icon = "__BiterPower__/graphics/breeder/biter-egg.png",
+            icon = "__BiterPower__/graphics/incubator/biter-egg.png",
             icon_size = 64, icon_mipmaps = 4,
             subgroup = "raw-resource",
             order = "a[biter-egg]",
@@ -38,7 +38,7 @@ return function(ctx)
         {
             type = "recipe",
             name = "bp-breed-biters",
-            icon = "__BiterPower__/graphics/breeder/biter-egg.png",
+            icon = "__BiterPower__/graphics/incubator/biter-egg.png",
             icon_size = 64, icon_mipmaps = 4,
             category = "bp-biter-ergonomics",            
             subgroup = "raw-material",
@@ -55,7 +55,7 @@ return function(ctx)
         },
         {
             type = "assembling-machine",
-            name = "bp-biter-breeder",
+            name = "bp-biter-incubator",
             icon = "__base__/graphics/icons/assembling-machine-1.png",
             icon_size = 64, icon_mipmaps = 4,
             flags = {"placeable-neutral", "placeable-player", "player-creation"},
