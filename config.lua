@@ -4,10 +4,12 @@
 local config = {
     biter_fuel_value = "300MJ",
     biter_tired_fuel_value = "10MJ",
+    
     incubator_success_rate = 0.9,
     incubator_duration = 60,
+    
     revitalization_success_rate = 0.9,
-    revitalization_time = 60,
+    revitalization_time = 30,
     revitalization_egg_drop_rate = 0.1,
 }
 
