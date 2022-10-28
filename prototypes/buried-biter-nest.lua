@@ -1,3 +1,4 @@
+local config = require("config")
 local sounds = require ("__base__.prototypes.entity.sounds")
 
 data:extend({
@@ -16,20 +17,25 @@ data:extend({
         order="a-b-a",
         infinite = true,
         highlight = true,
-        minimum = 60000,
-        normal = 300000,
+        minimum = 1,
+        normal = 1 ,
         infinite_depletion_amount = 10,
         resource_patch_search_radius = 12,
-        minable =
-        {
-          mining_time = 1,
+        minable = {
+          mining_time = 60,
           results =
           {
             {
               name = "bp-biter-egg",
-              amount_min = 10,
-              amount_max = 10,
+              amount_min = 0,
+              amount_max = 1,
               probability = 1
+            },
+            {
+              name = "bp-caged-biter",
+              name = "electronic-circuit",
+              amount_min = 0,
+              amount_max = 1,
             }
           }
         },

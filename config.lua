@@ -11,6 +11,10 @@ local config = {
     revitalization_success_rate = 0.9,
     revitalization_time = 30,
     revitalization_egg_drop_rate = 0.1,
+
+    buried_nest_egg_drop_rate = 0.2,
+    buried_nest_biter_drop_rate = 0.2,
+    buried_nest_mining_time = 0.2,
 }
 
 return config

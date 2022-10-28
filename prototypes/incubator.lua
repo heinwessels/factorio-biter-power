@@ -29,15 +29,6 @@ data:extend({
         name = "bp-biter-ergonomics"
     },
     {
-        type = "item",
-        name = "bp-biter-egg",
-        icon = "__BiterPower__/graphics/incubator/biter-egg.png",
-        icon_size = 64, icon_mipmaps = 4,
-        subgroup = "raw-resource",
-        order = "a[biter-egg]",
-        stack_size = 1
-    },
-    {
         type = "recipe",
         name = "bp-incubate-biter-egg",
         icon = "__BiterPower__/graphics/incubator/biter-egg.png",
