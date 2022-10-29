@@ -49,6 +49,30 @@ local idle_animation = {
 -- Now copy copy and start working on the working animation
 local animation = table.deepcopy(idle_animation)
 
+table.insert(animation.layers, {
+    filename = "__base__/graphics/entity/accumulator/accumulator-charge.png",
+    priority = "high",
+    width = 90,
+    height = 100,
+    line_length = 6,
+    frame_count = #frame_sequence,
+    draw_as_glow = true,
+    scale = 0.5,
+    shift = util.by_pixel(0, -5),
+    hr_version =
+    {
+      filename = "__base__/graphics/entity/accumulator/hr-accumulator-charge.png",
+      priority = "high",
+      width = 178,
+      height = 206,
+      line_length = 6,
+      frame_count = #frame_sequence,
+      draw_as_glow = true,
+      shift = util.by_pixel(0, -5),
+      scale = 0.5 * 0.5,
+    }
+}) 
+
 -- Add the internal biter
 local biter_scale = 0.45
 local biter_shift = {0, 0.3}
@@ -63,18 +87,18 @@ table.insert(animation.layers, {
     frame_sequence = frame_sequence,
     shift = util.mul_shift(util.by_pixel(30 + biter_shift[1]*32, 0 + biter_shift[2]*32), biter_scale),
     hr_version = {
-      filename ="__base__/graphics/entity/biter/hr-biter-attack-shadow-02.png",
-      width = 476,
-      height = 258,
-      y = 258,
-      scale = 0.5 * biter_scale,
-      frame_sequence = frame_sequence,
-      line_length = 11,
-      frame_count = 11,
-      shift = util.mul_shift(util.by_pixel(13 + biter_shift[1]*64, -1 + biter_shift[2]*64), biter_scale),
+        filename ="__base__/graphics/entity/biter/hr-biter-attack-shadow-02.png",
+        width = 476,
+        height = 258,
+        y = 258,
+        scale = 0.5 * biter_scale,
+        frame_sequence = frame_sequence,
+        line_length = 11,
+        frame_count = 11,
+        shift = util.mul_shift(util.by_pixel(13 + biter_shift[1]*64, -1 + biter_shift[2]*64), biter_scale),
     }
-  })
-  table.insert(animation.layers, {
+})
+table.insert(animation.layers, {
     filename = "__base__/graphics/entity/biter/biter-attack-02.png",
     width = 182,
     height = 176,
@@ -85,15 +109,15 @@ table.insert(animation.layers, {
     frame_sequence = frame_sequence,
     shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -26 + biter_shift[2]*32), biter_scale),
     hr_version = {
-      filename ="__base__/graphics/entity/biter/hr-biter-attack-02.png",
-      width = 356,
-      height = 348,
-      y = 348,
-      scale = 0.5 * biter_scale,
-      frame_sequence = frame_sequence,
-      line_length = 11,
-      frame_count = 11,
-      shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -25 + biter_shift[2]*64), biter_scale),
+        filename ="__base__/graphics/entity/biter/hr-biter-attack-02.png",
+        width = 356,
+        height = 348,
+        y = 348,
+        scale = 0.5 * biter_scale,
+        frame_sequence = frame_sequence,
+        line_length = 11,
+        frame_count = 11,
+        shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -25 + biter_shift[2]*64), biter_scale),
     }
 }) 
 
