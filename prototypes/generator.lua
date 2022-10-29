@@ -1,3 +1,5 @@
+local config = require("config")
+
 local function belt_sprite_at(shift, section)
     local y_offset = 0
     if section == "right" then y_offset = 19
@@ -184,7 +186,7 @@ data:extend({
     corpse = "steam-engine-remnants",
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
-    max_power_output = "1MW",
+    max_power_output = config.generator.power_output,
     minable = {mining_time = 1, result = "bp-biter-generator"},
     burner = {
       fuel_category = "bp-biter-power",
@@ -237,3 +239,27 @@ generator.integration_patch.shift[2] = generator.integration_patch.shift[2] + sh
 generator.integration_patch.hr_version.shift = generator.integration_patch.hr_version.shift or {0, 0}
 generator.integration_patch.hr_version.shift[1] = generator.integration_patch.hr_version.shift[1] + shift_correction[1]
 generator.integration_patch.hr_version.shift[2] = generator.integration_patch.hr_version.shift[2] + shift_correction[2]
+
+
+
+data:extend{
+  {
+    type = "recipe",
+    name = "bp-biter-power-generation",
+    icons = {
+        {
+            icon = "__base__/graphics/icons/steam-engine.png",
+            icon_size = 64, icon_mipmaps = 4,
+        },
+        {
+            icon = "__base__/graphics/icons/medium-biter.png",
+            icon_size = 64, icon_mipmaps = 4,
+        },
+    },
+    energy_required = 5*60,
+    ingredients = {
+        {"bp-caged-biter", 1},
+    },
+    result = "bp-caged-biter-tired"
+  },
+}

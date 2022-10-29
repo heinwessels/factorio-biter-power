@@ -19,7 +19,7 @@ data:extend({
                 icon_size = 64, icon_mipmaps = 4,
             },
             {
-                icon = "__base__/graphics/icons/small-biter.png",
+                icon = "__base__/graphics/icons/medium-biter.png",
                 icon_size = 64, icon_mipmaps = 4,
             },
         },
@@ -35,11 +35,15 @@ data:extend({
         name = "bp-caged-biter-tired",
         icons = {
             {
+                icon = "__base__/graphics/icons/deconstruction-planner.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
                 icon = "__base__/graphics/icons/steel-chest.png",
                 icon_size = 64, icon_mipmaps = 4,
             },
             {
-                icon = "__base__/graphics/icons/small-biter.png",
+                icon = "__base__/graphics/icons/medium-biter.png",
                 icon_size = 64, icon_mipmaps = 4,
             },
         },

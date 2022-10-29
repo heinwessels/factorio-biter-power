@@ -1,4 +1,3 @@
-
 local config = require("config")
 
 data:extend({
@@ -31,20 +30,35 @@ data:extend({
     {
         type = "recipe",
         name = "bp-incubate-biter-egg",
-        icon = "__BiterPower__/graphics/incubator/biter-egg.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icons = {
+            {
+                icon = "__BiterPower__/graphics/incubator/biter-egg.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
+                icon = "__base__/graphics/icons/medium-biter.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+        },
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
         energy_required = config.incubator.duration,
         ingredients = {
-            {"bp-biter-egg", 1},
+            {"bp-biter-egg", config.biter.egg_to_biter_ratio},
             {"steel-chest", 1}
         },
-        results = {{
-            name = "bp-caged-biter",
-            probability = config.incubator.success_rate,
-            amount = 1,
-        }}
+        results = {
+            {
+                name = "bp-caged-biter",
+                probability = config.incubator.success_rate,
+                amount = 1,
+            },
+            {
+                name = "steel-chest",
+                probability = 1 - config.incubator.success_rate,
+                amount = 1,
+            }
+        }
     },
     {
         type = "assembling-machine",

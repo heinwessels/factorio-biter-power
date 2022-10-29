@@ -19,7 +19,7 @@
 
 local config = {}
 config.biter = {
-    fuel_value = "300MJ",
+    fuel_value = "100MJ",
     tired_fuel_value = "10MJ",
 
     egg_stack_size = 50,
@@ -27,17 +27,17 @@ config.biter = {
 }
 
 config.generator = {
-
+    power_output = "2MW"
 }
 
 config.incubator = {
     success_rate = 0.9,
-    duration = 60,
+    duration = 60*10,
 }
 
 config.revitalization = {
-    success_rate = 0.9,
-    time = 30,
+    success_rate = 0.8,
+    time = 60,
     egg_drop_rate = 0.1,
 }
 
@@ -45,7 +45,7 @@ config.revitalization = {
 -- Each unit in the resource will result in one egg. This means
 -- the results can't average more than one egg.
 config.buried_nest = {}
-config.buried_nest.eggs_per_second = config.biter.egg_to_biter_ratio / 60
+config.buried_nest.eggs_per_second = 5 / 60 -- Results in sustained 20MW currently
 config.buried_nest.productivity_scaler = 0.4 -- 40% is maximum before infinite sciences
  -- Actual rate is set on drill
 config.buried_nest.mining_time = 1
@@ -61,8 +61,8 @@ config.buried_nest.results = {
 config.relocation_center = {}
 -- Speed is set here because it's more intuitive and
 -- easy for the player to see
-config.relocation_center.mining_speed = tonumber(string.format("%.1f", 
+config.relocation_center.mining_speed = 
         config.buried_nest.eggs_per_second
-        / (1 + config.buried_nest.productivity_scaler))) -- Round to 1 decimal
+        / (1 + config.buried_nest.productivity_scaler)
         
 return config

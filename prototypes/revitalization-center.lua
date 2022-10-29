@@ -153,8 +153,17 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-revitalization-center",
-        icon = "__base__/graphics/icons/uranium-processing.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icons = {
+            {
+                icon = "__base__/graphics/icons/lab.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
+                icon = "__base__/graphics/icons/medium-biter.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+        },
+        energy_required = 5,
         ingredients = {
             {"iron-gear-wheel", 8},
             {"pipe", 5},
@@ -165,8 +174,16 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-revitalization",
-        icon = "__base__/graphics/icons/uranium-processing.png",
-        icon_size = 64, icon_mipmaps = 4,            
+        icons = {
+            {
+                icon = "__base__/graphics/icons/lab.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
+                icon = "__base__/graphics/icons/medium-biter.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+        },
         subgroup = "raw-material",
         category = "bp-biter-ergonomics",
         ingredients = {{"bp-caged-biter-tired", 1}},
@@ -174,13 +191,14 @@ data:extend({
         results = {
             {
                 name = "bp-caged-biter",
-                probability = config.revitalization.success_rate,
+                probability = config.revitalization.success_rate * (1 - config.revitalization.egg_drop_rate),
                 amount = 1,
             },
             {
                 name = "bp-biter-egg",
-                probability = config.revitalization.egg_drop_rate,
-                amount = 1,
+                amount_min = 0,
+                -- Equal to dropping enough eggs for one biter when `success` and but didn't drop actual biter
+                amount_max = 2 * config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
             }
         }
     },
