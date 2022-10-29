@@ -2,7 +2,7 @@ local config = require("config")
 
 local frame_sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 8, 9, 10, 11}
 
-local animation_speed = 1.5
+local animation_speed = 0.7
 local idle_animation = {
     layers = {
         {
@@ -170,16 +170,16 @@ data:extend({
         subgroup = "raw-material",
         category = "bp-biter-ergonomics",
         ingredients = {{"bp-caged-biter-tired", 1}},
-        energy_required = config.revitalization_time,
+        energy_required = config.revitalization.time,
         results = {
             {
                 name = "bp-caged-biter",
-                probability = config.revitalization_success_rate,
+                probability = config.revitalization.success_rate,
                 amount = 1,
             },
             {
                 name = "bp-biter-egg",
-                probability = config.revitalization_egg_drop_rate,
+                probability = config.revitalization.egg_drop_rate,
                 amount = 1,
             }
         }
@@ -189,7 +189,7 @@ data:extend({
         name = "bp-biter-revitalization-center",
         icon = "__base__/graphics/icons/assembling-machine-1.png",
         icon_size = 64, icon_mipmaps = 4,
-        flags = {"placeable-neutral", "placeable-player", "player-creation"},
+        flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
         minable = {mining_time = 0.2, result = "assembling-machine-1"},
         max_health = 300,
         corpse = "assembling-machine-1-remnants",

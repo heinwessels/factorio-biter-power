@@ -8,7 +8,7 @@ data:extend({
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "raw-resource",
         order = "a[biter-egg]",
-        stack_size = 1
+        stack_size = config.biter.egg_stack_size,
     },
     {
         type = "item",
@@ -25,7 +25,7 @@ data:extend({
         },
         subgroup = "raw-resource",
         order = "a[caged-biter]",
-        fuel_value = config.biter_fuel_value,
+        fuel_value = config.biter.fuel_value,
         fuel_category = "bp-biter-power",
         burnt_result = "bp-caged-biter-tired",
         stack_size = 1,
@@ -45,7 +45,7 @@ data:extend({
         },
         subgroup = "raw-resource",
         order = "a[caged-biter-tired]",
-        fuel_value = config.biter_tired_fuel_value,
+        fuel_value = config.biter.tired_fuel_value,
         fuel_category = "bp-biter-power",
         stack_size = 1
     },

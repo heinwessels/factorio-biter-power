@@ -35,14 +35,14 @@ data:extend({
         icon_size = 64, icon_mipmaps = 4,
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
-        energy_required = config.incubator_duration,
+        energy_required = config.incubator.duration,
         ingredients = {
             {"bp-biter-egg", 1},
             {"steel-chest", 1}
         },
         results = {{
             name = "bp-caged-biter",
-            probability = config.incubator_success_rate,
+            probability = config.incubator.success_rate,
             amount = 1,
         }}
     },

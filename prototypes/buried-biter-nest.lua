@@ -9,35 +9,28 @@ data:extend({
     {
         type = "resource",
         name = "bp-buried-biter-nest",
-        icon = "__BiterPower__/graphics/incubator/biter-egg.png",
-        icon_size = 64, icon_mipmaps = 4, 
+        icons = {
+          {
+            icon = "__BiterPower__/graphics/buried-biter-nest/hole-icon.png",
+            icon_size = 64,
+          },
+          {
+            icon = "__BiterPower__/graphics/incubator/biter-egg.png",
+            icon_size = 64, 
+            icon_mipmaps = 4, 
+            scale = 0.3,
+            shift = {0, -5}
+          }
+        },
         flags = {"placeable-neutral"},
         category = "bp-biter-nest",
         subgroup = "raw-resource",
-        order="a-b-a",
-        infinite = true,
+        order="a-b-a",  
         highlight = true,
-        minimum = 1,
-        normal = 1 ,
-        infinite_depletion_amount = 10,
         resource_patch_search_radius = 12,
         minable = {
-          mining_time = 60,
-          results =
-          {
-            {
-              name = "bp-biter-egg",
-              amount_min = 0,
-              amount_max = 1,
-              probability = 1
-            },
-            {
-              name = "bp-caged-biter",
-              name = "electronic-circuit",
-              amount_min = 0,
-              amount_max = 1,
-            }
-          }
+          mining_time = config.buried_nest.mining_time,
+          results = config.buried_nest.results,
         },
         walking_sound = sounds.oil,
         collision_box = {{-1.4, -1.4}, {1.4, 1.4}},

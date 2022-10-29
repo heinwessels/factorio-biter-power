@@ -1,4 +1,5 @@
 -- Holy moly mining-drills are complicated!
+local config = require("config")
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 
@@ -50,7 +51,7 @@ data:extend({
         vehicle_impact_sound = sounds.generic_impact,
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
-        mining_speed = 0.5,
+        mining_speed = config.relocation_center.mining_speed,
         energy_source = {
           type = "electric",
           emissions_per_minute = 10,
