@@ -83,6 +83,27 @@ data:extend({
         selection_box = {{-1, -1}, {1, 1}},
         -- damaged_trigger_effect = hit_effects.entity(),
         alert_icon_shift = util.by_pixel(-3, -12),
+        energy_usage = util.format_number(config.incubator.power_usage, true).."W",
+        crafting_speed = 1,
+        energy_source = {
+            type = "electric",
+            usage_priority = "secondary-input",
+            emissions_per_minute = 4
+        },
+        -- open_sound = sounds.machine_open,
+        -- close_sound = sounds.machine_close,
+        -- vehicle_impact_sound = sounds.generic_impact,
+        working_sound = {
+            sound = {
+                {
+                filename = "__base__/sound/assembling-machine-t1-1.ogg",
+                volume = 0.5
+                }
+            },
+            audible_distance_modifier = 0.5,
+            fade_in_ticks = 4,
+            fade_out_ticks = 20
+        },
         animation = {
             layers = {
                 {
@@ -131,26 +152,5 @@ data:extend({
                 }
             }
         },
-        crafting_speed = 0.5,
-        energy_source = {
-            type = "electric",
-            usage_priority = "secondary-input",
-            emissions_per_minute = 4
-        },
-        energy_usage = "75kW",
-        -- open_sound = sounds.machine_open,
-        -- close_sound = sounds.machine_close,
-        -- vehicle_impact_sound = sounds.generic_impact,
-        working_sound = {
-            sound = {
-                {
-                filename = "__base__/sound/assembling-machine-t1-1.ogg",
-                volume = 0.5
-                }
-            },
-            audible_distance_modifier = 0.5,
-            fade_in_ticks = 4,
-            fade_out_ticks = 20
-        }
     }
 })

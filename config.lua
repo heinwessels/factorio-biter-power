@@ -30,11 +30,13 @@ config.biter.egg_stack_size = 20
 config.biter.egg_to_biter_ratio = 10
 
 config.incubator = {}
+config.incubator.power_usage = 75e3
 config.incubator.number_per_generator = 1 / 5
 config.incubator.success_rate = 0.9
 config.incubator.duration = config.biter.burn_time * config.incubator.number_per_generator
 
 config.revitalization = {}
+config.revitalization.power_usage = 75e3
 config.revitalization.number_per_generator = 1 / 10
 config.revitalization.success_rate = 0.8
 config.revitalization.egg_drop_rate = 0.1
@@ -56,7 +58,7 @@ config.revitalization.results = {
         probability = config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
     }
 }
-if config.revitalization.results[2].probability and config.revitalization.results[2].probability > 0 then error("Probability above 1") end
+if config.revitalization.results[2].probability and config.revitalization.results[2].probability > 1 then error("Probability above 1") end
 if config.revitalization.results[2].amount_max and config.revitalization.results[2].amount_max < 5 then error("Probability amount_max too small") end
 
 config.loop_efficiency = config.revitalization.success_rate * config.incubator.success_rate
@@ -88,5 +90,6 @@ config.relocation_center = {}
 config.relocation_center.mining_speed = 
         config.buried_nest.eggs_per_second
         / (1 + config.buried_nest.productivity_scaler)
-        
+config.relocation_center.mining_speed = 
+        tonumber(string.format("%.3f", config.relocation_center.mining_speed))
 return config

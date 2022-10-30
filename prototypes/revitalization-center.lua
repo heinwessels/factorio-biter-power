@@ -211,13 +211,13 @@ data:extend({
         selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
         -- damaged_trigger_effect = hit_effects.entity(),
         alert_icon_shift = util.by_pixel(-3, -12),
-        crafting_speed = 0.5,
+        crafting_speed = 1,
+        energy_usage = util.format_number(config.revitalization.power_usage, true).."W",
         energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
             emissions_per_minute = 4
         },
-        energy_usage = "75kW",
         -- open_sound = sounds.machine_open,
         -- close_sound = sounds.machine_close,
         -- vehicle_impact_sound = sounds.generic_impact,
