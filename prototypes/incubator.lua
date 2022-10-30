@@ -43,23 +43,8 @@ data:extend({
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
         energy_required = config.incubator.duration,
-        ingredients = {
-            {"bp-biter-egg", config.biter.egg_to_biter_ratio},
-            {"steel-chest", 1}
-        },
-        results = {
-            {
-                name = "bp-caged-biter",
-                probability = config.incubator.success_rate,
-                amount_min = 0,
-                amount_max = 2,
-            },
-            {
-                name = "steel-chest",
-                probability = 1 - config.incubator.success_rate,
-                amount = 1,
-            }
-        }
+        ingredients = config.incubator.ingredients,
+        results = config.incubator.results,
     },
     {
         type = "assembling-machine",
@@ -104,52 +89,91 @@ data:extend({
             fade_in_ticks = 4,
             fade_out_ticks = 20
         },
-        animation = {
+        always_draw_idle_animation = true,
+        idle_animation = {
             layers = {
                 {
-                    filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1.png",
-                    priority="high",
-                    width = 108,
-                    height = 114,
-                    frame_count = 32,
+                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A.png",
+                    priority = "high",
                     line_length = 8,
-                    shift = util.by_pixel(0, 2),
-                    scale = 2/3,
+                    width = 70,
+                    height = 123,
+                    frame_count = 64,
+                    scale = 1.5,
+                    animation_speed = 0.5,
+                    shift = {0, -1},
                     hr_version = {
-                        filename = "__base__/graphics/entity/assembling-machine-1/hr-assembling-machine-1.png",
-                        priority="high",
-                        width = 214,
-                        height = 226,
-                        frame_count = 32,
-                        line_length = 8,
-                        shift = util.by_pixel(0, 2),
-                        scale = 0.5 * 2/3
+                      filename = "__BiterPower__/graphics/incubator/hr-center.png",
+                      priority = "high",
+                      line_length = 8,
+                      width = 139,
+                      height = 246,
+                      animation_speed = 0.5,
+                      frame_count = 64,
+                      scale = 0.5 * 1.5,
+                      shift = {-0.15, 0},
                     }
                 },
                 {
-                    filename = "__base__/graphics/entity/assembling-machine-1/assembling-machine-1-shadow.png",
-                    priority="high",
-                    width = 95,
-                    height = 83,
-                    frame_count = 1,
-                    line_length = 1,
-                    repeat_count = 32,
-                    draw_as_shadow = true,
-                    shift = util.by_pixel(8.5, 5.5),
-                    scale = 2/3,
+                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A.png",
+                    priority = "high",
+                    width = 70,
+                    height = 123,
+                    scale = 1.5,
+                    repeat_count = 64,
+                    shift = {0, -1},
                     hr_version = {
-                        filename = "__base__/graphics/entity/assembling-machine-1/hr-assembling-machine-1-shadow.png",
-                        priority="high",
-                        width = 190,
-                        height = 165,
-                        frame_count = 1,
-                        line_length = 1,
-                        repeat_count = 32,
-                        draw_as_shadow = true,
-                        shift = util.by_pixel(8.5, 5),
-                        scale = 0.5 * 2/3
+                      filename = "__BiterPower__/graphics/incubator/hr-center-front.png",
+                      priority = "high",
+                      width = 139,
+                      height = 246,
+                      repeat_count = 64,
+                      scale = 0.5 * 1.5,
+                      shift = {-0.15, 0},
                     }
-                }
+                },
+                {
+                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A-shadow.png",
+                    draw_as_shadow = true,
+                    priority = "high",
+                    line_length = 8,
+                    width = 108,
+                    height = 54,
+                    frame_count = 64,
+                    shift = {0, 0},
+                    hr_version = {
+                      filename = "__base__/graphics/entity/centrifuge/hr-centrifuge-A-shadow.png",
+                      draw_as_shadow = true,
+                      priority = "high",
+                      scale = 0.5 * 1.5,
+                      line_length = 8,
+                      width = 230,
+                      height = 124,
+                      frame_count = 64,
+                      shift = {0, 0},
+                    }
+                },
+            },
+        },
+        integration_patch = {
+            filename = "__base__/graphics/entity/lab/lab-integration.png",
+            width = 122,
+            height = 81,
+            frame_count = 1,
+            line_length = 1,
+            repeat_count = 64,
+            shift = util.by_pixel(0, 15.5),
+            scale = 0.5 * 2 / 3,
+            hr_version =
+            {
+              filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
+              width = 242,
+              height = 162,
+              frame_count = 1,
+              line_length = 1,
+              repeat_count = 64,
+              shift = util.by_pixel(0, 15.5),
+              scale = 0.5 * 2 / 3,
             }
         },
     }

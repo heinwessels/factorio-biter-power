@@ -253,6 +253,6 @@ data:extend({
               shift = util.by_pixel(0, 15.5),
               scale = 0.5
             }
-          },
+        },
     }
 })

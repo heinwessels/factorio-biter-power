@@ -31,9 +31,27 @@ config.biter.egg_to_biter_ratio = 10
 
 config.incubator = {}
 config.incubator.power_usage = 75e3
-config.incubator.number_per_generator = 1 / 5
+config.incubator.number_per_generator = 1 / 2
 config.incubator.success_rate = 0.9
 config.incubator.duration = config.biter.burn_time * config.incubator.number_per_generator
+config.incubator.ingredients = {
+    -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
+    {"bp-biter-egg", 1},
+    {"steel-chest", 1}
+}
+config.incubator.results = {
+    {
+        name = "bp-caged-biter",
+        probability = config.incubator.success_rate / config.biter.egg_to_biter_ratio,
+        amount_min = 0,
+        amount_max = 2,
+    },
+    {
+        name = "steel-chest",
+        probability = 1 - (config.incubator.success_rate / config.biter.egg_to_biter_ratio),
+        amount = 1,
+    }
+}
 
 config.revitalization = {}
 config.revitalization.power_usage = 75e3
@@ -66,7 +84,7 @@ config.loop_efficiency = config.revitalization.success_rate * config.incubator.s
 -- Each unit in the resource will result in one egg. This means
 -- the results can't average more than one egg.
 config.buried_nest = {}
-config.buried_nest.number_per_generator = 1 / 5 -- 10
+config.buried_nest.number_per_generator = 1 / 10
 config.buried_nest.eggs_per_second = 
         config.biter.egg_to_biter_ratio
         / config.buried_nest.number_per_generator
