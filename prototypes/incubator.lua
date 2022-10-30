@@ -51,7 +51,8 @@ data:extend({
             {
                 name = "bp-caged-biter",
                 probability = config.incubator.success_rate,
-                amount = 1,
+                amount_min = 0,
+                amount_max = 2,
             },
             {
                 name = "steel-chest",

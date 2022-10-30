@@ -18,34 +18,58 @@
 -- of biter power.
 
 local config = {}
-config.biter = {
-    fuel_value = "100MJ",
-    tired_fuel_value = "10MJ",
 
-    egg_stack_size = 50,
-    egg_to_biter_ratio = 100,
+config.generator = {}
+config.generator.power_output = 500e3
+
+config.biter = {}
+config.biter.fuel_value = config.generator.power_output * 60 * 5
+config.biter.tired_fuel_value = config.biter.fuel_value / 10
+config.biter.burn_time = config.biter.fuel_value / config.generator.power_output
+config.biter.egg_stack_size = 20
+config.biter.egg_to_biter_ratio = 10
+
+config.incubator = {}
+config.incubator.number_per_generator = 1 / 5
+config.incubator.success_rate = 0.9
+config.incubator.duration = config.biter.burn_time * config.incubator.number_per_generator
+
+config.revitalization = {}
+config.revitalization.number_per_generator = 1 / 10
+config.revitalization.success_rate = 0.8
+config.revitalization.egg_drop_rate = 0.1
+config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
+config.revitalization.results = {
+    {
+        name = "bp-caged-biter",
+        probability = config.revitalization.success_rate * (1 - config.revitalization.egg_drop_rate),
+        amount = 1,
+    },
+    {
+        name = "bp-biter-egg",
+        -- amount_min = 0,
+        -- Equal to dropping enough eggs for one biter when `success` and but didn't drop actual biter
+        -- amount_max = 2 * config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
+        
+        -- This works better if the number is less than 1
+        amount = 1,
+        probability = config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
+    }
 }
+if config.revitalization.results[2].probability and config.revitalization.results[2].probability > 0 then error("Probability above 1") end
+if config.revitalization.results[2].amount_max and config.revitalization.results[2].amount_max < 5 then error("Probability amount_max too small") end
 
-config.generator = {
-    power_output = "2MW"
-}
-
-config.incubator = {
-    success_rate = 0.9,
-    duration = 60*10,
-}
-
-config.revitalization = {
-    success_rate = 0.8,
-    time = 60,
-    egg_drop_rate = 0.1,
-}
-
+config.loop_efficiency = config.revitalization.success_rate * config.incubator.success_rate
 
 -- Each unit in the resource will result in one egg. This means
 -- the results can't average more than one egg.
 config.buried_nest = {}
-config.buried_nest.eggs_per_second = 5 / 60 -- Results in sustained 20MW currently
+config.buried_nest.number_per_generator = 1 / 5 -- 10
+config.buried_nest.eggs_per_second = 
+        config.biter.egg_to_biter_ratio
+        / config.buried_nest.number_per_generator
+        / config.biter.burn_time
+        * (1 - config.loop_efficiency)
 config.buried_nest.productivity_scaler = 0.4 -- 40% is maximum before infinite sciences
  -- Actual rate is set on drill
 config.buried_nest.mining_time = 1

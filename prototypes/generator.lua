@@ -1,4 +1,5 @@
 local config = require("config")
+local util = require("util")
 
 local function belt_sprite_at(shift, section)
     local y_offset = 0
@@ -186,7 +187,7 @@ data:extend({
     corpse = "steam-engine-remnants",
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
-    max_power_output = config.generator.power_output,
+    max_power_output = util.format_number(config.generator.power_output, true).."W",
     minable = {mining_time = 1, result = "bp-biter-generator"},
     burner = {
       fuel_category = "bp-biter-power",

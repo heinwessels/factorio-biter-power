@@ -1,4 +1,5 @@
 local config = require("config")
+local util = require("util")
 
 data:extend({
     {
@@ -25,7 +26,7 @@ data:extend({
         },
         subgroup = "raw-resource",
         order = "a[caged-biter]",
-        fuel_value = config.biter.fuel_value,
+        fuel_value = util.format_number(config.biter.fuel_value, true).."J",
         fuel_category = "bp-biter-power",
         burnt_result = "bp-caged-biter-tired",
         stack_size = 1,
@@ -49,7 +50,7 @@ data:extend({
         },
         subgroup = "raw-resource",
         order = "a[caged-biter-tired]",
-        fuel_value = config.biter.tired_fuel_value,
+        fuel_value = util.format_number(config.biter.tired_fuel_value, true).."J",
         fuel_category = "bp-biter-power",
         stack_size = 1
     },
