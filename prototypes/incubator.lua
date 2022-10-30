@@ -89,6 +89,43 @@ data:extend({
             fade_in_ticks = 4,
             fade_out_ticks = 20
         },
+        working_visualisations =
+        {
+          {
+            effect = "uranium-glow",
+            fadeout = true,
+            light = {intensity = 0.2, size = 9.9, shift = {0.0, 0.0}, color = {r = 248/255, g = 104/255, b = 215/255}}
+          },
+          {
+            effect = "uranium-glow",
+            fadeout = true,
+            draw_as_light = true,
+            animation = { layers = {
+                {
+                    filename = "__BiterPower__/graphics/incubator/center-glow.png",
+                    priority = "high",
+                    blend_mode = "additive", -- centrifuge
+                    animation_speed = 0.5,
+                    line_length = 8,
+                    width = 55,
+                    height = 98,
+                    frame_count = 64,
+                    hr_version = {
+                        filename = "__BiterPower__/graphics/incubator/hr-center-glow.png",
+                        priority = "high",
+                        blend_mode = "additive", -- centrifuge
+                        animation_speed = 0.5,
+                        line_length = 8,
+                        width = 108,
+                        height = 197,
+                        frame_count = 64,
+                        scale = 0.5 * 1.5,
+                        shift = {0.03, -0.24},
+                    }
+                }
+            }}
+          }
+        },
         always_draw_idle_animation = true,
         idle_animation = {
             layers = {
@@ -111,7 +148,7 @@ data:extend({
                       animation_speed = 0.5,
                       frame_count = 64,
                       scale = 0.5 * 1.5,
-                      shift = {-0.15, 0},
+                      shift = {-0.1, 0},
                     }
                 },
                 {
@@ -129,7 +166,7 @@ data:extend({
                       height = 246,
                       repeat_count = 64,
                       scale = 0.5 * 1.5,
-                      shift = {-0.15, 0},
+                      shift = {-0.1, 0},
                     }
                 },
                 {
@@ -145,7 +182,7 @@ data:extend({
                       filename = "__base__/graphics/entity/centrifuge/hr-centrifuge-A-shadow.png",
                       draw_as_shadow = true,
                       priority = "high",
-                      scale = 0.5 * 1.5,
+                      scale = 0.5 * 1.4,
                       line_length = 8,
                       width = 230,
                       height = 124,
@@ -162,8 +199,8 @@ data:extend({
             frame_count = 1,
             line_length = 1,
             repeat_count = 64,
-            shift = util.by_pixel(0, 15.5),
-            scale = 0.5 * 2 / 3,
+            shift = util.by_pixel(0, 10.5),
+            scale = 2 / 3 * 0.9,
             hr_version =
             {
               filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
@@ -172,8 +209,8 @@ data:extend({
               frame_count = 1,
               line_length = 1,
               repeat_count = 64,
-              shift = util.by_pixel(0, 15.5),
-              scale = 0.5 * 2 / 3,
+              shift = util.by_pixel(0, 10.5),
+              scale = 0.5 * 2 / 3 * 0.9,
             }
         },
     }
