@@ -170,24 +170,25 @@ data:extend({
                     }
                 },
                 {
-                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A-shadow.png",
+                    filename = "__BiterPower__/graphics/incubator/center-shadow.png",
                     draw_as_shadow = true,
                     priority = "high",
                     line_length = 8,
                     width = 108,
                     height = 54,
                     frame_count = 64,
-                    shift = {0, 0},
+                    scale = 1.4,
+                    shift = {1.5, 0},
                     hr_version = {
-                      filename = "__base__/graphics/entity/centrifuge/hr-centrifuge-A-shadow.png",
+                      filename = "__BiterPower__/graphics/incubator/hr-center-shadow.png",
                       draw_as_shadow = true,
                       priority = "high",
-                      scale = 0.5 * 1.4,
                       line_length = 8,
-                      width = 230,
-                      height = 124,
+                      width = 163,
+                      height = 123,
                       frame_count = 64,
-                      shift = {0, 0},
+                      scale = 0.5 * 1.4,
+                      shift = {1.5, 0},
                     }
                 },
             },
@@ -210,7 +211,7 @@ data:extend({
               line_length = 1,
               repeat_count = 64,
               shift = util.by_pixel(0, 10.5),
-              scale = 0.5 * 2 / 3 * 0.9,
+              scale = 0.5 * 2 / 3 * 0.95,
             }
         },
     }

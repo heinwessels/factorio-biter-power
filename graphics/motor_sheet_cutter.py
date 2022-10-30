@@ -1,6 +1,6 @@
 from PIL import Image
 
-sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-center.png")
+sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-centrifuge-A-shadow.png")
 
 columns = 8
 rows = 8
@@ -12,7 +12,7 @@ w = width / columns
 h = height / rows
 
 # left, top, right, bottom
-crop_l = (18, 5, 114, 161)
+crop_l = (67, 13, 230, 136)
 crop_l_w = crop_l[2]-crop_l[0]
 crop_l_h = crop_l[3]-crop_l[1]
 
