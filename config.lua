@@ -110,4 +110,12 @@ config.relocation_center.mining_speed =
         / (1 + config.buried_nest.productivity_scaler)
 config.relocation_center.mining_speed = 
         tonumber(string.format("%.3f", config.relocation_center.mining_speed))
+
+
+config.escapes = { }
+config.escapes.machine_whitelist = {
+    ["bp-biter-generator"]=true,
+    ["bp-biter-revitalization-center"]=true,
+}
+
 return config
