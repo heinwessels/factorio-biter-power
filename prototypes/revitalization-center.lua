@@ -143,26 +143,18 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-revitalization-center",
-        icon = "__base__/graphics/icons/assembling-machine-1.png",
+        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
-        subgroup = "production-machine",
-        order = "a[assembling-machine-1]",
+        subgroup = "bp-biter-machines",
+        order = "d[biter-revitalization-center]",
         place_result = "bp-biter-revitalization-center",
         stack_size = 20
     },
     {
         type = "recipe",
         name = "bp-biter-revitalization-center",
-        icons = {
-            {
-                icon = "__base__/graphics/icons/lab.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-            {
-                icon = "__base__/graphics/icons/medium-biter.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-        }, 
+        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon_size = 64, icon_mipmaps = 4,
         ingredients = {
             {"iron-gear-wheel", 8},
             {"pipe", 5},
@@ -173,16 +165,8 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-revitalization",
-        icons = {
-            {
-                icon = "__base__/graphics/icons/lab.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-            {
-                icon = "__base__/graphics/icons/medium-biter.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-        },
+        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon_size = 64, icon_mipmaps = 4,
         subgroup = "raw-material",
         category = "bp-biter-ergonomics",
         ingredients = {{"bp-caged-biter-tired", 1}},
@@ -192,7 +176,7 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-biter-revitalization-center",
-        icon = "__base__/graphics/icons/assembling-machine-1.png",
+        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
         minable = {mining_time = 0.2, result = "assembling-machine-1"},

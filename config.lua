@@ -37,7 +37,7 @@ config.incubator.duration = config.biter.burn_time * config.incubator.number_per
 config.incubator.ingredients = {
     -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
-    {"steel-chest", 1}
+    {"bp-biter-cage", 1}
 }
 config.incubator.results = {
     {
@@ -47,7 +47,7 @@ config.incubator.results = {
         amount_max = 2,
     },
     {
-        name = "steel-chest",
+        name = "bp-biter-cage",
         probability = 1 - (config.incubator.success_rate / config.biter.egg_to_biter_ratio),
         amount = 1,
     }

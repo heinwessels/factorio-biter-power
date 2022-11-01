@@ -4,18 +4,18 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-incubator",
-        icon = "__base__/graphics/icons/assembling-machine-1.png",
-        icon_size = 64, icon_mipmaps = 4,
-        subgroup = "production-machine",
-        order = "a[assembling-machine-1]",
+        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon_size = 64,
+        subgroup = "bp-biter-machines",
+        order = "b[biter-incubator]",
         place_result = "bp-biter-incubator",
         stack_size = 20
     },
     {
         type = "recipe",
         name = "bp-biter-incubator",
-        icon = "__base__/graphics/icons/uranium-processing.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon_size = 64,
         ingredients = {
             {"iron-gear-wheel", 8},
             {"pipe", 5},
@@ -30,16 +30,8 @@ data:extend({
     {
         type = "recipe",
         name = "bp-incubate-biter-egg",
-        icons = {
-            {
-                icon = "__BiterPower__/graphics/incubator/biter-egg.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-            {
-                icon = "__base__/graphics/icons/medium-biter.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-        },
+        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon_size = 64,
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
         energy_required = config.incubator.duration,
@@ -49,8 +41,8 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-biter-incubator",
-        icon = "__base__/graphics/icons/assembling-machine-1.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon_size = 64,
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "assembling-machine-1"},
         max_health = 300,

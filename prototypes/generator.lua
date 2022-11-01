@@ -159,10 +159,10 @@ data:extend({
   {
     type = "item",
     name = "bp-biter-generator",
-    icon = "__base__/graphics/icons/assembling-machine-1.png",
-    icon_size = 64, icon_mipmaps = 4,
-    subgroup = "production-machine",
-    order = "a[assembling-machine-1]",
+    icon = "__BiterPower__/graphics/generator/icon.png",
+    icon_size = 64,
+    subgroup = "bp-biter-machines",
+    order = "c[generator]",
     place_result = "bp-biter-generator",
     stack_size = 50
   },
@@ -173,14 +173,16 @@ data:extend({
     ingredients =
     {
       {"electronic-circuit", 3},
+      {"transport-belt", 5},
+      {"steel-plate", 5}
     },
     result = "bp-biter-generator"
   },
   {
     name = "bp-biter-generator",
     type = "burner-generator",
-    icon = "__base__/graphics/icons/steam-engine.png",
-    icon_size = 64, icon_mipmaps = 4,
+    icon = "__BiterPower__/graphics/generator/icon.png",
+    icon_size = 64,
     flags = {"placeable-neutral","player-creation"},
     max_health = 400,
     dying_explosion = "medium-explosion",
@@ -240,27 +242,3 @@ generator.integration_patch.shift[2] = generator.integration_patch.shift[2] + sh
 generator.integration_patch.hr_version.shift = generator.integration_patch.hr_version.shift or {0, 0}
 generator.integration_patch.hr_version.shift[1] = generator.integration_patch.hr_version.shift[1] + shift_correction[1]
 generator.integration_patch.hr_version.shift[2] = generator.integration_patch.hr_version.shift[2] + shift_correction[2]
-
-
-
-data:extend{
-  {
-    type = "recipe",
-    name = "bp-biter-power-generation",
-    icons = {
-        {
-            icon = "__base__/graphics/icons/steam-engine.png",
-            icon_size = 64, icon_mipmaps = 4,
-        },
-        {
-            icon = "__base__/graphics/icons/medium-biter.png",
-            icon_size = 64, icon_mipmaps = 4,
-        },
-    },
-    energy_required = 5*60,
-    ingredients = {
-        {"bp-caged-biter", 1},
-    },
-    result = "bp-caged-biter-tired"
-  },
-}

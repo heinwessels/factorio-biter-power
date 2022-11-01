@@ -7,10 +7,10 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-relocation-center",
-        icon = "__base__/graphics/icons/assembling-machine-1.png",
+        icon = "__base__/graphics/icons/electric-mining-drill.png",
         icon_size = 64, icon_mipmaps = 4,
-        subgroup = "production-machine",
-        order = "a[assembling-machine-1]",
+        subgroup = "bp-biter-machines",
+        order = "a[biter-relocation-center]",
         place_result = "bp-biter-relocation-center",
         stack_size = 20
     },
