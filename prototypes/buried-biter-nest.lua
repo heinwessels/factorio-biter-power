@@ -58,3 +58,30 @@ data:extend({
         map_grid = false
     }
 })
+
+
+for _, spawner_name in pairs{"biter-spawner", "spitter-spawner"} do
+  local spawner = data.raw["unit-spawner"][spawner_name]
+  
+  -- Add trigger effect to spawners to have a chance
+  -- to create buried biter nest on death
+  spawner.dying_trigger_effect = spawner.dying_trigger_effect or {}
+  table.insert(spawner.dying_trigger_effect, {
+    type = "create-entity",
+    entity_name = "bp-buried-biter-nest",
+    probability = config.buried_nest.spawn_chance,
+
+    -- Need some way to clear the corpse later because
+    -- it doesn't exist when these triggers fire
+    trigger_created_entity = true,
+  })
+  spawner.localised_description = {"bp-text.spawner-description", string.format("%.0f", config.buried_nest.spawn_chance*100)}
+
+  -- Also add a chance for some eggs to drop on any spawner kill 
+  spawner.loot = spawner.spawner or {}
+  table.insert(spawner.loot, {item = "bp-biter-egg", probability=0.5})
+  table.insert(spawner.loot, {item = "bp-biter-egg", probability=0.1})
+
+
+
+end

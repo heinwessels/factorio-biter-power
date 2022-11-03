@@ -85,6 +85,7 @@ config.loop_efficiency = config.revitalization.success_rate * config.incubator.s
 -- the results can't average more than one egg.
 config.buried_nest = {}
 config.buried_nest.number_per_generator = 1 / 10
+config.buried_nest.spawn_chance = 1 / 20
 config.buried_nest.eggs_per_second = 
         config.biter.egg_to_biter_ratio
         / config.buried_nest.number_per_generator
@@ -110,7 +111,6 @@ config.relocation_center.mining_speed =
         / (1 + config.buried_nest.productivity_scaler)
 config.relocation_center.mining_speed = 
         tonumber(string.format("%.3f", config.relocation_center.mining_speed))
-
 
 config.escapes = { }
 config.escapes.machine_whitelist = {
