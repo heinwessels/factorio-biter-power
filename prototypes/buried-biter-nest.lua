@@ -79,9 +79,10 @@ for _, spawner_name in pairs{"biter-spawner", "spitter-spawner"} do
 
   -- Also add a chance for some eggs to drop on any spawner kill 
   spawner.loot = spawner.spawner or {}
-  table.insert(spawner.loot, {item = "bp-biter-egg", probability=0.5})
-  table.insert(spawner.loot, {item = "bp-biter-egg", probability=0.1})
-
-
-
+  table.insert(spawner.loot, {
+    item = "bp-biter-egg", 
+    -- Will on average drop 1 biter per spawner death
+    count_min = 0.5 * config.biter.egg_to_biter_ratio,
+    count_max = 1.5 * config.biter.egg_to_biter_ratio,
+  })
 end
