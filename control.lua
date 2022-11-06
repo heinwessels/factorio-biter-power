@@ -1,5 +1,6 @@
 local config = require("config")
 local lib = require("lib.lib")
+local util = require("util")
 
 local function create_escapable_data(entity)
     return {
@@ -10,6 +11,10 @@ local function create_escapable_data(entity)
         last_escape = nil,                  -- Tick the last escape occured
         last_dice_roll = game.tick,         -- Last tick an escape was chanced
     }
+end
+
+local function rally_biters_around(position)
+
 end
 
 local function on_built(event)
@@ -46,50 +51,11 @@ script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
 
-local function determine_biter_to_escape(entity)
+local function determine_biter_type_to_escape(entity)
     return "small-biter"
 end
 
-local function escape_biter_from_machine(entity)
-    local surface = entity.surface
-    local search_radius = 20    -- Not really a radius
-    local position = surface.find_non_colliding_position_in_box(
-        "small-biter", 
-        {{entity.position.x - search_radius, entity.position.y - search_radius}, 
-         {entity.position.x + search_radius, entity.position.y + search_radius}},
-        0.5
-    )
-
-    -- We could not find a position where the entity could escape to. Well, in that
-    -- case just destroy the entity.
-    local kill_machine = false
-    if not position then
-        kill_machine = true
-        position = entity.position
-    end
-
-    -- Create the entity!
-    local biter = surface.create_entity{
-        name = determine_biter_to_escape(entity),
-        position = position,
-        force = "enemy",        
-    }
-    if not biter then return end -- No good way to handle this. Just ignore
-
-    -- Handle entity spawned from
-    if kill_machine then
-        entity.die("enemy", biter)
-    else        
-        entity.damage(entity.prototype.max_health * 0.25, biter.force, "physical", biter)        
-    end
-end
-
-local function tick_escape_for_entity(data)
-    local entity = data.entity
-    if not entity or not entity.valid then return nil, true end -- Delete entry
-    local tick = game.tick
-    
-    -- Does it contain biters?
+local function count_biters_in_machine(entity)
     local count_biters = 0
     local burner = entity.burner
     if burner then
@@ -100,13 +66,31 @@ local function tick_escape_for_entity(data)
         for i = 1, #burner.inventory do
             -- Need to ensure the inventory is actually filled with biters.
             -- It can also contain <Empty LuaItemStack>. I think?
-            if not burner.inventory[i].valid_for_read then
+            if burner.inventory[i].valid_for_read then
                 -- If we can read it we assume it's fuel
                 count_biters = count_biters + #burner.inventory
             end
         end        
     end
-    if count_biters == 0 then
+    return count_biters
+end
+
+local function clear_all_biters_in_machine(entity)
+    local burner = entity.burner
+    if burner then
+        burner.inventory.clear()
+        burner.currently_burning = nil  -- Voids the currently burning item.
+    end
+end
+
+local function tick_escape_for_entity(data)
+    local entity = data.entity
+    if not entity or not entity.valid then return nil, true end -- Delete entry
+    local tick = game.tick
+    
+    -- Does it contain biters?
+    local number_of_biters = count_biters_in_machine(entity)
+    if number_of_biters == 0 then
         -- If it doesn't contain biters then "reset" the "timer".
         -- Otherwise when it's empty for a long time and suddenly gets a biter
         -- then the time_since_last_roll will be massive, and biter will escape!
@@ -123,9 +107,33 @@ local function tick_escape_for_entity(data)
     if not average_escape_time then return nil, true end -- This machine isn't escapable. Something went wrong. Delete!
     local probability = time_since_last_roll / average_escape_time
     if math.random() < probability then
-        -- Biter will escape!
-        escape_biter_from_machine(entity)   -- TODO Specific for burning and inventory?
-        data.last_dice_roll = tick
+
+        -- First remove all biters. Otherwise if the entity is destroyed with damage
+        -- then the destroyed_handler must not be able to release anything else.
+        clear_all_biters_in_machine(entity)
+        
+        -- Release the amount of biters thats inside the machine, applying damage for each one.
+        local surface = entity.surface
+        local entity_position = util.table.deepcopy(entity.position) -- The entity might become invalid in this operation
+        local biter_name = determine_biter_type_to_escape(entity)
+        entity.create_build_effect_smoke()
+        for i = 1, number_of_biters do            
+            local position = surface.find_non_colliding_position(
+                biter_name, entity_position, 20, 0.2)
+            local biter
+            if position then
+                -- Only spawn biter if there's a spot to spawn. Will always damage though
+                biter = surface.create_entity{
+                    name=biter_name, position=position, 
+                    force="enemy", raise_built=true}
+            end
+
+            if entity.valid then -- It might be destroyed in the loop. Only apply damage if it still exists                
+                entity.damage(entity.prototype.max_health * 0.2, "enemy", "physical", biter) -- biter can be nil
+            end
+        end
+        rally_biters_around(entity_position)    -- Will make them attack similar structures to release more biters
+        data.last_dice_roll = tick              -- Reset dice-roll timer
     end
 end
 
