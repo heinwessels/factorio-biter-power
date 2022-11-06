@@ -58,20 +58,36 @@ end
 local function count_biters_in_machine(entity)
     local count_biters = 0
     local burner = entity.burner
+
+    count_in_inventory = function (inventory)
+        if not inventory then return 0 end
+        local _count = 0 -- Don't know how the scopes work here.
+        for i = 1, #inventory do
+            if inventory[i].valid_for_read and inventory[i].prototype.fuel_category == "bp-biter-power" then
+                -- If we can read it we assume it's fuel
+                _count = _count + inventory[i].count
+            end
+        end
+        return _count
+    end
+
+    -- If this is a burner
     if burner then
         if burner.remaining_burning_fuel > 0 then
             -- There is a biter running on this treadmil!
             count_biters = count_biters + 1
         end
-        for i = 1, #burner.inventory do
-            -- Need to ensure the inventory is actually filled with biters.
-            -- It can also contain <Empty LuaItemStack>. I think?
-            if burner.inventory[i].valid_for_read then
-                -- If we can read it we assume it's fuel
-                count_biters = count_biters + #burner.inventory
-            end
-        end        
+        count_biters = count_biters + count_in_inventory(burner.inventory)
     end
+
+    -- If this is an assembler
+    if entity.type == "assembling-machine" or entity.type == "furnace" then
+        -- Then it's an assembler, or crafting machine at least
+        if entity.crafting_progress > 0 then count_biters = count_biters + 1 end
+        count_biters = count_biters + count_in_inventory(entity.get_output_inventory())
+        count_biters = count_biters + count_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input))
+    end
+
     return count_biters
 end
 
@@ -80,6 +96,10 @@ local function clear_all_biters_in_machine(entity)
     if burner then
         burner.inventory.clear()
         burner.currently_burning = nil  -- Voids the currently burning item.
+    elseif entity.type == "assembling-machine" or entity.type == "furnace" then
+        entity.crafting_progress = 0
+        entity.get_output_inventory().clear()
+        entity.get_inventory(defines.inventory.assembling_machine_input).clear()
     end
 end
 
@@ -101,11 +121,12 @@ local function tick_escape_for_entity(data)
     -- The idea is that if the odds are that the biter will escape every 10 seconds,
     -- and we roll the dice every second, then each time we roll the biter has a 10% chance
     -- of escaping. I think this should work.
-    local time_since_last_roll = (tick - data.last_dice_roll) / 60 -- We calculate in seconds
+    local time_since_last_roll = tick - data.last_dice_roll
     if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
     local average_escape_time = config.escapes.escapable_machine[entity.name]
     if not average_escape_time then return nil, true end -- This machine isn't escapable. Something went wrong. Delete!
     local probability = time_since_last_roll / average_escape_time
+    data.last_dice_roll = tick
     if math.random() < probability then
 
         -- First remove all biters. Otherwise if the entity is destroyed with damage
@@ -133,7 +154,6 @@ local function tick_escape_for_entity(data)
             end
         end
         rally_biters_around(entity_position)    -- Will make them attack similar structures to release more biters
-        data.last_dice_roll = tick              -- Reset dice-roll timer
     end
 end
 

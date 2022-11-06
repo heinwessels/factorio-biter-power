@@ -1,5 +1,6 @@
 local config = require("config")
 local util = require("util")
+local lib = require("lib.lib")
 
 local function belt_sprite_at(shift, section)
     local y_offset = 0
@@ -181,6 +182,10 @@ data:extend({
   {
     name = "bp-biter-generator",
     type = "burner-generator",
+    localised_description = {"",
+      {"entity-description.bp-biter-generator"},
+      {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-biter-generator"])},
+    },
     icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,
     flags = {"placeable-neutral","player-creation"},

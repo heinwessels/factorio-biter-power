@@ -1,7 +1,25 @@
 local lib = { table = { } }
 
--- This function is pulled from flib. Thanks Raiguard, this is an epic function!
+function lib.formattime(ticks)
+  local seconds = ticks / 60
+  local minutes = math.floor((seconds)/60)
+  seconds = math.floor(seconds - 60*minutes)
+  local hours = math.floor((minutes)/60)
+  minutes = math.floor(minutes - 60*hours)
+  local str = ""
+  for key, value in pairs({
+    ["h"] = hours,
+    ["m"] = minutes,
+    ["s"] = seconds,
+  }) do
+    if str ~= "" then str=str.." " end
+    str = str..string.format("%d"..key, value)
+  end
+  return str
+end
 
+
+-- This function is pulled from flib. Thanks Raiguard, this is an epic function!
 --- Call the given function on a set number of items in a table, returning the next starting key.
 ---
 --- Calls `callback(value, key)` over `n` items from `tbl`, starting after `from_k`.

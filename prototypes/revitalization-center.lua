@@ -1,8 +1,9 @@
 local config = require("config")
+local lib = require("lib.lib")
 
 local frame_sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 8, 9, 10, 11}
 
-local animation_speed = 0.7
+local animation_speed = 0.5
 local idle_animation = {
     layers = {
         {
@@ -176,6 +177,10 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-biter-revitalization-center",
+        localised_description = {"",
+            {"entity-description.bp-biter-revitalization-center"},
+            {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-biter-revitalization-center"])},
+        },
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
