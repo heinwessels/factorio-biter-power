@@ -11,11 +11,11 @@ data:extend({
         name = "bp-buried-biter-nest",
         icons = {
           {
-            icon = "__BiterPower__/graphics/buried-biter-nest/hole-icon.png",
+            icon = "__biter-power__/graphics/buried-biter-nest/hole-icon.png",
             icon_size = 64,
           },
           {
-            icon = "__BiterPower__/graphics/incubator/biter-egg.png",
+            icon = "__biter-power__/graphics/incubator/biter-egg.png",
             icon_size = 64, 
             icon_mipmaps = 4, 
             scale = 0.3,
@@ -38,14 +38,14 @@ data:extend({
         stage_counts = {0},
         stages = {
             sheet = {
-                filename = "__BiterPower__/graphics/buried-biter-nest/hole.png",
+                filename = "__biter-power__/graphics/buried-biter-nest/hole.png",
                 priority = "extra-high",
                 width = 166,
                 height = 122,
                 scale = 3/4,
                 variation_count = 1,
                 hr_version = {
-                    filename = "__BiterPower__/graphics/buried-biter-nest/hr-hole.png",
+                    filename = "__biter-power__/graphics/buried-biter-nest/hr-hole.png",
                     priority = "extra-high",
                     width = 322,
                     height = 240,

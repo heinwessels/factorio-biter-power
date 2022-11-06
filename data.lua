@@ -12,3 +12,12 @@ require("prototypes.incubator")
 require("prototypes.revitalization-center")
 require("prototypes.buried-biter-nest")
 require("prototypes.biter-relocation-center")
+
+
+if mods["debugadapter"] then
+    log("====== Biter Power: Config [Stats for nerds] ======")
+    local config = require("config")
+    log(serpent.block(config))
+    log("--- Extra Stats ---")
+    log("Biter Effective Power: "..string.format("%.2f", config.biter.fuel_value_net/1e6/3600).." MW-hour")
+end

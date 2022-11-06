@@ -1,10 +1,10 @@
 from PIL import Image
 
-# sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-center-precut.png")
-# mask = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\mask.png")
+# sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\biter-power_0.0.1\\graphics\\incubator\\hr-center-precut.png")
+# mask = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\biter-power_0.0.1\\graphics\\incubator\\mask.png")
 
-sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-center-shadow.png")
-mask = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-center-shadow-mask.png")
+sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\biter-power_0.0.1\\graphics\\incubator\\hr-center-shadow.png")
+mask = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\biter-power_0.0.1\\graphics\\incubator\\hr-center-shadow-mask.png")
 
 columns = 8
 rows = 8

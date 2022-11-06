@@ -1,6 +1,6 @@
 from PIL import Image
 
-sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\BiterPower_0.0.1\\graphics\\incubator\\hr-centrifuge-A-shadow.png")
+sheet = Image.open(r"C:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\mods\\biter-power_0.0.1\\graphics\\incubator\\hr-centrifuge-A-shadow.png")
 
 columns = 8
 rows = 8

@@ -30,13 +30,13 @@ local idle_animation = {
             } 
         },
         {
-            filename = "__BiterPower__/graphics/revitalization-center/center-back.png",
+            filename = "__biter-power__/graphics/revitalization-center/center-back.png",
             width = 194,
             height = 173,
             scale = 0.25,
             repeat_count = #frame_sequence,
             hr_version = {
-                filename = "__BiterPower__/graphics/revitalization-center/center-back.png",
+                filename = "__biter-power__/graphics/revitalization-center/center-back.png",
                 width = 194,
                 height = 173,
                 scale = 0.5,
@@ -124,13 +124,13 @@ table.insert(animation.layers, {
 -- Now add the front to both
 for _, property in pairs{idle_animation, animation} do
     table.insert(property.layers, {
-        filename = "__BiterPower__/graphics/revitalization-center/center-front.png",
+        filename = "__biter-power__/graphics/revitalization-center/center-front.png",
         width = 194,
         height = 173,
         scale = 0.25,
         repeat_count = #frame_sequence,
         hr_version = {
-            filename = "__BiterPower__/graphics/revitalization-center/center-front.png",
+            filename = "__biter-power__/graphics/revitalization-center/center-front.png",
             width = 194,
             height = 173,
             scale = 0.5,
@@ -143,7 +143,7 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-revitalization-center",
-        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
         order = "d[biter-revitalization-center]",
@@ -153,7 +153,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-revitalization-center",
-        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         ingredients = {
             {"iron-gear-wheel", 8},
@@ -165,7 +165,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-revitalization",
-        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "raw-material",
         category = "bp-biter-ergonomics",
@@ -176,7 +176,7 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-biter-revitalization-center",
-        icon = "__BiterPower__/graphics/revitalization-center/icon.png",
+        icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
         minable = {mining_time = 0.2, result = "assembling-machine-1"},

@@ -2,7 +2,7 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-cage",
-        icon = "__BiterPower__/graphics/cage/icon.png",
+        icon = "__biter-power__/graphics/cage/icon.png",
         icon_size = 64,
         subgroup = "bp-biters",
         order = "b[biter-cage]",
@@ -11,7 +11,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-cage",
-        icon = "__BiterPower__/graphics/cage/icon.png",
+        icon = "__biter-power__/graphics/cage/icon.png",
         icon_size = 64,
         ingredients = {
             {"steel-plate", 100},

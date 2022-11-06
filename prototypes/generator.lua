@@ -35,13 +35,13 @@ local function belt_sprite_at(shift, section)
 local idle_animation = {
   layers = {
     {
-      filename = "__BiterPower__/graphics/generator/generator-back.png",
+      filename = "__biter-power__/graphics/generator/generator-back.png",
       width = 195,
       height = 230,
       scale = 0.25 * 4 / 3,
       repeat_count = 16,
       hr_version = {
-        filename = "__BiterPower__/graphics/generator/generator-back.png",
+        filename = "__biter-power__/graphics/generator/generator-back.png",
         width = 195,
         height = 230,        
         scale = 0.5 * 4 / 3,
@@ -100,7 +100,7 @@ table.insert(animation.layers, {
 -- Now add the outer cage edge to both
 for _, property in pairs{idle_animation, animation} do
   table.insert(property.layers, {
-    filename = "__BiterPower__/graphics/generator/hr-motor.png",
+    filename = "__biter-power__/graphics/generator/hr-motor.png",
     width = 195,
     height = 230,
     scale = 0.5 * 0.8 * 0.5,
@@ -108,7 +108,7 @@ for _, property in pairs{idle_animation, animation} do
     line_length = 4,
     shift = {1.2, 0},
     hr_version = {
-      filename = "__BiterPower__/graphics/generator/hr-motor.png",
+      filename = "__biter-power__/graphics/generator/hr-motor.png",
       width = 114,
       height = 318,
       frame_count = 16,
@@ -118,7 +118,7 @@ for _, property in pairs{idle_animation, animation} do
     }
   })
   table.insert(property.layers, {
-    filename = "__BiterPower__/graphics/generator/generator-front-shadow.png",
+    filename = "__biter-power__/graphics/generator/generator-front-shadow.png",
     draw_as_shadow = true,
     width = 195,
     height = 230,
@@ -126,7 +126,7 @@ for _, property in pairs{idle_animation, animation} do
     shift = {0.8, 0.3},
     repeat_count = 16,
     hr_version = {
-      filename = "__BiterPower__/graphics/generator/hr-generator-shadow.png",
+      filename = "__biter-power__/graphics/generator/hr-generator-shadow.png",
       draw_as_shadow = true,
       width = 274,
       height = 196,
@@ -136,13 +136,13 @@ for _, property in pairs{idle_animation, animation} do
     }
   })
   table.insert(property.layers, {
-    filename = "__BiterPower__/graphics/generator/generator-front.png",
+    filename = "__biter-power__/graphics/generator/generator-front.png",
     width = 195,
     height = 230,
     scale = 0.25 * 4 / 3,
     repeat_count = 16,
     hr_version = {
-      filename = "__BiterPower__/graphics/generator/generator-front.png",
+      filename = "__biter-power__/graphics/generator/generator-front.png",
       width = 195,
       height = 230,
       scale = 0.5 * 4 / 3,
@@ -159,7 +159,7 @@ data:extend({
   {
     type = "item",
     name = "bp-biter-generator",
-    icon = "__BiterPower__/graphics/generator/icon.png",
+    icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,
     subgroup = "bp-biter-machines",
     order = "c[generator]",
@@ -181,7 +181,7 @@ data:extend({
   {
     name = "bp-biter-generator",
     type = "burner-generator",
-    icon = "__BiterPower__/graphics/generator/icon.png",
+    icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,
     flags = {"placeable-neutral","player-creation"},
     max_health = 400,
@@ -205,13 +205,13 @@ data:extend({
     idle_animation = idle_animation,
     animation = animation,
     integration_patch = {
-        filename = "__BiterPower__/graphics/generator/integration-patch.png",
+        filename = "__biter-power__/graphics/generator/integration-patch.png",
         width = 220,
         height = 222,
         scale = 0.25 * 4 / 3,
         repeat_count = 16,
         hr_version = {
-          filename = "__BiterPower__/graphics/generator/hr-integration-patch.png",
+          filename = "__biter-power__/graphics/generator/hr-integration-patch.png",
           width = 220,
           height = 222,
           scale = 0.5 * 4 / 3,

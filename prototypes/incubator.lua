@@ -4,7 +4,7 @@ data:extend({
     {
         type = "item",
         name = "bp-biter-incubator",
-        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         subgroup = "bp-biter-machines",
         order = "b[biter-incubator]",
@@ -14,7 +14,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-biter-incubator",
-        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         ingredients = {
             {"iron-gear-wheel", 8},
@@ -30,7 +30,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-incubate-biter-egg",
-        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
@@ -41,7 +41,7 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-biter-incubator",
-        icon = "__BiterPower__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "assembling-machine-1"},
@@ -97,7 +97,7 @@ data:extend({
             draw_as_light = true,
             animation = { layers = {
                 {
-                    filename = "__BiterPower__/graphics/incubator/center-glow.png",
+                    filename = "__biter-power__/graphics/incubator/center-glow.png",
                     priority = "high",
                     blend_mode = "additive", -- centrifuge
                     animation_speed = 0.5,
@@ -106,7 +106,7 @@ data:extend({
                     height = 98,
                     frame_count = 64,
                     hr_version = {
-                        filename = "__BiterPower__/graphics/incubator/hr-center-glow.png",
+                        filename = "__biter-power__/graphics/incubator/hr-center-glow.png",
                         priority = "high",
                         blend_mode = "additive", -- centrifuge
                         animation_speed = 0.5,
@@ -135,7 +135,7 @@ data:extend({
                     animation_speed = 0.5,
                     shift = {0, -1},
                     hr_version = {
-                      filename = "__BiterPower__/graphics/incubator/hr-center.png",
+                      filename = "__biter-power__/graphics/incubator/hr-center.png",
                       priority = "high",
                       line_length = 8,
                       width = 139,
@@ -155,7 +155,7 @@ data:extend({
                     repeat_count = 64,
                     shift = {0, -1},
                     hr_version = {
-                      filename = "__BiterPower__/graphics/incubator/hr-center-front.png",
+                      filename = "__biter-power__/graphics/incubator/hr-center-front.png",
                       priority = "high",
                       width = 139,
                       height = 246,
@@ -165,7 +165,7 @@ data:extend({
                     }
                 },
                 {
-                    filename = "__BiterPower__/graphics/incubator/center-shadow.png",
+                    filename = "__biter-power__/graphics/incubator/center-shadow.png",
                     draw_as_shadow = true,
                     priority = "high",
                     line_length = 8,
@@ -175,7 +175,7 @@ data:extend({
                     scale = 1.4,
                     shift = {1.5, 0},
                     hr_version = {
-                      filename = "__BiterPower__/graphics/incubator/hr-center-shadow.png",
+                      filename = "__biter-power__/graphics/incubator/hr-center-shadow.png",
                       draw_as_shadow = true,
                       priority = "high",
                       line_length = 8,
