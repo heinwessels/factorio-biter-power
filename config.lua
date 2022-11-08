@@ -121,7 +121,7 @@ config.escapes = { }
 config.escapes.escapable_machine = {
     -- The 'value' is the average time it will take 
     -- for a single escape from a single machine in ticks
-    ["bp-biter-generator"] = 60 * 60 * 60 * 2,
+    ["bp-biter-generator"] = 20 * 60, --60 * 60 * 60 * 2,
     ["bp-biter-revitalization-center"] = 60 * 60 * 30,
 }
 

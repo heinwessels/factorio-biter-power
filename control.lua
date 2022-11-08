@@ -13,10 +13,6 @@ local function create_escapable_data(entity)
     }
 end
 
-local function rally_biters_around(position)
-
-end
-
 local function on_built(event)
     local entity = event.created_entity or event.entity
     if not entity or not entity.valid then return end
@@ -43,6 +39,12 @@ local function on_deconstructed(event)
     if not entity or not entity.valid then return end
     if not config.escapes.escapable_machine[entity.name] then return end
 
+    -- If this is a die event then the biters should escape!
+    -- We should only reach here if entity is escapable
+    if event.name == defines.events.name then
+        escape_biters_from_entity(entity)
+    end
+    
     global.escapables[entity.unit_number] = nil
 end
 
@@ -100,7 +102,7 @@ local function determine_biter_type_to_escape(entity)
     local cache = global.biter_distribution_cache[force.name]
     if not cache or cache.expiry_tick < game.tick then
         cache = {
-            expiry_tick = game.tick + 60 * 60 * 5, -- expires after 5 minutes
+            expiry_tick = game.tick + 60 * 60 * 3, -- expires after some time
             distribution = biter_distribution_for_evolution(force.evolution_factor)
         }
         global.biter_distribution_cache[force.name] = cache
@@ -121,7 +123,7 @@ local function count_biters_in_machine(entity)
     local count_biters = 0
     local burner = entity.burner
 
-    count_in_inventory = function (inventory)
+    local count_in_inventory = function (inventory)
         if not inventory then return 0 end
         local _count = 0 -- Don't know how the scopes work here.
         for i = 1, #inventory do
@@ -165,6 +167,96 @@ local function clear_all_biters_in_machine(entity)
     end
 end
 
+local function escape_biters_from_entity(entity, number_biters)
+    local number_of_biters = number_of_biters or count_biters_in_machine(entity)
+    if number_of_biters == 0 then return { } end
+    
+    -- Out of the cage
+    clear_all_biters_in_machine(entity)
+    
+    -- And into the world
+    local biters = { }
+    local surface = entity.surface
+    local biter_name = determine_biter_type_to_escape(entity)    
+    for i = 1, number_of_biters do            
+        local position = surface.find_non_colliding_position(
+            biter_name, entity.position, 20, 0.2)
+        local biter
+        if position then
+            biter = surface.create_entity{
+                name=biter_name, position=position, 
+                force="enemy", raise_built=true
+            }
+            if biter then table.insert(biters, biter) end
+        end
+    end
+
+    return biters
+end
+
+local function rally_biters_around(surface, position)
+    -- This function will rally biter around this position
+    -- to attack a machine which contains other biters.
+    -- Will also rallies spitters, because why not, they
+    -- should also be angry
+    
+    local enemies = surface.find_enemy_units(position, 50, "player")
+    if not enemies then return end -- No enemies found, ignore
+
+    local machines_to_target = {}
+    for machine_name, _ in pairs(config.escapes.escapable_machine) do
+        table.insert(machines_to_target, machine_name)
+    end
+    local machines = surface.find_entities_filtered{
+        position = position,
+        radius = 50,
+        name = machines_to_target,
+        force = nil, -- Any force
+    }
+
+    
+    local command 
+    
+    -- Loop through current biters and see if they are attacking a machine
+    -- containing biters. If one is, let the other join in
+    for _, enemy in pairs(enemies) do
+        local this_command = enemy.command
+        if this_command and this_command.name == defines.command.attack then
+            local target = this_command.target
+            if target.valid and  count_biters_in_machine(this_command.target) > 1 then
+                command = this_command
+                command.distraction = defines.distraction.none
+                goto done
+            end
+        end
+    end
+    
+    for _, machine in pairs(machines) do
+        if count_biters_in_machine(machine) > 0 then
+            command = {
+                type = defines.command.attack,
+                target = machine,
+                radius = 30,
+            }
+            goto done
+        end
+    end
+
+    if not command then
+        command = {
+            type = defines.command.attack_area,
+            destination = position,
+            radius = 30,
+            distraction = defines.distraction.none, 
+        }
+    end
+
+    ::done::
+    for _, enemy in pairs(enemies) do
+        enemy.set_command(command)
+    end
+end
+
 local function tick_escape_for_entity(data)
     local entity = data.entity
     if not entity or not entity.valid then return nil, true end -- Delete entry
@@ -190,32 +282,14 @@ local function tick_escape_for_entity(data)
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
     if math.random() < probability then
-
-        -- First remove all biters. Otherwise if the entity is destroyed with damage
-        -- then the destroyed_handler must not be able to release anything else.
-        clear_all_biters_in_machine(entity)
-        
-        -- Release the amount of biters thats inside the machine, applying damage for each one.
-        local surface = entity.surface
-        local entity_position = util.table.deepcopy(entity.position) -- The entity might become invalid in this operation
-        local biter_name = determine_biter_type_to_escape(entity)
         entity.create_build_effect_smoke()
-        for i = 1, number_of_biters do            
-            local position = surface.find_non_colliding_position(
-                biter_name, entity_position, 20, 0.2)
-            local biter
-            if position then
-                -- Only spawn biter if there's a spot to spawn. Will always damage though
-                biter = surface.create_entity{
-                    name=biter_name, position=position, 
-                    force="enemy", raise_built=true}
-            end
-
+        local biters = escape_biters_from_entity(entity)
+        rally_biters_around(entity.surface, entity.position)
+        for i = 1, number_of_biters do
             if entity.valid then -- It might be destroyed in the loop. Only apply damage if it still exists                
-                entity.damage(entity.prototype.max_health * 0.2, "enemy", "physical", biter) -- biter can be nil
+                entity.damage(entity.prototype.max_health * 0.2, "enemy", "physical")
             end
         end
-        rally_biters_around(entity_position)    -- Will make them attack similar structures to release more biters
     end
 end
 
