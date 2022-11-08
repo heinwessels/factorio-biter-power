@@ -51,8 +51,70 @@ script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
 
+local function biter_distribution_for_evolution(evolution)
+    -- Calculate the biter spawn probability for a given evolution
+    -- verified with calculator in the wiki.
+    -- Cool :)
+
+    -- Currently we will only spawn biters and not spitters. 
+    local result_units = game.entity_prototypes["biter-spawner"].result_units
+    local distribution = { }
+    local total = 0
+    for _, definition in pairs(result_units) do
+        local weight = 0
+        for index = #definition.spawn_points, 1, -1 do
+            local point_l = definition.spawn_points[index]
+            if evolution >= point_l.evolution_factor then
+                if index == #definition.spawn_points then
+                    -- probability stays constant after last index
+                    weight = point_l.weight
+                else
+                    -- interpolate between this index and the next
+                    local point_r = definition.spawn_points[index + 1]
+                    weight = point_l.weight 
+                                + (evolution - point_l.evolution_factor)
+                                * (point_r.weight - point_l.weight)
+                                / (point_r.evolution_factor - point_l.evolution_factor)
+                end
+                goto done
+            end
+        end
+        ::done::        
+        total = total + weight
+        table.insert(distribution, {unit=definition.unit, weight=weight})
+    end
+
+    -- Scale to one
+    local correction = 1 / total
+    for _, definition in pairs(distribution) do
+        definition.weight = correction * definition.weight
+    end
+
+    return distribution
+end
+
 local function determine_biter_type_to_escape(entity)
-    return "small-biter"
+    local force = entity.force
+
+    -- Get a distribution table, maybe from the cache. We key it by force
+    local cache = global.biter_distribution_cache[force.name]
+    if not cache or cache.expiry_tick < game.tick then
+        cache = {
+            expiry_tick = game.tick + 60 * 60 * 5, -- expires after 5 minutes
+            distribution = biter_distribution_for_evolution(force.evolution_factor)
+        }
+        global.biter_distribution_cache[force.name] = cache
+    end
+
+    -- Now roll the dice and see which biter to release!
+    local roll = math.random()
+    local weight = 0
+    for _, entry in pairs(cache.distribution) do
+        weight = weight + entry.weight
+        if roll <= weight then
+            return entry.unit
+        end
+    end
 end
 
 local function count_biters_in_machine(entity)
@@ -186,9 +248,11 @@ end)
 script.on_init(function()
     global.escapables = { }
     global.nests_to_clean = { }
+    global.biter_distribution_cache = { }
 end)
 
 script.on_configuration_changed(function (event)
     global.escapables = global.escapables or { }
     global.nests_to_clean = global.nests_to_clean or { }
+    global.biter_distribution_cache = global.biter_distribution_cache or { }
 end)
