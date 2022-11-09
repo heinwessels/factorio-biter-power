@@ -69,7 +69,7 @@ data:extend{
             height = 161,
             scale = 0.5
         },
-        trigger_radius = 2.5,
+        trigger_radius = 3.5,
         ammo_category = "landmine",
         action = {
             type = "direct",

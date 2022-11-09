@@ -44,13 +44,15 @@ data:extend({
                 height = 122,
                 scale = 3/4,
                 variation_count = 1,
+                shift = {0, -0.5},
                 hr_version = {
                     filename = "__biter-power__/graphics/buried-biter-nest/hr-hole.png",
                     priority = "extra-high",
                     width = 322,
-                    height = 240,
+                    height = 300,
                     scale = 0.5 * 3/4,
                     variation_count = 1,
+                    shift = {0, -0.5},
                 }
             }
         },
