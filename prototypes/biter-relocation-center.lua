@@ -6,32 +6,32 @@ local sounds = require("__base__.prototypes.entity.sounds")
 data:extend({
     {
         type = "item",
-        name = "bp-biter-relocation-center",
+        name = "bp-relocation-center",
         icon = "__base__/graphics/icons/electric-mining-drill.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
         order = "a[biter-relocation-center]",
-        place_result = "bp-biter-relocation-center",
+        place_result = "bp-relocation-center",
         stack_size = 20
     },
     {
         type = "recipe",
-        name = "bp-biter-relocation-center",
+        name = "bp-relocation-center",
         icon_size = 64, icon_mipmaps = 4,
         ingredients = {
-            {"iron-gear-wheel", 8},
-            {"pipe", 5},
-            {"iron-plate", 10}
+            {"steel-plate", 8},
+            {"stone-brick", 5},
+            {"iron-gear-wheel", 10},
         },
-        result = "bp-biter-relocation-center"
+        result = "bp-relocation-center"
     },
     {
         type = "mining-drill",
-        name = "bp-biter-relocation-center",
+        name = "bp-relocation-center",
         icon = "__base__/graphics/icons/electric-mining-drill.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "player-creation"},
-        minable = {mining_time = 0.3, result = "bp-biter-relocation-center"},
+        minable = {mining_time = 0.3, result = "bp-relocation-center"},
         max_health = 300,
         resource_categories = {"bp-biter-nest"},
         corpse = "electric-mining-drill-remnants",

@@ -8,7 +8,7 @@ data:extend{
         icon = "__biter-power__/graphics/cage-trap/icon.png",
         icon_size = 64,
         subgroup = "gun",
-        order = "f[cage-trap]",
+        order = "g[cage-trap]",
         place_result = "bp-cage-trap",
         stack_size = 100
     },
@@ -19,7 +19,7 @@ data:extend{
         energy_required = 5,
         ingredients =
         {
-          {"bp-biter-cage", 1},
+          {"bp-cage", 1},
           {"iron-gear-wheel", 20},
           {"iron-stick", 5}
         },

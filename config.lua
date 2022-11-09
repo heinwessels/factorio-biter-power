@@ -37,7 +37,7 @@ config.incubator.duration = config.biter.burn_time * config.incubator.number_per
 config.incubator.ingredients = {
     -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
-    {"bp-biter-cage", 1}
+    {"bp-cage", 1}
 }
 config.incubator.results = {
     {
@@ -47,7 +47,7 @@ config.incubator.results = {
         amount_max = 2,
     },
     {
-        name = "bp-biter-cage",
+        name = "bp-cage",
         probability = 1 - (config.incubator.success_rate / config.biter.egg_to_biter_ratio),
         amount = 1,
     }
@@ -121,8 +121,8 @@ config.escapes = { }
 config.escapes.escapable_machine = {
     -- The 'value' is the average time it will take 
     -- for a single escape from a single machine in ticks
-    ["bp-biter-generator"] = 60 * 60 * 60 * 2,
-    ["bp-biter-revitalization-center"] = 60 * 60 * 30,
+    ["bp-generator"] = 60 * 60 * 60 * 2,
+    ["bp-revitalization-center"] = 60 * 60 * 30,
 }
 
 return config

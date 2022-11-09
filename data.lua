@@ -13,6 +13,7 @@ require("prototypes.revitalization-center")
 require("prototypes.buried-biter-nest")
 require("prototypes.biter-relocation-center")
 require("prototypes.cage-trap")
+require("prototypes.technology")
 
 
 if mods["debugadapter"] then

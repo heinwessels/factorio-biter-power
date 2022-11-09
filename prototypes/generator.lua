@@ -159,17 +159,17 @@ data:extend({
   },
   {
     type = "item",
-    name = "bp-biter-generator",
+    name = "bp-generator",
     icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,
     subgroup = "bp-biter-machines",
     order = "c[generator]",
-    place_result = "bp-biter-generator",
+    place_result = "bp-generator",
     stack_size = 50
   },
   {
     type = "recipe",
-    name = "bp-biter-generator",
+    name = "bp-generator",
     enabled = false,
     ingredients =
     {
@@ -177,14 +177,14 @@ data:extend({
       {"transport-belt", 5},
       {"steel-plate", 5}
     },
-    result = "bp-biter-generator"
+    result = "bp-generator"
   },
   {
-    name = "bp-biter-generator",
+    name = "bp-generator",
     type = "burner-generator",
     localised_description = {"",
-      {"entity-description.bp-biter-generator"},
-      {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-biter-generator"])},
+      {"entity-description.bp-generator"},
+      {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-generator"])},
     },
     icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,
@@ -195,7 +195,7 @@ data:extend({
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
     max_power_output = util.format_number(config.generator.power_output, true).."W",
-    minable = {mining_time = 1, result = "bp-biter-generator"},
+    minable = {mining_time = 1, result = "bp-generator"},
     burner = {
       fuel_category = "bp-biter-power",
       effectivity = 1,
@@ -230,7 +230,7 @@ data:extend({
 -- I'm placing all sprites at the wrong place with the middle in the middle, and not 
 -- the bottom on the bottom tile edge. Shift everything up
 local shift_correction = {0, -0.3}
-local generator = data.raw["burner-generator"]["bp-biter-generator"]
+local generator = data.raw["burner-generator"]["bp-generator"]
 for _, property in pairs({"idle_animation", "animation"}) do
   for _, layer in pairs(generator[property].layers) do    
     layer.shift = layer.shift or {0, 0}

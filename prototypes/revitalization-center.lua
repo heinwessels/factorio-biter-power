@@ -143,29 +143,29 @@ end
 data:extend({
     {
         type = "item",
-        name = "bp-biter-revitalization-center",
+        name = "bp-revitalization-center",
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
         order = "d[biter-revitalization-center]",
-        place_result = "bp-biter-revitalization-center",
+        place_result = "bp-revitalization-center",
         stack_size = 20
     },
     {
         type = "recipe",
-        name = "bp-biter-revitalization-center",
+        name = "bp-revitalization-center",
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         ingredients = {
-            {"iron-gear-wheel", 8},
-            {"pipe", 5},
-            {"iron-plate", 10}
+            {"steel-plate", 30},
+            {"electronic-circuit", 10},
+            {"copper-plate", 5},
         },
-        result = "bp-biter-revitalization-center"
+        result = "bp-revitalization-center"
     },
     {
         type = "recipe",
-        name = "bp-biter-revitalization",
+        name = "bp-revitalization",
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "raw-material",
@@ -176,10 +176,10 @@ data:extend({
     },
     {
         type = "assembling-machine",
-        name = "bp-biter-revitalization-center",
+        name = "bp-revitalization-center",
         localised_description = {"",
-            {"entity-description.bp-biter-revitalization-center"},
-            {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-biter-revitalization-center"])},
+            {"entity-description.bp-revitalization-center"},
+            {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-revitalization-center"])},
         },
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
@@ -189,7 +189,7 @@ data:extend({
         corpse = "assembling-machine-1-remnants",
         dying_explosion = "assembling-machine-1-explosion", 
         crafting_categories = {"bp-biter-ergonomics"},
-        fixed_recipe = "bp-biter-revitalization",
+        fixed_recipe = "bp-revitalization",
         resistances = {
             {
                 type = "fire",

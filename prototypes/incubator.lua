@@ -3,25 +3,24 @@ local config = require("config")
 data:extend({
     {
         type = "item",
-        name = "bp-biter-incubator",
+        name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         subgroup = "bp-biter-machines",
         order = "b[biter-incubator]",
-        place_result = "bp-biter-incubator",
+        place_result = "bp-incubator",
         stack_size = 20
     },
     {
         type = "recipe",
-        name = "bp-biter-incubator",
+        name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         ingredients = {
-            {"iron-gear-wheel", 8},
-            {"pipe", 5},
-            {"iron-plate", 10}
+            {"stone-brick", 10},
+            {"copper-plate", 10}
         },
-        result = "bp-biter-incubator"
+        result = "bp-incubator"
     },
     {
         type = "recipe-category",
@@ -40,7 +39,7 @@ data:extend({
     },
     {
         type = "assembling-machine",
-        name = "bp-biter-incubator",
+        name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/incubator-icon.png",
         icon_size = 64,
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
