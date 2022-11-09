@@ -16,6 +16,17 @@ end
 local function on_built(event)
     local entity = event.created_entity or event.entity
     if not entity or not entity.valid then return end
+
+    if entity.type == "entity-ghost" and entity.ghost_name == "bp-cage-trap" then
+        local player = game.get_player(event.player_index)
+        player.create_local_flying_text{
+            text={"bp-text.cannot-be-placed-by-robot"},
+            position=entity.position
+        }
+        player.play_sound{ path="utility/cannot_build" }
+        entity.destroy{ raise_destroy=true }
+        return
+    end
     
     if config.escapes.escapable_machine[entity.name] then 
         global.escapables[entity.unit_number] = create_escapable_data(entity)
@@ -52,6 +63,21 @@ script.on_event(defines.events.on_player_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
+
+script.on_event(defines.events.on_script_trigger_effect , function(event)
+    if event.effect_id ~= "bp-cage-trap-trigger" then return end
+    local victim = event.target_entity
+    if not victim then return end
+    local whitelist = {
+        ["small-biter"] = true,
+        ["medium-biter"] = true,
+        ["biter-biter"] = true,
+        ["behemoth-biter"] = true,        
+    }
+    if not whitelist[victim.name] then return end
+    victim.surface.spill_item_stack(victim.position, {name="bp-caged-biter"}, true, "player")
+    victim.destroy{raise_destroy = true}
+end)
 
 local function biter_distribution_for_evolution(evolution)
     -- Calculate the biter spawn probability for a given evolution
