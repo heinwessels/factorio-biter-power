@@ -42,6 +42,7 @@ script.on_event(defines.events.on_trigger_created_entity, function(event)
     local entity = event.created_entity or event.entity
     if not entity or not entity.valid then return end
     if entity.name ~= "bp-buried-biter-nest" then return end
+    entity.amount = config.buried_nest.spawn_amount * (math.random() + 0.5)
     table.insert(global.nests_to_clean, entity)
 end)
 

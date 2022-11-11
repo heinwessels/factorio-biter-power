@@ -75,6 +75,8 @@ for _, spawner_name in pairs{"biter-spawner", "spitter-spawner"} do
 
     -- Need some way to clear the corpse later because
     -- it doesn't exist when these triggers fire
+    -- Also don't know how to set the resource amount
+    -- here, so we will set it on the raised event
     trigger_created_entity = true,
   })
   spawner.localised_description = {"bp-text.spawner-description", string.format("%.0f", config.buried_nest.spawn_chance*100)}
