@@ -43,8 +43,7 @@ config.incubator.results = {
     {
         name = "bp-caged-biter",
         probability = config.incubator.success_rate / config.biter.egg_to_biter_ratio,
-        amount_min = 0,
-        amount_max = 2,
+        amount = 1,
     },
     {
         name = "bp-cage",
