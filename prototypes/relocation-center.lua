@@ -3,11 +3,12 @@ local config = require("config")
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 
+local shift = {x=-0, y=-0.5} -- Because getting that glow aligned was awful
 data:extend({
     {
         type = "item",
         name = "bp-relocation-center",
-        icon = "__base__/graphics/icons/electric-mining-drill.png",
+        icon = "__biter-power__/graphics/relocation-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
         order = "a[biter-relocation-center]",
@@ -28,7 +29,7 @@ data:extend({
     {
         type = "mining-drill",
         name = "bp-relocation-center",
-        icon = "__base__/graphics/icons/electric-mining-drill.png",
+        icon = "__biter-power__/graphics/relocation-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "player-creation"},
         minable = {mining_time = 0.3, result = "bp-relocation-center"},
@@ -113,7 +114,7 @@ data:extend({
                           height = 197,
                           frame_count = 64,
                           scale = 0.5 * 1.5,
-                          shift = {0.03, -0.24},
+                          shift = {0.03 + shift.x, -0.24 + shift.y},
                       }
                   }
               }}
@@ -123,6 +124,26 @@ data:extend({
           idle_animation = {
               layers = {
                   {
+                    filename = "__biter-power__/graphics/relocation-center/hole-front.png",
+                    priority = "extra-high",
+                    animation_speed = 0.5,
+                    width = 166,
+                    height = 122,
+                    scale = 3/4,
+                    repeat_count = 64,
+                    shift = {0.25, -0.5},
+                    hr_version = {
+                        filename = "__biter-power__/graphics/relocation-center/hr-hole-front.png",
+                        priority = "extra-high",
+                        animation_speed = 0.5,
+                        width = 322,
+                        height = 300,
+                        scale = 0.5 * 3/4,
+                        repeat_count = 64,
+                        shift = {0.25, -0.5},
+                    }
+                  },
+                  {
                       filename = "__base__/graphics/entity/centrifuge/center.png",
                       priority = "high",
                       line_length = 8,
@@ -131,7 +152,7 @@ data:extend({
                       frame_count = 64,
                       scale = 1.5,
                       animation_speed = 0.5,
-                      shift = {0, -1},
+                      shift = {0 + shift.x, -1 + shift.y},
                       hr_version = {
                         filename = "__biter-power__/graphics/relocation-center/hr-center.png",
                         priority = "high",
@@ -141,26 +162,8 @@ data:extend({
                         animation_speed = 0.5,
                         frame_count = 64,
                         scale = 0.5 * 1.5,
-                        shift = {-0.1, 0},
+                        shift = {-0.1 + shift.x, 0 + shift.y},
                       }
-                  },
-                  {
-                    filename = "__biter-power__/graphics/relocation-center/hole.png",
-                    priority = "extra-high",
-                    width = 166,
-                    height = 122,
-                    scale = 3/4,
-                    repeat_count = 64,
-                    shift = {0, -0.5},
-                    hr_version = {
-                        filename = "__biter-power__/graphics/relocation-center/hr-hole-front.png",
-                        priority = "extra-high",
-                        width = 322,
-                        height = 300,
-                        scale = 0.5 * 3/4,
-                        repeat_count = 64,
-                        shift = {0, -0.5},
-                    }
                   },
                   {
                       filename = "__biter-power__/graphics/relocation-center/center-shadow.png",
@@ -171,7 +174,7 @@ data:extend({
                       height = 54,
                       frame_count = 64,
                       scale = 1.4,
-                      shift = {1.5, 0},
+                      shift = {1.5 + shift.x, 0 + shift.y},
                       hr_version = {
                         filename = "__biter-power__/graphics/relocation-center/hr-center-shadow.png",
                         draw_as_shadow = true,
@@ -181,32 +184,11 @@ data:extend({
                         height = 123,
                         frame_count = 64,
                         scale = 0.5 * 1.4,
-                        shift = {1.5, 0},
+                        shift = {1.5 + shift.x, 0 + shift.y},
                       }
                   },
               },
           },
         },
-        integration_patch = {
-          filename = "__base__/graphics/entity/lab/lab-integration.png",
-          width = 122,
-          height = 81,
-          frame_count = 1,
-          line_length = 1,
-          repeat_count = 64,
-          shift = util.by_pixel(0, 10.5),
-          scale = 2 / 3 * 0.9,
-          hr_version =
-          {
-            filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
-            width = 242,
-            height = 162,
-            frame_count = 1,
-            line_length = 1,
-            repeat_count = 64,
-            shift = util.by_pixel(0, 10.5),
-            scale = 0.5 * 2 / 3 * 0.95,
-          }
-      },
     }
 })
