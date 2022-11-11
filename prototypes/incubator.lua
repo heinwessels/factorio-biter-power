@@ -1,10 +1,12 @@
+local hit_effects = require("__base__.prototypes.entity.hit-effects")
+local sounds = require("__base__.prototypes.entity.sounds")
 local config = require("config")
 
 data:extend({
     {
         type = "item",
         name = "bp-incubator",
-        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/icon.png",
         icon_size = 64,
         subgroup = "bp-biter-machines",
         order = "b[biter-incubator]",
@@ -14,7 +16,7 @@ data:extend({
     {
         type = "recipe",
         name = "bp-incubator",
-        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/icon.png",
         icon_size = 64,
         ingredients = {
             {"stone-brick", 10},
@@ -29,10 +31,11 @@ data:extend({
     {
         type = "recipe",
         name = "bp-incubate-biter-egg",
-        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/icon.png",
         icon_size = 64,
         category = "bp-biter-ergonomics",            
         subgroup = "raw-material",
+        crafting_machine_tint = {primary={r=226, g=22, b=190}},
         energy_required = config.incubator.duration,
         ingredients = config.incubator.ingredients,
         results = config.incubator.results,
@@ -40,13 +43,13 @@ data:extend({
     {
         type = "assembling-machine",
         name = "bp-incubator",
-        icon = "__biter-power__/graphics/incubator/incubator-icon.png",
+        icon = "__biter-power__/graphics/incubator/icon.png",
         icon_size = 64,
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
-        minable = {mining_time = 0.2, result = "assembling-machine-1"},
-        max_health = 300,
-        corpse = "assembling-machine-1-remnants",
-        dying_explosion = "assembling-machine-1-explosion", 
+        minable = {mining_time = 0.2, result = "bp-incubator"},
+        max_health = 300,        
+        corpse = "chemical-plant-remnants",
+        dying_explosion = "chemical-plant-explosion", 
         fixed_recipe = "bp-incubate-biter-egg",
         crafting_categories = {"bp-biter-ergonomics"},
         resistances = {
@@ -57,7 +60,7 @@ data:extend({
         },
         collision_box = {{-0.7, -0.7}, {0.7, 0.7}},
         selection_box = {{-1, -1}, {1, 1}},
-        -- damaged_trigger_effect = hit_effects.entity(),
+        damaged_trigger_effect = hit_effects.entity(),
         alert_icon_shift = util.by_pixel(-3, -12),
         energy_usage = util.format_number(config.incubator.power_usage, true).."W",
         crafting_speed = 1,
@@ -69,9 +72,9 @@ data:extend({
             -- a player typically has purifiers
             emissions_per_minute = -200
         },
-        -- open_sound = sounds.machine_open,
-        -- close_sound = sounds.machine_close,
-        -- vehicle_impact_sound = sounds.generic_impact,
+        open_sound = sounds.machine_open,
+        close_sound = sounds.machine_close,
+        vehicle_impact_sound = sounds.generic_impact,
         working_sound = {
             sound = {
                 {
@@ -83,130 +86,80 @@ data:extend({
             fade_in_ticks = 4,
             fade_out_ticks = 20
         },
-        working_visualisations =
-        {
-          {
-            effect = "uranium-glow",
-            fadeout = true,
-            light = {intensity = 0.2, size = 9.9, shift = {0.0, 0.0}, color = {r = 248/255, g = 104/255, b = 215/255}}
-          },
-          {
-            effect = "uranium-glow",
-            fadeout = true,
-            draw_as_light = true,
-            animation = { layers = {
-                {
-                    filename = "__biter-power__/graphics/incubator/center-glow.png",
-                    priority = "high",
-                    blend_mode = "additive", -- centrifuge
-                    animation_speed = 0.5,
-                    line_length = 8,
-                    width = 55,
-                    height = 98,
-                    frame_count = 64,
+        always_draw_idle_animation = true,
+        idle_animation = {layers = {
+            {
+                filename = "__biter-power__/graphics/incubator/center.png",
+                width = 194,
+                height = 223,
+                scale = 0.5 * 2 / 3,
+                shift = {0, -0.2},
+                hr_version = {
+                    filename = "__biter-power__/graphics/incubator/center.png",
+                    width = 194,
+                    height = 223,
+                    scale = 0.5 * 2 / 3,
+                    shift = {0, -0.2},
+                }
+            },
+            {
+                filename = "__biter-power__/graphics/incubator/center-shadow.png",
+                width = 294,
+                height = 188,
+                draw_as_shadow = true,
+                scale = 0.5 * 2 / 3,
+                shift = {0.5, 0.2},
+                hr_version = {
+                    filename = "__biter-power__/graphics/incubator/center-shadow.png",
+                    width = 294,
+                    height = 188,
+                    draw_as_shadow = true,
+                    scale = 0.5 * 2 / 3,
+                    shift = {0.5, 0.2},
+                }
+            },
+        }},
+        working_visualisations = {
+            {
+                apply_recipe_tint = "primary",
+                animation = {
+                    filename = "__biter-power__/graphics/incubator/center-light-bottom.png",
+                    draw_as_glow = true,
+                    width = 194,
+                    height = 223,
+                    scale = 0.5 * 2 / 3,
+                    shift = {0, -0.2},
                     hr_version = {
-                        filename = "__biter-power__/graphics/incubator/hr-center-glow.png",
-                        priority = "high",
-                        blend_mode = "additive", -- centrifuge
-                        animation_speed = 0.5,
-                        line_length = 8,
-                        width = 108,
-                        height = 197,
-                        frame_count = 64,
-                        scale = 0.5 * 1.5,
-                        shift = {0.03, -0.24},
+                        filename = "__biter-power__/graphics/incubator/center-light-bottom.png",
+                        draw_as_glow = true,
+                        width = 194,
+                        height = 223,
+                        scale = 0.5 * 2 / 3,
+                        shift = {0, -0.2},
                     }
                 }
-            }}
-          }
-        },
-        always_draw_idle_animation = true,
-        idle_animation = {
-            layers = {
-                {
-                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A.png",
-                    priority = "high",
-                    line_length = 8,
-                    width = 70,
-                    height = 123,
-                    frame_count = 64,
-                    scale = 1.5,
-                    animation_speed = 0.5,
-                    shift = {0, -1},
-                    hr_version = {
-                      filename = "__biter-power__/graphics/incubator/hr-center.png",
-                      priority = "high",
-                      line_length = 8,
-                      width = 139,
-                      height = 246,
-                      animation_speed = 0.5,
-                      frame_count = 64,
-                      scale = 0.5 * 1.5,
-                      shift = {-0.1, 0},
-                    }
-                },
-                {
-                    filename = "__base__/graphics/entity/centrifuge/centrifuge-A.png",
-                    priority = "high",
-                    width = 70,
-                    height = 123,
-                    scale = 1.5,
-                    repeat_count = 64,
-                    shift = {0, -1},
-                    hr_version = {
-                      filename = "__biter-power__/graphics/incubator/hr-center-front.png",
-                      priority = "high",
-                      width = 139,
-                      height = 246,
-                      repeat_count = 64,
-                      scale = 0.5 * 1.5,
-                      shift = {-0.1, 0},
-                    }
-                },
-                {
-                    filename = "__biter-power__/graphics/incubator/center-shadow.png",
-                    draw_as_shadow = true,
-                    priority = "high",
-                    line_length = 8,
-                    width = 108,
-                    height = 54,
-                    frame_count = 64,
-                    scale = 1.4,
-                    shift = {1.5, 0},
-                    hr_version = {
-                      filename = "__biter-power__/graphics/incubator/hr-center-shadow.png",
-                      draw_as_shadow = true,
-                      priority = "high",
-                      line_length = 8,
-                      width = 163,
-                      height = 123,
-                      frame_count = 64,
-                      scale = 0.5 * 1.4,
-                      shift = {1.5, 0},
-                    }
-                },
             },
-        },
-        integration_patch = {
-            filename = "__base__/graphics/entity/lab/lab-integration.png",
-            width = 122,
-            height = 81,
-            frame_count = 1,
-            line_length = 1,
-            repeat_count = 64,
-            shift = util.by_pixel(0, 10.5),
-            scale = 2 / 3 * 0.9,
-            hr_version =
             {
-              filename = "__base__/graphics/entity/lab/hr-lab-integration.png",
-              width = 242,
-              height = 162,
-              frame_count = 1,
-              line_length = 1,
-              repeat_count = 64,
-              shift = util.by_pixel(0, 10.5),
-              scale = 0.5 * 2 / 3 * 0.95,
+                animation = {
+                    filename = "__biter-power__/graphics/incubator/center-light-top.png",
+                    blend_mode = "additive",
+                    draw_as_glow = true,
+                    width = 194,
+                    height = 223,
+                    scale = 0.5 * 2 / 3,
+                    shift = {0, -0.2},
+                    hr_version =
+                    {
+                        filename = "__biter-power__/graphics/incubator/center-light-top.png",
+                        blend_mode = "additive",
+                        draw_as_glow = true,
+                        width = 194,
+                        height = 223,
+                        scale = 0.5 * 2 / 3,
+                        shift = {0, -0.2},
+                    }
+                }
             }
-        },
+        }
     }
 })

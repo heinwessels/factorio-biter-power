@@ -1,3 +1,5 @@
+local hit_effects = require("__base__.prototypes.entity.hit-effects")
+local sounds = require("__base__.prototypes.entity.sounds")
 local config = require("config")
 local lib = require("lib.lib")
 
@@ -184,10 +186,10 @@ data:extend({
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
-        minable = {mining_time = 0.2, result = "assembling-machine-1"},
+        minable = {mining_time = 0.2, result = "bp-revitalization-center"},
         max_health = 300,
-        corpse = "assembling-machine-1-remnants",
-        dying_explosion = "assembling-machine-1-explosion", 
+        corpse = "lab-remnants",
+        dying_explosion = "lab-explosion", 
         crafting_categories = {"bp-biter-ergonomics"},
         fixed_recipe = "bp-revitalization",
         resistances = {
@@ -198,7 +200,7 @@ data:extend({
         },
         collision_box = {{-1.2, -1.2}, {1.2, 1.2}},
         selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
-        -- damaged_trigger_effect = hit_effects.entity(),
+        damaged_trigger_effect = hit_effects.entity(),
         alert_icon_shift = util.by_pixel(-3, -12),
         crafting_speed = 1,
         energy_usage = util.format_number(config.revitalization.power_usage, true).."W",
@@ -207,9 +209,9 @@ data:extend({
             usage_priority = "secondary-input",
             emissions_per_minute = 4
         },
-        -- open_sound = sounds.machine_open,
-        -- close_sound = sounds.machine_close,
-        -- vehicle_impact_sound = sounds.generic_impact,
+        open_sound = sounds.machine_open,
+        close_sound = sounds.machine_close,
+        vehicle_impact_sound = sounds.generic_impact,
         working_sound = {
             sound = {
                 {
