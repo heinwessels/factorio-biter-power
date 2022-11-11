@@ -38,11 +38,11 @@ data:extend({
         stage_counts = {0},
         stages = {
             sheet = {
-                filename = "__biter-power__/graphics/buried-biter-nest/hole.png",
+                filename = "__biter-power__/graphics/buried-biter-nest/hr-hole.png",
                 priority = "extra-high",
-                width = 166,
-                height = 122,
-                scale = 3/4,
+                width = 322,
+                height = 300,
+                scale = 0.5 * 3/4,
                 variation_count = 1,
                 shift = {0.25, -0.5},
                 hr_version = {

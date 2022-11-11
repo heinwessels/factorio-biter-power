@@ -38,8 +38,8 @@ local idle_animation = {
     {
       filename = "__biter-power__/graphics/generator/generator-back.png",
       width = 195,
-      height = 230,
-      scale = 0.25 * 4 / 3,
+      height = 230,        
+      scale = 0.5 * 4 / 3,
       repeat_count = 16,
       hr_version = {
         filename = "__biter-power__/graphics/generator/generator-back.png",
@@ -102,11 +102,11 @@ table.insert(animation.layers, {
 for _, property in pairs{idle_animation, animation} do
   table.insert(property.layers, {
     filename = "__biter-power__/graphics/generator/hr-motor.png",
-    width = 195,
-    height = 230,
-    scale = 0.5 * 0.8 * 0.5,
+    width = 114,
+    height = 318,
     frame_count = 16,
     line_length = 4,
+    scale = 0.5 * 0.8,
     shift = {1.2, 0},
     hr_version = {
       filename = "__biter-power__/graphics/generator/hr-motor.png",
@@ -119,11 +119,11 @@ for _, property in pairs{idle_animation, animation} do
     }
   })
   table.insert(property.layers, {
-    filename = "__biter-power__/graphics/generator/generator-front-shadow.png",
+    filename = "__biter-power__/graphics/generator/hr-generator-shadow.png",
     draw_as_shadow = true,
-    width = 195,
-    height = 230,
-    scale = 0.25 * 4 / 3,
+    width = 274,
+    height = 196,
+    scale = 0.5 * 4 / 3,
     shift = {0.8, 0.3},
     repeat_count = 16,
     hr_version = {
@@ -140,7 +140,7 @@ for _, property in pairs{idle_animation, animation} do
     filename = "__biter-power__/graphics/generator/generator-front.png",
     width = 195,
     height = 230,
-    scale = 0.25 * 4 / 3,
+    scale = 0.5 * 4 / 3,
     repeat_count = 16,
     hr_version = {
       filename = "__biter-power__/graphics/generator/generator-front.png",
@@ -210,10 +210,11 @@ data:extend({
     idle_animation = idle_animation,
     animation = animation,
     integration_patch = {
-        filename = "__biter-power__/graphics/generator/integration-patch.png",
+        filename = "__biter-power__/graphics/generator/hr-integration-patch.png",
         width = 220,
         height = 222,
-        scale = 0.25 * 4 / 3,
+        scale = 0.5 * 4 / 3,
+        shift = util.by_pixel(0, 230/2-222/2),
         repeat_count = 16,
         hr_version = {
           filename = "__biter-power__/graphics/generator/hr-integration-patch.png",
