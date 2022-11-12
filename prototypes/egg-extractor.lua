@@ -9,7 +9,7 @@ data:extend({
         type = "item",
         name = "bp-egg-extractor",
         icon = "__biter-power__/graphics/egg-extractor/icon.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon_size = 64,
         subgroup = "bp-biter-machines",
         order = "a[biter-egg-extractor]",
         place_result = "bp-egg-extractor",
@@ -18,7 +18,6 @@ data:extend({
     {
         type = "recipe",
         name = "bp-egg-extractor",
-        icon_size = 64, icon_mipmaps = 4,
         ingredients = {
             {"steel-plate", 8},
             {"stone-brick", 5},
@@ -30,7 +29,7 @@ data:extend({
         type = "mining-drill",
         name = "bp-egg-extractor",
         icon = "__biter-power__/graphics/egg-extractor/icon.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon_size = 64,
         flags = {"placeable-neutral", "player-creation"},
         minable = {mining_time = 0.3, result = "bp-egg-extractor"},
         max_health = 300,

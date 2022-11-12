@@ -13,71 +13,26 @@ local function create_escapable_data(entity)
     }
 end
 
-local function on_built(event)
-    local entity = event.created_entity or event.entity
-    if not entity or not entity.valid then return end
-
-    if entity.type == "entity-ghost" and entity.ghost_name == "bp-cage-trap" then
-        local player = game.get_player(event.player_index)
-        player.create_local_flying_text{
-            text={"bp-text.cannot-be-placed-by-robot"},
-            position=entity.position
-        }
-        player.play_sound{ path="utility/cannot_build" }
-        entity.destroy{ raise_destroy=true }
-        return
-    end
-    
-    if config.escapes.escapable_machine[entity.name] then 
-        global.escapables[entity.unit_number] = create_escapable_data(entity)
-    end
-end
-
-script.on_event(defines.events.on_robot_built_entity, on_built)
-script.on_event(defines.events.on_built_entity, on_built)
-script.on_event(defines.events.script_raised_built, on_built)
-script.on_event(defines.events.script_raised_revive, on_built)
-
-script.on_event(defines.events.on_trigger_created_entity, function(event) 
-    local entity = event.created_entity or event.entity
-    if not entity or not entity.valid then return end
-    if entity.name ~= "bp-buried-biter-nest" then return end
-    entity.amount = config.buried_nest.spawn_amount * (math.random() + 0.5)
-    table.insert(global.nests_to_clean, entity)
-end)
-
-local function on_deconstructed(event)
-    local entity = event.created_entity or event.entity
-    if not entity or not entity.valid then return end
-    if not config.escapes.escapable_machine[entity.name] then return end
-
-    -- If this is a die event then the biters should escape!
-    -- We should only reach here if entity is escapable
-    if event.name == defines.events.name then
-        escape_biters_from_entity(entity)
-    end
-    
-    global.escapables[entity.unit_number] = nil
-end
-
-script.on_event(defines.events.on_player_mined_entity, on_deconstructed)
-script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
-script.on_event(defines.events.on_entity_died, on_deconstructed)
-script.on_event(defines.events.script_raised_destroy, on_deconstructed)
-
 script.on_event(defines.events.on_script_trigger_effect , function(event)
     if event.effect_id ~= "bp-cage-trap-trigger" then return end
+    local trap = event.source_entity
     local victim = event.target_entity
     if not victim then return end
     local whitelist = {
         ["small-biter"] = true,
         ["medium-biter"] = true,
-        ["biter-biter"] = true,
-        ["behemoth-biter"] = true,        
+        ["big-biter"] = true,
+        ["behemoth-biter"] = true,
+        
+        ["small-spitter"] = true,
+        ["medium-spitter"] = true,
+        ["big-spitter"] = true,
+        ["behemoth-spitter"] = true,
     }
-    if not whitelist[victim.name] then return end
-    victim.surface.spill_item_stack(victim.position, {name="bp-caged-biter"}, true, "player")
+    if not whitelist[victim.name] then return end -- Will lose the cage
+    victim.surface.spill_item_stack(victim.position, {name="bp-caged-biter"}, true, trap.force)
     victim.destroy{raise_destroy = true}
+    trap.force.item_production_statistics.on_flow("bp-caged-biter", 1)
 end)
 
 local function biter_distribution_for_evolution(evolution)
@@ -200,12 +155,13 @@ local function escape_biters_from_entity(entity, number_biters)
     
     -- Out of the cage
     clear_all_biters_in_machine(entity)
+    -- TODO Add to item statistics? Annoying because in-progress biters are already consumed
     
     -- And into the world
     local biters = { }
     local surface = entity.surface
-    local biter_name = determine_biter_type_to_escape(entity)    
     for i = 1, number_of_biters do            
+        local biter_name = determine_biter_type_to_escape(entity)
         local position = surface.find_non_colliding_position(
             biter_name, entity.position, 20, 0.2)
         local biter
@@ -345,6 +301,58 @@ script.on_nth_tick(10, function (event)
 
     tick_escapes(event.tick)
 end)
+
+local function on_built(event)
+    local entity = event.created_entity or event.entity
+    if not entity or not entity.valid then return end
+
+    if entity.type == "entity-ghost" and entity.ghost_name == "bp-cage-trap" then
+        local player = game.get_player(event.player_index)
+        player.create_local_flying_text{
+            text={"bp-text.cannot-be-placed-by-robot"},
+            position=entity.position
+        }
+        player.play_sound{ path="utility/cannot_build" }
+        entity.destroy{ raise_destroy=true }
+        return
+    end
+    
+    if config.escapes.escapable_machine[entity.name] then 
+        global.escapables[entity.unit_number] = create_escapable_data(entity)
+    end
+end
+
+script.on_event(defines.events.on_robot_built_entity, on_built)
+script.on_event(defines.events.on_built_entity, on_built)
+script.on_event(defines.events.script_raised_built, on_built)
+script.on_event(defines.events.script_raised_revive, on_built)
+
+script.on_event(defines.events.on_trigger_created_entity, function(event) 
+    local entity = event.created_entity or event.entity
+    if not entity or not entity.valid then return end
+    if entity.name ~= "bp-buried-biter-nest" then return end
+    entity.amount = config.buried_nest.spawn_amount * (math.random() + 0.5)
+    table.insert(global.nests_to_clean, entity)
+end)
+
+local function on_deconstructed(event)
+    local entity = event.created_entity or event.entity
+    if not entity or not entity.valid then return end
+    if not config.escapes.escapable_machine[entity.name] then return end
+
+    -- If this is a die event then the biters should escape!
+    -- We should only reach here if entity is escapable
+    if event.name == defines.events.on_entity_died then
+        escape_biters_from_entity(entity)
+    end
+    
+    global.escapables[entity.unit_number] = nil
+end
+
+script.on_event(defines.events.on_player_mined_entity, on_deconstructed)
+script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
+script.on_event(defines.events.on_entity_died, on_deconstructed)
+script.on_event(defines.events.script_raised_destroy, on_deconstructed)
 
 script.on_init(function()
     global.escapables = { }

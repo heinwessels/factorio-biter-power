@@ -10,7 +10,7 @@ data:extend{
         subgroup = "gun",
         order = "g[cage-trap]",
         place_result = "bp-cage-trap",
-        stack_size = 100
+        stack_size = 20
     },
     {
         type = "recipe",
@@ -43,6 +43,7 @@ data:extend{
         max_health = 15,
         corpse = "land-mine-remnants",
         dying_explosion = "land-mine-explosion",
+        timeout = 30, -- Ready in half a second. 2 seconds is wayyyyy too long.
         collision_box = {{-0.9,-0.9}, {0.9, 0.9}},
         selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
         damaged_trigger_effect = hit_effects.entity(),

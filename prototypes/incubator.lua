@@ -78,8 +78,8 @@ data:extend({
         working_sound = {
             sound = {
                 {
-                filename = "__base__/sound/assembling-machine-t1-1.ogg",
-                volume = 0.5
+                    filename = "__base__/sound/electric-furnace.ogg",
+                    volume = 0.5
                 }
             },
             audible_distance_modifier = 0.5,

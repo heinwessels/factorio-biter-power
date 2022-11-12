@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 12.1.2022
+  Features:
+    - Treadmill Generator to generate power from biters.
+    - Revitilization Center to reenergize tired biters.
+    - Incubator to hatch biter eggs.
+    - Egg Extractor to extract eggs from a Buried Biter Nest.
+    - Buried Biter Nest which can be find under some surface Biter Nests.
+    - Cage Trap to catch unsuspecting biters in a cage to be utilized later.
+    - Biters can escape from some buildings.

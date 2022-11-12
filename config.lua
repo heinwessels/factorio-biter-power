@@ -87,7 +87,7 @@ for i = 1,50 do -- Simulate recycling loop. This will converge on a specific val
 end
 
 config.buried_nest = {}
-config.buried_nest.spawn_chance = 1 / 20
+config.buried_nest.spawn_chance = 1 / 10
 config.buried_nest.spawn_amount = 1000 * config.biter.egg_to_biter_ratio
 config.buried_nest.generators_supported = 10
 -- Scale the buried nest to account for productivity, and scale it so math checks out at full productivity 

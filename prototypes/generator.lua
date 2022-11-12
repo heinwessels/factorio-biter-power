@@ -165,7 +165,7 @@ data:extend({
     subgroup = "bp-biter-machines",
     order = "c[generator]",
     place_result = "bp-generator",
-    stack_size = 50
+    stack_size = 20
   },
   {
     type = "recipe",
@@ -190,8 +190,8 @@ data:extend({
     icon_size = 64,
     flags = {"placeable-neutral","player-creation"},
     max_health = 400,
-    dying_explosion = "medium-explosion",
-    corpse = "steam-engine-remnants",
+    dying_explosion = "big-explosion",
+    corpse = "big-remnants",
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
     max_power_output = util.format_number(config.generator.power_output, true).."W",
