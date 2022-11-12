@@ -305,17 +305,6 @@ end)
 local function on_built(event)
     local entity = event.created_entity or event.entity
     if not entity or not entity.valid then return end
-
-    if entity.type == "entity-ghost" and entity.ghost_name == "bp-cage-trap" then
-        local player = game.get_player(event.player_index)
-        player.create_local_flying_text{
-            text={"bp-text.cannot-be-placed-by-robot"},
-            position=entity.position
-        }
-        player.play_sound{ path="utility/cannot_build" }
-        entity.destroy{ raise_destroy=true }
-        return
-    end
     
     if config.escapes.escapable_machine[entity.name] then 
         global.escapables[entity.unit_number] = create_escapable_data(entity)
