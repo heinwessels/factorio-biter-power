@@ -36,7 +36,7 @@ data:extend({
         resource_categories = {"bp-biter-nest"},
         corpse = "electric-mining-drill-remnants",
         dying_explosion = "electric-mining-drill-explosion",
-        collision_box = {{ -1.4, -1.4}, {1.4, 1.4}},
+        collision_box = {{ -1, -1}, {1, 1}},
         selection_box = {{ -1.5, -1.5}, {1.5, 1.5}},
         damaged_trigger_effect = hit_effects.entity(),
         working_sound = {
@@ -67,7 +67,7 @@ data:extend({
         vehicle_impact_sound = sounds.generic_impact,
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
-        mining_speed = config.relocation_center.mining_speed,
+        mining_speed = config.egg_extractor.mining_speed,
         energy_source = {
           type = "electric",
           usage_priority = "secondary-input",

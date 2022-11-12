@@ -23,7 +23,7 @@ config.generator = {}
 config.generator.power_output = 500e3
 
 config.biter = {}
-config.biter.fuel_value = config.generator.power_output * 60 * 5
+config.biter.fuel_value = config.generator.power_output * 30
 config.biter.tired_fuel_value = config.biter.fuel_value / 10
 config.biter.burn_time = config.biter.fuel_value / config.generator.power_output
 config.biter.egg_stack_size = 20
@@ -33,7 +33,6 @@ config.incubator = {}
 config.incubator.power_usage = 75e3
 config.incubator.number_per_generator = 1 / 2
 config.incubator.success_rate = 0.9
-config.incubator.duration = config.biter.burn_time * config.incubator.number_per_generator
 config.incubator.ingredients = {
     -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
@@ -54,8 +53,8 @@ config.incubator.results = {
 
 config.revitalization = {}
 config.revitalization.power_usage = 75e3
-config.revitalization.number_per_generator = 1 / 10
-config.revitalization.success_rate = 0.8
+config.revitalization.number_per_generator = 1 / 5 
+config.revitalization.success_rate = 0.9
 config.revitalization.egg_drop_rate = 0.1
 config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
 config.revitalization.results = {
@@ -78,13 +77,28 @@ config.revitalization.results = {
 if config.revitalization.results[2].probability and config.revitalization.results[2].probability > 1 then error("Probability above 1") end
 if config.revitalization.results[2].amount_max and config.revitalization.results[2].amount_max < 5 then error("Probability amount_max too small") end
 
+-- The Factorio normal-tired-normal cycle effiency
+config.biter.loop_efficiency =  config.revitalization.success_rate * (1*(1-config.revitalization.egg_drop_rate) + config.incubator.success_rate*config.revitalization.egg_drop_rate)
+
 -- Calculate an biter's effective fuel value if recycled
+-- This is approximate, as it doesn't take into account that 
+-- `config.incubator.success_rate` actually plays a smaller role
 config.biter.fuel_value_net = 0
 local multiplier = 1
 for i = 1,50 do -- Simulate recycling loop. This will converge on a specific value
     config.biter.fuel_value_net = config.biter.fuel_value_net + multiplier * config.biter.fuel_value
-    multiplier = multiplier * config.revitalization.success_rate * config.incubator.success_rate
+    multiplier = multiplier * config.biter.loop_efficiency
 end
+
+config.biter.loss_per_watt = --per second
+        1 / config.biter.fuel_value                 -- biters required per second per watt
+        * (1 - config.biter.loop_efficiency)        -- how many will perish
+
+-- Incubator must keep up to supply the specified generators
+config.incubator.duration = 1 / (
+        (config.generator.power_output / config.incubator.number_per_generator)     -- total power that needs to be supplied
+        * config.biter.loss_per_watt)                                               -- biters per second 
+config.incubator.duration = tonumber(string.format("%.0f", config.incubator.duration))
 
 config.buried_nest = {}
 config.buried_nest.spawn_chance = 1 / 10
@@ -93,9 +107,10 @@ config.buried_nest.generators_supported = 10
 -- Scale the buried nest to account for productivity, and scale it so math checks out at full productivity 
 config.buried_nest.productivity_scaler = 0.4 -- 40% is maximum before infinite sciences 
 config.buried_nest.eggs_per_second = 
-        config.generator.power_output / config.biter.fuel_value_net --  biters required per second per generator
-        * config.biter.egg_to_biter_ratio * config.buried_nest.generators_supported
-        / (1 + config.buried_nest.productivity_scaler)
+        (config.generator.power_output * config.buried_nest.generators_supported)   -- total power that needs to be supplied
+        * config.biter.loss_per_watt                                                -- biters per second
+        * config.biter.egg_to_biter_ratio                                           -- eggs per second             
+        / (1 + config.buried_nest.productivity_scaler)                              -- eggs per second scaled to 40% productivity
 config.buried_nest.mining_time = 1 -- Actual rate is set on drill
 config.buried_nest.results = {
     -- Each unit in the resource will result in one egg. This means
@@ -108,14 +123,14 @@ config.buried_nest.results = {
     },
 }
 
-config.relocation_center = {}
+config.egg_extractor = {}
 -- Speed is set here because it's more intuitive and
 -- easy for the player to see
-config.relocation_center.mining_speed = 
+config.egg_extractor.mining_speed = 
         config.buried_nest.eggs_per_second
         / (1 + config.buried_nest.productivity_scaler)
-config.relocation_center.mining_speed = 
-        tonumber(string.format("%.3f", config.relocation_center.mining_speed))
+config.egg_extractor.mining_speed = 
+        tonumber(string.format("%.3f", config.egg_extractor.mining_speed))
 
 config.escapes = { }
 config.escapes.escapable_machine = {

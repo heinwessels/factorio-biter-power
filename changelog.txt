@@ -1,8 +1,13 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 12.1.2022
+  Changes:
+    - Change some buildings' recipes.
+    - Reduced energy in caged biters by a factor 10 to reduce latency in the system.
+    - Scaled other systems to account for the decrease in biter energy.
+    - Descreased Egg Extractor's collision box.
   Bugfixes:
-    - Hide Incubation and Revitilization recipes correctly.
+    - Correctly place Incubation and Revitilization recipes.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.0
 Date: 12.1.2022
