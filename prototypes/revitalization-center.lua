@@ -170,6 +170,7 @@ data:extend({
         name = "bp-revitalization",
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
+        hidden = "true",
         subgroup = "raw-material",
         category = "bp-biter-ergonomics",
         ingredients = {{"bp-caged-biter-tired", 1}},

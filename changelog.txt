@@ -1,8 +1,10 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.0
+Version: 0.1.1
 Date: 12.1.2022
   Features:
     - Added support for AAI Industry.
+  Bugfixes:
+    - Hide Incubation and Revitilization recipes correctly.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.0
 Date: 12.1.2022
