@@ -170,6 +170,8 @@ data:extend({
         name = "bp-revitalization",
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,
+        show_amount_in_title = false,
+        always_show_products = true,
         subgroup = "bp-biters",
         category = "bp-biter-ergonomics",
         order = "d[revitilization]",

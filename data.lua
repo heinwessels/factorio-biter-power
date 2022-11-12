@@ -24,6 +24,7 @@ if mods["debugadapter"] then
     log("--- Extra Stats ---")
     log("Biter Power Capacity: "..string.format("%.2f", config.biter.fuel_value/1e3/3600).." kW-hour")
     log("Biter Net Power Capacity: "..string.format("%.2f", config.biter.fuel_value_net/1e3/3600).." kW-hour")
+    log("Biters consumed per MW-hour: "..string.format("%.2f", config.biter.consumed_per_watt*1e6*3600).." biters")
     log("Biters lost per MW-hour: "..string.format("%.2f", config.biter.loss_per_watt*1e6*3600).." biters")
     log("Buried Nest Power: "..string.format("%.2f", config.buried_nest.generators_supported*config.generator.power_output/1e6).." MW")
     log("Buried Nest Power Capacity: "..string.format("%.2f", config.buried_nest.spawn_amount*(1+config.buried_nest.productivity_scaler )/config.biter.egg_to_biter_ratio*config.biter.fuel_value_net/1e6/3600).." MW-hour")

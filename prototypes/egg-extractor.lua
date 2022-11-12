@@ -36,7 +36,7 @@ data:extend({
         resource_categories = {"bp-biter-nest"},
         corpse = "electric-mining-drill-remnants",
         dying_explosion = "electric-mining-drill-explosion",
-        collision_box = {{ -1, -1}, {1, 1}},
+        collision_box = {{ -1.4, -1.4}, {1.4, 1.4}},
         selection_box = {{ -1.5, -1.5}, {1.5, 1.5}},
         damaged_trigger_effect = hit_effects.entity(),
         working_sound = {

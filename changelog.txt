@@ -4,8 +4,8 @@ Date: 12.1.2022
   Changes:
     - Change some buildings' recipes.
     - Reduced energy in caged biters by a factor 10 to reduce latency in the system.
-    - Scaled other systems to account for the decrease in biter energy.
-    - Descreased Egg Extractor's collision box.
+    - Corrected and scaled other systems for smoother gameplay.
+    - Biter Revitilization Center's no longer drop eggs. It was too complicated to maintain.
   Bugfixes:
     - Correctly place Incubation and Revitilization recipes.
 ---------------------------------------------------------------------------------------------------
