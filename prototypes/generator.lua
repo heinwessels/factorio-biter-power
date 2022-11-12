@@ -207,6 +207,17 @@ data:extend({
       type = "electric",
       usage_priority = "secondary-output"
     },
+    working_sound = {
+      sound = {      
+        {
+          filename = "__base__/sound/transport-belt.ogg",
+          volume = 0.3
+        },
+      },
+      match_speed_to_activity = true,
+      max_sounds_per_type = 2,
+      audible_distance_modifier = 0.6,
+    },
     idle_animation = idle_animation,
     animation = animation,
     integration_patch = {

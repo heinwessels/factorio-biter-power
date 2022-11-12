@@ -215,13 +215,20 @@ data:extend({
         working_sound = {
             sound = {
                 {
-                filename = "__base__/sound/assembling-machine-t1-1.ogg",
-                volume = 0.5
+                    filename = "__base__/sound/accumulator-working.ogg",
+                    volume = 0.4
+                },
+                {
+                    filename = "__base__/sound/creatures/biter-roar-mid-1.ogg",
+                    volume = 0.4
+                },
+                {
+                    filename = "__base__/sound/electric-furnace.ogg",
+                    volume = 0.5
                 }
             },
-            audible_distance_modifier = 0.5,
-            fade_in_ticks = 4,
-            fade_out_ticks = 20
+            max_sounds_per_type = 3,
+            audible_distance_modifier = 0.6,
         },
         idle_animation = idle_animation,
         animation = animation,

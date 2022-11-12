@@ -7,32 +7,32 @@ local shift = {x=-0, y=-0.5} -- Because getting that glow aligned was awful
 data:extend({
     {
         type = "item",
-        name = "bp-relocation-center",
-        icon = "__biter-power__/graphics/relocation-center/icon.png",
+        name = "bp-egg-extractor",
+        icon = "__biter-power__/graphics/egg-extractor/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
-        order = "a[biter-relocation-center]",
-        place_result = "bp-relocation-center",
+        order = "a[biter-egg-extractor]",
+        place_result = "bp-egg-extractor",
         stack_size = 20
     },
     {
         type = "recipe",
-        name = "bp-relocation-center",
+        name = "bp-egg-extractor",
         icon_size = 64, icon_mipmaps = 4,
         ingredients = {
             {"steel-plate", 8},
             {"stone-brick", 5},
             {"iron-gear-wheel", 10},
         },
-        result = "bp-relocation-center"
+        result = "bp-egg-extractor"
     },
     {
         type = "mining-drill",
-        name = "bp-relocation-center",
-        icon = "__biter-power__/graphics/relocation-center/icon.png",
+        name = "bp-egg-extractor",
+        icon = "__biter-power__/graphics/egg-extractor/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "player-creation"},
-        minable = {mining_time = 0.3, result = "bp-relocation-center"},
+        minable = {mining_time = 0.3, result = "bp-egg-extractor"},
         max_health = 300,
         resource_categories = {"bp-biter-nest"},
         corpse = "electric-mining-drill-remnants",
@@ -41,13 +41,29 @@ data:extend({
         selection_box = {{ -1.5, -1.5}, {1.5, 1.5}},
         damaged_trigger_effect = hit_effects.entity(),
         working_sound = {
-          sound = {
-            filename = "__base__/sound/electric-mining-drill.ogg",
-            volume = 0.5
+          sound = { 
+            allow_random_repeat = true,
+            aggregation = {
+              max_count = 1,
+              remove = true,
+            },
+            variations = {
+              {
+                filename = "__base__/sound/centrifuge-1.ogg",
+                volume = 0.3
+              },
+              {
+                filename = "__base__/sound/centrifuge-2.ogg",
+                volume = 0.3
+              },
+              {
+                filename = "__base__/sound/centrifuge-6.ogg",
+                volume = 0.3
+              }
+            }
           },
-          audible_distance_modifier = 0.6,
           fade_in_ticks = 4,
-          fade_out_ticks = 20
+          fade_out_ticks = 20,
         },
         vehicle_impact_sound = sounds.generic_impact,
         open_sound = sounds.machine_open,
@@ -96,7 +112,7 @@ data:extend({
               draw_as_light = true,
               animation = { layers = {
                   {
-                      filename = "__biter-power__/graphics/relocation-center/hr-center-glow.png",
+                      filename = "__biter-power__/graphics/egg-extractor/hr-center-glow.png",
                       priority = "high",
                       blend_mode = "additive",
                       animation_speed = 0.5,
@@ -109,7 +125,7 @@ data:extend({
                       scale = 0.5 * 1.5,
                       shift = {0.03 + shift.x, -0.24 + shift.y},
                       hr_version = {
-                          filename = "__biter-power__/graphics/relocation-center/hr-center-glow.png",
+                          filename = "__biter-power__/graphics/egg-extractor/hr-center-glow.png",
                           priority = "high",
                           blend_mode = "additive",
                           animation_speed = 0.5,
@@ -128,7 +144,7 @@ data:extend({
           idle_animation = {
               layers = {
                   {
-                    filename = "__biter-power__/graphics/relocation-center/hr-hole-front.png",
+                    filename = "__biter-power__/graphics/egg-extractor/hr-hole-front.png",
                     priority = "extra-high",
                     animation_speed = 0.5,
                     width = 322,
@@ -137,7 +153,7 @@ data:extend({
                     repeat_count = 64,
                     shift = {0.25, -0.5},
                     hr_version = {
-                        filename = "__biter-power__/graphics/relocation-center/hr-hole-front.png",
+                        filename = "__biter-power__/graphics/egg-extractor/hr-hole-front.png",
                         priority = "extra-high",
                         animation_speed = 0.5,
                         width = 322,
@@ -148,7 +164,7 @@ data:extend({
                     }
                   },
                   {
-                      filename = "__biter-power__/graphics/relocation-center/hr-center.png",
+                      filename = "__biter-power__/graphics/egg-extractor/hr-center.png",
                       priority = "high",
                       animation_speed = 0.5,
                       line_length = 8,
@@ -162,7 +178,7 @@ data:extend({
                       scale = 0.5 * 1.5,
                       shift = {-0.1 + shift.x, 0 + shift.y},
                       hr_version = {
-                        filename = "__biter-power__/graphics/relocation-center/hr-center.png",
+                        filename = "__biter-power__/graphics/egg-extractor/hr-center.png",
                         priority = "high",
                         line_length = 8,
                         animation_speed = 0.5,
@@ -174,7 +190,7 @@ data:extend({
                       }
                   },
                   {
-                      filename = "__biter-power__/graphics/relocation-center/hr-center-shadow.png",
+                      filename = "__biter-power__/graphics/egg-extractor/hr-center-shadow.png",
                       draw_as_shadow = true,
                       priority = "high",
                       line_length = 8,
@@ -188,7 +204,7 @@ data:extend({
                       scale = 0.5 * 1.4,
                       shift = {1.5 + shift.x, 0 + shift.y},
                       hr_version = {
-                        filename = "__biter-power__/graphics/relocation-center/hr-center-shadow.png",
+                        filename = "__biter-power__/graphics/egg-extractor/hr-center-shadow.png",
                         draw_as_shadow = true,
                         priority = "high",
                         line_length = 8,
