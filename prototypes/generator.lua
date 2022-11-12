@@ -174,8 +174,8 @@ data:extend({
     ingredients =
     {
       {"electronic-circuit", 3},
-      {"transport-belt", 5},
-      {"steel-plate", 5}
+      {"transport-belt", 2},
+      {"steel-plate", 2}
     },
     result = "bp-generator"
   },

@@ -14,6 +14,7 @@ require("prototypes.buried-biter-nest")
 require("prototypes.egg-extractor")
 require("prototypes.cage-trap")
 require("prototypes.technology")
+require("prototypes.compatibility")
 
 
 if mods["debugadapter"] then
