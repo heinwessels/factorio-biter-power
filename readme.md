@@ -4,7 +4,8 @@
 
 Generate electricity by placing biters on treadmills. Biters can be caught with cage traps, or by placing an egg extractor on a buried biter nest. Biters get tired after running on the treadmill after which they need be revitalized, which could be hazardous. Warning, biters might escape!
 
-`This mod is still in it's early stages and might contains some (unintended) bugs and balance issues.`
+`This mod is still in it's early stages and might contains some (unintended) bugs and balance issues. If you have any feedback, please let me know.`
+
 ## Features:
 
 - **Treadmill Generator**: Generate power by placing biters on a treadmil-like device. This might have hazardous effects if the biter is tired, but device will still function optimally.
@@ -16,4 +17,5 @@ Generate electricity by placing biters on treadmills. Biters can be caught with 
 
 
 # Credits
-- justarandomgeek for this [Factorio debugger](https://marketplace.visualstudio.com/items?itemName=justarandomgeek.factoriomod-debug), without which this mod would not have been possible.
+-  _stann_co_ for the [original idea](https://forums.factorio.com/103767) to utilize biters for power which sparked this mod.
+- _justarandomgeek_ for this [Factorio debugger](https://marketplace.visualstudio.com/items?itemName=justarandomgeek.factoriomod-debug), without which this mod would not have been possible.

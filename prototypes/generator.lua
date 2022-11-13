@@ -175,7 +175,7 @@ data:extend({
     {
       {"electronic-circuit", 3},
       {"transport-belt", 2},
-      {"steel-plate", 2}
+      {"steel-plate", 1}
     },
     result = "bp-generator"
   },

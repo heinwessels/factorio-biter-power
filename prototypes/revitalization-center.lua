@@ -190,7 +190,7 @@ data:extend({
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
         minable = {mining_time = 0.2, result = "bp-revitalization-center"},
-        max_health = 300,
+        max_health = 400,
         corpse = "lab-remnants",
         dying_explosion = "lab-explosion", 
         crafting_categories = {"bp-biter-ergonomics"},

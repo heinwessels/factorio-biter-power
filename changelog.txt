@@ -1,6 +1,14 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.1
-Date: 12.1.2022
+Version: 0.2.1
+Date: 12.11.2022
+  Changes:
+    - Treadmill Generator and Incubator recipes are now cheaper.
+    - Buried Nests now contains more eggs.
+    - Incubators now supports more generators.
+    - Doubled power output of system (Treadmill Generators now produce 1MW).
+---------------------------------------------------------------------------------------------------
+Version: 0.2.0
+Date: 12.11.2022
   Changes:
     - Change some buildings' recipes.
     - Reduced energy in caged biters by a factor 10 to reduce latency in the system.
@@ -11,7 +19,7 @@ Date: 12.1.2022
     - Correctly place Incubation and Revitilization recipes.
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.0
-Date: 12.1.2022
+Date: 12.11.2022
   Features:
     - Treadmill Generator to generate power from biters.
     - Revitilization Center to reenergize tired biters.

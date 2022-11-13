@@ -1,12 +1,11 @@
 {
     "name": "biter-power",
-    "version": "0.1.0",
+    "version": "0.2.1",
     "title": "Biter Power",
     "author": "stringweasel",
     "factorio_version": "1.1",
     "description": "Generate electricity by placing biters on treadmills. Biters can be caught with cage traps, or by placing an egg extractor on a buried biter nest. Biters get tired after running on the treadmill after which they need be revitalized, which could be hazardous. Warning, biters might escape!",
     "dependencies": [
-        "base >= 1.1.60",
-        "(?) aai-industry"
+        "base >= 1.1.60"
     ]
 }

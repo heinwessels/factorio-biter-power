@@ -20,7 +20,7 @@
 local config = {}
 
 config.generator = {}
-config.generator.power_output = 500e3
+config.generator.power_output = 1e6
 
 config.biter = {}
 config.biter.fuel_value = config.generator.power_output * 30
@@ -30,9 +30,9 @@ config.biter.egg_stack_size = 20
 config.biter.egg_to_biter_ratio = 10
 
 config.incubator = {}
-config.incubator.power_usage = 75e3
-config.incubator.number_per_generator = 1 / 2
-config.incubator.success_rate = 0.9
+config.incubator.power_usage = 200e3
+config.incubator.number_per_generator = 1 / 5
+config.incubator.success_rate = 1
 config.incubator.ingredients = {
     -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
@@ -52,8 +52,8 @@ config.incubator.results = {
 }
 
 config.revitalization = {}
-config.revitalization.power_usage = 75e3
-config.revitalization.number_per_generator = 1 / 5 
+config.revitalization.power_usage = 100e3
+config.revitalization.number_per_generator = 1 / 10 
 config.revitalization.success_rate = 0.9
 config.revitalization.egg_drop_rate = 0 -- Disable it for now, it's too complicated.
 config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
@@ -91,7 +91,7 @@ for i = 1,50 do -- Simulate recycling loop. This will converge on a specific val
     multiplier = multiplier * config.biter.loop_efficiency
 end
 
-config.biter.consumed_per_watt --[[per second]] = 1 / config.biter.fuel_value
+config.biter.consumed_per_watt --[[per second]] = 1 / config.biter.fuel_value   -- Not `net` value, because we're counting the life-cycle.
 config.biter.loss_per_watt --[[per second]]  = config.biter.consumed_per_watt * (1 - config.biter.loop_efficiency)        
 
 -- Incubator must keep up to supply the specified generators
@@ -103,11 +103,17 @@ config.incubator.duration = 1 / (
 config.incubator.duration = tonumber(string.format("%.0f", config.incubator.duration))
 
 config.buried_nest = {}
-config.buried_nest.spawn_chance = 1 / 10
-config.buried_nest.spawn_amount = 1000 * config.biter.egg_to_biter_ratio
-config.buried_nest.generators_supported = 10
 -- Scale the buried nest to account for productivity, and scale it so math checks out at full productivity 
 config.buried_nest.productivity_scaler = 0.4 -- 40% is maximum before infinite sciences 
+config.buried_nest.spawn_chance = 1 / 10
+config.buried_nest.power_capacity = 100e6 * (3600 * 10) -- In Joule
+config.buried_nest.spawn_amount = 
+        config.buried_nest.power_capacity 
+        / config.biter.fuel_value_net 
+        * config.biter.egg_to_biter_ratio 
+        / (1+config.buried_nest.productivity_scaler )
+config.buried_nest.power_output = 10e6
+config.buried_nest.generators_supported = config.buried_nest.power_output / config.generator.power_output
 config.buried_nest.eggs_per_second = 
         (config.generator.power_output * config.buried_nest.generators_supported)   -- total power that needs to be supplied
         * config.biter.loss_per_watt                                                -- biters per second
