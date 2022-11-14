@@ -105,7 +105,7 @@ config.incubator.duration = tonumber(string.format("%.0f", config.incubator.dura
 config.buried_nest = {}
 -- Scale the buried nest to account for productivity, and scale it so math checks out at full productivity 
 config.buried_nest.productivity_scaler = 0.4 -- 40% is maximum before infinite sciences 
-config.buried_nest.spawn_chance = 1 --/ 10
+config.buried_nest.spawn_chance = 1 / 10
 config.buried_nest.power_capacity = 100e6 * (3600 * 10) -- In Joule
 config.buried_nest.spawn_amount = 
         config.buried_nest.power_capacity 
