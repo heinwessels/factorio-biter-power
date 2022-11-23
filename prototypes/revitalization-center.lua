@@ -130,7 +130,7 @@ for _, property in pairs{idle_animation, animation} do
         filename = "__biter-power__/graphics/revitalization-center/center-front.png",
         width = 194,
         height = 173,
-        scale = 0.25,
+        scale = 0.5,
         repeat_count = #frame_sequence,
         hr_version = {
             filename = "__biter-power__/graphics/revitalization-center/center-front.png",

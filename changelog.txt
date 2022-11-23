@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.4
+Date: 23.11.2022
+  Bugfixes:
+    - Fix Revitilizatio Center graphics not being scaled properly for normal resolution. (Thanks Ray1claw!)
+---------------------------------------------------------------------------------------------------
 Version: 0.2.3
 Date: 14.11.2022
   Bugfixes:
