@@ -68,10 +68,7 @@ data:extend({
         energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
-
-            -- K2 Air Purifier is -75, but we will have much less incubators then
-            -- a player typically has purifiers
-            emissions_per_minute = -200
+            emissions_per_minute = config.incubator.emissions_per_minute
         },
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,

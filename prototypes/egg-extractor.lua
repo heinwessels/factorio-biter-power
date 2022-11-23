@@ -71,11 +71,7 @@ data:extend({
         energy_source = {
           type = "electric",
           usage_priority = "secondary-input",
-
-          -- This number should be big. For example a mining patch with 100 miners
-          -- release 1000 pollution per minute. This should be worse, and there's 
-          -- usually only one.
-          emissions_per_minute = 2000,
+          emissions_per_minute = config.egg_extractor.emissions_per_minute
         },
         energy_usage = "90kW",
         resource_searching_radius = 0.49,

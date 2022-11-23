@@ -1,26 +1,11 @@
 -- This will contain the entire config of the mod
 -- to make sure everything as balanced as it should be
 
--- African Bois
---  Killed 60 spawners
---  Pulling 18MW
-
--- Walvis Craft
---  Killed 250 spawners
---  Pulling 20MW
-
--- Fluidic Spaghetti Base
---  Killed 250 spawners
---  Pulling 600MW
-
--- We will go with finite buried-nests. We can dynamically allocate how
--- much eggs can be inside a nest, giving us ok control of the flow
--- of biter power.
-
 local config = {}
 
 config.generator = {}
 config.generator.power_output = 1e6
+config.generator.emissions_per_minute = 0
 
 config.biter = {}
 config.biter.fuel_value = config.generator.power_output * 30
@@ -33,6 +18,7 @@ config.incubator = {}
 config.incubator.power_usage = 200e3
 config.incubator.number_per_generator = 1 / 5
 config.incubator.success_rate = 1
+config.incubator.emissions_per_minute = -200 -- Note: K2 air purifier is -75, and there will be much less incubators
 config.incubator.ingredients = {
     -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
@@ -57,6 +43,7 @@ config.revitalization.number_per_generator = 1 / 10
 config.revitalization.success_rate = 0.9
 config.revitalization.egg_drop_rate = 0 -- Disable it for now, it's too complicated.
 config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
+config.revitalization.emissions_per_minute = 4  -- Just like assembler 1
 config.revitalization.results = {
     {
         name = "bp-caged-biter",
@@ -138,6 +125,20 @@ config.egg_extractor = {}
 config.egg_extractor.mining_speed = config.buried_nest.eggs_per_second
 config.egg_extractor.mining_speed = 
         tonumber(string.format("%.3f", config.egg_extractor.mining_speed))
+config.egg_extractor.emmisions_equivalent_modifier = 0  -- emmision neutral for now
+config.egg_extractor.emissions_per_minute = 
+        (config.buried_nest.power_output) / 900e3   -- amount of steam engines
+        / 2 * 30                                    -- emmisions of equivalent boilers required
+        * config.egg_extractor.emmisions_equivalent_modifier    -- scale equivalent emissions
+        - (config.buried_nest.generators_supported      -- account for incubators
+           * config.incubator.number_per_generator      -- Number of incubators per nest
+           * config.incubator.emissions_per_minute)
+        - (config.buried_nest.generators_supported      -- account for revitalization
+           * config.revitalization.number_per_generator -- Number of incubators per nest
+           * config.revitalization.emissions_per_minute)
+        - (config.buried_nest.generators_supported      -- account for generators
+           * config.generator.emissions_per_minute)
+        
 
 config.escapes = { }
 config.escapes.escapable_machine = {
