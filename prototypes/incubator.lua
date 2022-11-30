@@ -1,6 +1,7 @@
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local config = require("config")
+local util = require("util")
 
 data:extend({
     {
@@ -26,20 +27,7 @@ data:extend({
     },
     {
         type = "recipe-category",
-        name = "bp-biter-ergonomics"
-    },
-    {
-        type = "recipe",
-        name = "bp-incubate-biter-egg",
-        icon = "__biter-power__/graphics/incubator/icon.png",
-        icon_size = 64,
-        category = "bp-biter-ergonomics",        
-        subgroup = "bp-biters",
-        order = "c[incubation]",
-        crafting_machine_tint = {primary={r=226, g=22, b=190}},
-        energy_required = config.incubator.duration,
-        ingredients = config.incubator.ingredients,
-        results = config.incubator.results,
+        name = "bp-biter-incubation"
     },
     {
         type = "assembling-machine",
@@ -50,9 +38,8 @@ data:extend({
         minable = {mining_time = 0.2, result = "bp-incubator"},
         max_health = 300,        
         corpse = "chemical-plant-remnants",
-        dying_explosion = "chemical-plant-explosion", 
-        fixed_recipe = "bp-incubate-biter-egg",
-        crafting_categories = {"bp-biter-ergonomics"},
+        dying_explosion = "chemical-plant-explosion",
+        crafting_categories = {"bp-biter-incubation"},
         resistances = {
             {
                 type = "fire",
@@ -161,3 +148,31 @@ data:extend({
         }
     }
 })
+
+-- create recipes for revitilization
+for biter_name, biter_data in pairs(config.biter.types) do
+    local recipe =     {
+        type = "recipe",
+        name = "bp-incubate-egg-"..biter_name,
+        localised_name = {"bp-text.incubation", biter_name},
+        icons = {
+            {
+                icon = "__biter-power__/graphics/incubator/biter-egg.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
+                icon = "__base__/graphics/icons/"..biter_name..".png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+        },
+        category = "bp-biter-incubation",        
+        subgroup = "bp-biters",
+        order = "c[incubation]",
+        crafting_machine_tint = {primary={r=226, g=22, b=190}},
+        energy_required = config.incubator.duration,
+        ingredients = util.table.deepcopy(config.incubator.ingredients),
+        results = util.table.deepcopy(config.incubator.results),
+    }
+    recipe.results[1].name = "bp-caged-"..biter_name
+    data:extend{ recipe }
+end

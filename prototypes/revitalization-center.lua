@@ -2,6 +2,7 @@ local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 local config = require("config")
 local lib = require("lib.lib")
+local util = require("util")
 
 local frame_sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 8, 9, 10, 11}
 
@@ -166,21 +167,11 @@ data:extend({
         result = "bp-revitalization-center"
     },
     {
-        type = "recipe",
-        name = "bp-revitalization",
-        icon = "__biter-power__/graphics/revitalization-center/icon.png",
-        icon_size = 64, icon_mipmaps = 4,
-        show_amount_in_title = false,
-        always_show_products = true,
-        subgroup = "bp-biters",
-        category = "bp-biter-ergonomics",
-        order = "d[revitilization]",
-        ingredients = {{"bp-caged-biter-tired", 1}},
-        energy_required = config.revitalization.time,
-        results = config.revitalization.results,
+        type = "recipe-category",
+        name = "bp-biter-revitalization"
     },
     {
-        type = "assembling-machine",
+        type = "furnace",
         name = "bp-revitalization-center",
         localised_description = {"",
             {"entity-description.bp-revitalization-center"},
@@ -192,9 +183,10 @@ data:extend({
         minable = {mining_time = 0.2, result = "bp-revitalization-center"},
         max_health = 400,
         corpse = "lab-remnants",
-        dying_explosion = "lab-explosion", 
-        crafting_categories = {"bp-biter-ergonomics"},
-        fixed_recipe = "bp-revitalization",
+        dying_explosion = "lab-explosion",
+        result_inventory_size = 1,
+        source_inventory_size = 1, 
+        crafting_categories = {"bp-biter-revitalization"},
         resistances = {
             {
                 type = "fire",
@@ -257,3 +249,32 @@ data:extend({
         },
     }
 })
+
+-- create recipes for revitilization
+for biter_name, biter_data in pairs(config.biter.types) do
+    local recipe = {
+        type = "recipe",
+        name = "bp-revitalization-"..biter_name,
+        localised_name = {"bp-text.revitalization", biter_name},
+        icons = {
+            {
+                icon = "__biter-power__/graphics/revitalization-center/icon.png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+            {
+                icon = "__base__/graphics/icons/"..biter_name..".png",
+                icon_size = 64, icon_mipmaps = 4,
+            },
+        },
+        show_amount_in_title = false,
+        always_show_products = true,
+        subgroup = "bp-biters",
+        category = "bp-biter-revitalization",
+        order = "d[revitilization]",
+        ingredients = {{"bp-tired-caged-"..biter_name, 1}},
+        energy_required = config.revitalization.time,
+        results = util.table.deepcopy(config.revitalization.results),
+    }
+    recipe.results[1].name = "bp-caged-"..biter_name
+    data:extend{ recipe }
+end

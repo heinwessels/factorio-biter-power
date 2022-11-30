@@ -46,7 +46,7 @@ config.revitalization.time = config.biter.burn_time * config.revitalization.numb
 config.revitalization.emissions_per_minute = 4  -- Just like assembler 1
 config.revitalization.results = {
     {
-        name = "bp-caged-biter",
+        name = "bp-caged-",
         probability = config.revitalization.success_rate * (1 - config.revitalization.egg_drop_rate),
         amount = 1,
     },
@@ -146,6 +146,33 @@ config.escapes.escapable_machine = {
     -- for a single escape from a single machine in ticks
     ["bp-generator"] = 60 * 60 * 60 * 2,
     ["bp-revitalization-center"] = 60 * 60 * 30,
+}
+
+
+-- Here we define the different biter types. All stats
+-- will be relative to the base values because I don't 
+-- want the calculations to be that complicated.
+config.biter.types = {
+    ["small-biter"] = {
+        energy_modifer = 0.8,
+        density_modifier = 0.8,
+        escape_modifier = 0.5,        
+    },
+    ["medium-biter"] = {
+        energy_modifer = 1,
+        density_modifier = 1,
+        escape_modifier = 0.8,        
+    },
+    ["big-biter"] = {
+        energy_modifer = 2,
+        density_modifier = 2,
+        escape_modifier = 1.4,        
+    },
+    ["behemoth-biter"] = {
+        energy_modifer = 3,
+        density_modifier = 3,
+        escape_modifier = 1.4,        
+    },
 }
 
 return config
