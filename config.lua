@@ -20,22 +20,10 @@ config.incubator.number_per_generator = 1 / 5
 config.incubator.success_rate = 1
 config.incubator.emissions_per_minute = -200 -- Note: K2 air purifier is -75, and there will be much less incubators
 config.incubator.ingredients = {
-    -- {"bp-biter-egg", config.biter.egg_to_biter_ratio},
     {"bp-biter-egg", 1},
     {"bp-cage", 1}
 }
-config.incubator.results = {
-    {
-        name = "bp-caged-biter",
-        probability = config.incubator.success_rate / config.biter.egg_to_biter_ratio,
-        amount = 1,
-    },
-    {
-        name = "bp-cage",
-        probability = 1 - (config.incubator.success_rate / config.biter.egg_to_biter_ratio),
-        amount = 1,
-    }
-}
+config.incubator.biter_birth_probability = config.incubator.success_rate / config.biter.egg_to_biter_ratio
 
 config.revitalization = {}
 config.revitalization.power_usage = 100e3

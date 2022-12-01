@@ -150,6 +150,7 @@ data:extend({
 })
 
 -- create recipes for revitilization
+-- biter density modifier will make higher densities take longer to incubate
 for biter_name, biter_data in pairs(config.biter.types) do
     local recipe =     {
         type = "recipe",
@@ -171,8 +172,18 @@ for biter_name, biter_data in pairs(config.biter.types) do
         crafting_machine_tint = {primary={r=226, g=22, b=190}},
         energy_required = config.incubator.duration,
         ingredients = util.table.deepcopy(config.incubator.ingredients),
-        results = util.table.deepcopy(config.incubator.results),
-    }
-    recipe.results[1].name = "bp-caged-"..biter_name
+        results = {
+            {
+                name = "bp-caged-"..biter_name,
+                probability = config.incubator.biter_birth_probability / biter_data.density_modifier,
+                amount = 1,
+            },
+            {
+                name = "bp-cage",
+                probability = 1 - (config.incubator.biter_birth_probability / biter_data.density_modifier),
+                amount = 1,
+            }
+        },
+    } 
     data:extend{ recipe }
 end

@@ -272,7 +272,7 @@ for biter_name, biter_data in pairs(config.biter.types) do
         category = "bp-biter-revitalization",
         order = "d[revitilization]",
         ingredients = {{"bp-tired-caged-"..biter_name, 1}},
-        energy_required = config.revitalization.time,
+        energy_required = config.revitalization.time * biter_data.density_modifier,
         results = util.table.deepcopy(config.revitalization.results),
     }
     recipe.results[1].name = "bp-caged-"..biter_name
