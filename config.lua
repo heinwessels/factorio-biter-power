@@ -161,6 +161,26 @@ config.biter.types = {
         density_modifier = 3,
         escape_modifier = 1.4,        
     },
+    ["small-spitter"] = {
+        energy_modifer = 0.8,
+        density_modifier = 0.8,
+        escape_modifier = 0.5,        
+    },
+    ["medium-spitter"] = {
+        energy_modifer = 1,
+        density_modifier = 1,
+        escape_modifier = 0.8,        
+    },
+    ["big-spitter"] = {
+        energy_modifer = 2,
+        density_modifier = 2,
+        escape_modifier = 1.4,
+    },
+    ["behemoth-spitter"] = {
+        energy_modifer = 3,
+        density_modifier = 3,
+        escape_modifier = 1.4,        
+    },
 }
 
 return config

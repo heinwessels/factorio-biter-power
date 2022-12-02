@@ -30,6 +30,12 @@ data:extend({
         name = "bp-biter-incubation"
     },
     {
+        type = "item-subgroup",
+        name = "bp-egg-incubation",
+        group = "intermediate-products",
+        order = "n"
+    },
+    {
         type = "assembling-machine",
         name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/icon.png",
@@ -167,8 +173,8 @@ for biter_name, biter_data in pairs(config.biter.types) do
             },
         },
         category = "bp-biter-incubation",        
-        subgroup = "bp-biters",
-        order = "c[incubation]",
+        subgroup = "bp-egg-incubation",
+        order = "c[incubation]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         crafting_machine_tint = {primary={r=226, g=22, b=190}},
         energy_required = config.incubator.duration,
         ingredients = util.table.deepcopy(config.incubator.ingredients),

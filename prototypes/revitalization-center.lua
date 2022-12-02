@@ -171,6 +171,12 @@ data:extend({
         name = "bp-biter-revitalization"
     },
     {
+        type = "item-subgroup",
+        name = "bp-biter-revitalization",
+        group = "intermediate-products",
+        order = "o"
+    },
+    {
         type = "furnace",
         name = "bp-revitalization-center",
         localised_description = {"",
@@ -268,9 +274,9 @@ for biter_name, biter_data in pairs(config.biter.types) do
         },
         show_amount_in_title = false,
         always_show_products = true,
-        subgroup = "bp-biters",
+        subgroup = "bp-biter-revitalization",
         category = "bp-biter-revitalization",
-        order = "d[revitilization]",
+        order = "c[revitilization]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         ingredients = {{"bp-tired-caged-"..biter_name, 1}},
         energy_required = config.revitalization.time * biter_data.density_modifier,
         results = util.table.deepcopy(config.revitalization.results),
