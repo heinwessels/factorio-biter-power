@@ -131,63 +131,65 @@ config.egg_extractor.emissions_per_minute =
 
 config.escapes = { }
 config.escapes.escapable_machine = {
-    -- The 'value' is the average time it will take 
-    -- for a single escape from a single machine in ticks
-    ["bp-generator"] = 60 * 60 * 60 * 2,
-    ["bp-revitalization-center"] = 60 * 60 * 30,
+    -- The 'value' is a multiplier for biters' escape_period
+    ["bp-generator"] = 1,
+    ["bp-reinforced-generator"] = 0.5,
+    ["bp-revitalization-center"] = 1,
 }
 
 
 -- Here we define the different biter types. All stats
 -- will be relative to the base values because I don't 
 -- want the calculations to be that complicated.
+--  The 'escape_period' is the average time it will take 
+--  for a single escape from a single machine in ticks
 config.biter.types = {
     ["small-biter"] = {
         energy_modifer = 0.8,
         density_modifier = 0.8,
-        escape_modifier = 0.5,
+        escape_period = 60 * 60 * 60 * 4,
         tint = {r=0.9 , g=0.83, b=0.54, a=1},
     },
     ["medium-biter"] = {
         energy_modifer = 1,
         density_modifier = 1,
-        escape_modifier = 0.8,
+        escape_period = 60 * 60 * 60 * 3.5,
         tint = {r=0.93, g=0.72, b=0.72, a=1},
     },
     ["big-biter"] = {
         energy_modifer = 2,
         density_modifier = 2,
-        escape_modifier = 1.4,
+        escape_period = 60 * 60 * 60 * 3,
         tint = {r=0.55, g=0.76, b=0.75, a=1},   
     },
     ["behemoth-biter"] = {
         energy_modifer = 3,
         density_modifier = 3,
-        escape_modifier = 1.4,
+        escape_period = 60 * 60 * 60 * 2,
         tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
     },
     ["small-spitter"] = {
         energy_modifer = 0.8,
         density_modifier = 0.8,
-        escape_modifier = 0.5,
+        escape_period = 60 * 60 * 60 * 4,
         tint = {r=0.91 , g=0.92 , b=0.87 , a=1 },
     },
     ["medium-spitter"] = {
         energy_modifer = 1,
         density_modifier = 1,
-        escape_modifier = 0.8,
+        escape_period = 60 * 60 * 60 * 3.5,
         tint = {r=0.89 , g=0.84 , b=0.85 , a=1 },
     },
     ["big-spitter"] = {
         energy_modifer = 2,
         density_modifier = 2,
-        escape_modifier = 1.4,
+        escape_period = 60 * 60 * 60 * 3,
         tint = {r=0.8  , g=0.82 , b=0.85 , a=1 },
     },
     ["behemoth-spitter"] = {
         energy_modifer = 3,
         density_modifier = 3,
-        escape_modifier = 1.4,
+        escape_period = 60 * 60 * 60 * 2,
         tint = {r = 0.7, g = 0.95, b = 0.4, a = 1.000},  
     },
 }

@@ -13,6 +13,14 @@ local function create_escapable_data(entity)
     }
 end
 
+-- create "compile-time" lookup-table between biter-names and their fuel items
+-- this will work fine because it's dependent on prototypes
+local fuel_to_biter_name = { }
+for biter_name, _ in pairs(config.biter.types) do
+    fuel_to_biter_name["bp-caged-"..biter_name] = biter_name
+    fuel_to_biter_name["bp-tired-caged-"..biter_name] = biter_name
+end
+
 script.on_event(defines.events.on_script_trigger_effect , function(event)
     if event.effect_id ~= "bp-cage-trap-trigger" then return end
     local trap = event.source_entity
@@ -35,106 +43,42 @@ script.on_event(defines.events.on_script_trigger_effect , function(event)
     trap.force.item_production_statistics.on_flow("bp-caged-biter", 1)
 end)
 
-local function biter_distribution_for_evolution(evolution)
-    -- Calculate the biter spawn probability for a given evolution
-    -- verified with calculator in the wiki.
-    -- Cool :)
-
-    -- Currently we will only spawn biters and not spitters. 
-    local result_units = game.entity_prototypes["biter-spawner"].result_units
-    local distribution = { }
-    local total = 0
-    for _, definition in pairs(result_units) do
-        local weight = 0
-        for index = #definition.spawn_points, 1, -1 do
-            local point_l = definition.spawn_points[index]
-            if evolution >= point_l.evolution_factor then
-                if index == #definition.spawn_points then
-                    -- probability stays constant after last index
-                    weight = point_l.weight
-                else
-                    -- interpolate between this index and the next
-                    local point_r = definition.spawn_points[index + 1]
-                    weight = point_l.weight 
-                                + (evolution - point_l.evolution_factor)
-                                * (point_r.weight - point_l.weight)
-                                / (point_r.evolution_factor - point_l.evolution_factor)
-                end
-                goto done
-            end
-        end
-        ::done::        
-        total = total + weight
-        table.insert(distribution, {unit=definition.unit, weight=weight})
-    end
-
-    -- Scale to one
-    local correction = 1 / total
-    for _, definition in pairs(distribution) do
-        definition.weight = correction * definition.weight
-    end
-
-    return distribution
-end
-
-local function determine_biter_type_to_escape(entity)
-    local force = entity.force
-
-    -- Get a distribution table, maybe from the cache. We key it by force
-    local cache = global.biter_distribution_cache[force.name]
-    if not cache or cache.expiry_tick < game.tick then
-        cache = {
-            expiry_tick = game.tick + 60 * 60 * 3, -- expires after some time
-            distribution = biter_distribution_for_evolution(force.evolution_factor)
-        }
-        global.biter_distribution_cache[force.name] = cache
-    end
-
-    -- Now roll the dice and see which biter to release!
-    local roll = math.random()
-    local weight = 0
-    for _, entry in pairs(cache.distribution) do
-        weight = weight + entry.weight
-        if roll <= weight then
-            return entry.unit
-        end
-    end
-end
-
-local function count_biters_in_machine(entity)
-    local count_biters = 0
+-- retuns a table of biter types found
+local function get_biters_in_machine(entity)
+    local biters_found = {}
     local burner = entity.burner
 
     local count_in_inventory = function (inventory)
         if not inventory then return 0 end
-        local _count = 0 -- Don't know how the scopes work here.
         for i = 1, #inventory do
             if inventory[i].valid_for_read and inventory[i].prototype.fuel_category == "bp-biter-power" then
-                -- If we can read it we assume it's fuel
-                _count = _count + inventory[i].count
+                table.insert(biters_found, fuel_to_biter_name[inventory[i].name])
             end
         end
-        return _count
     end
 
     -- If this is a burner
     if burner then
         if burner.remaining_burning_fuel > 0 then
             -- There is a biter running on this treadmil!
-            count_biters = count_biters + 1
+            table.insert(biters_found, fuel_to_biter_name[burner.currently_burning.name])
         end
-        count_biters = count_biters + count_in_inventory(burner.inventory)
+        count_in_inventory(burner.inventory)
     end
 
     -- If this is an assembler
     if entity.type == "assembling-machine" or entity.type == "furnace" then
         -- Then it's an assembler, or crafting machine at least
-        if entity.crafting_progress > 0 then count_biters = count_biters + 1 end
-        count_biters = count_biters + count_in_inventory(entity.get_output_inventory())
-        count_biters = count_biters + count_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input))
+        if entity.crafting_progress > 0 then 
+            -- assume the not-tired-biter is the first product of the current recipe
+            table.insert(biters_found, fuel_to_biter_name[entity.get_recipe().products[1].name])
+            
+        end
+        count_in_inventory(entity.get_output_inventory())
+        count_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input))
     end
 
-    return count_biters
+    return biters_found
 end
 
 local function clear_all_biters_in_machine(entity)
@@ -149,22 +93,19 @@ local function clear_all_biters_in_machine(entity)
     end
 end
 
-local function escape_biters_from_entity(entity, number_biters)
-    local number_of_biters = number_of_biters or count_biters_in_machine(entity)
-    if number_of_biters == 0 then return { } end
+local function escape_biters_from_entity(entity, biter_names)
+    if not next(biter_names) then return { } end
     
     -- Out of the cage
     clear_all_biters_in_machine(entity)
-    -- TODO Add to item statistics? Annoying because in-progress biters are already consumed
+    -- We won't update production statistics, because they are not consumed
     
     -- And into the world
     local biters = { }
     local surface = entity.surface
-    for i = 1, number_of_biters do            
-        local biter_name = determine_biter_type_to_escape(entity)
+    for _, biter_name in pairs(biter_names) do
         local position = surface.find_non_colliding_position(
             biter_name, entity.position, 20, 0.2)
-        local biter
         if position then
             biter = surface.create_entity{
                 name=biter_name, position=position, 
@@ -206,7 +147,7 @@ local function rally_biters_around(surface, position)
         local this_command = enemy.command
         if this_command and this_command.name == defines.command.attack then
             local target = this_command.target
-            if target.valid and  count_biters_in_machine(this_command.target) > 1 then
+            if target.valid and #get_biters_in_machine(this_command.target) > 1 then
                 command = this_command
                 command.distraction = defines.distraction.none
                 goto done
@@ -215,7 +156,7 @@ local function rally_biters_around(surface, position)
     end
     
     for _, machine in pairs(machines) do
-        if count_biters_in_machine(machine) > 0 then
+        if #get_biters_in_machine(machine) > 0 then
             command = {
                 type = defines.command.attack,
                 target = machine,
@@ -246,8 +187,8 @@ local function tick_escape_for_entity(data)
     local tick = game.tick
     
     -- Does it contain biters?
-    local number_of_biters = count_biters_in_machine(entity)
-    if number_of_biters == 0 then
+    local biters_in_machine = get_biters_in_machine(entity)
+    if not next(biters_in_machine) then
         -- If it doesn't contain biters then "reset" the "timer".
         -- Otherwise when it's empty for a long time and suddenly gets a biter
         -- then the time_since_last_roll will be massive, and biter will escape!
@@ -260,15 +201,16 @@ local function tick_escape_for_entity(data)
     -- of escaping. I think this should work.
     local time_since_last_roll = tick - data.last_dice_roll
     if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
-    local average_escape_time = config.escapes.escapable_machine[entity.name]
-    if not average_escape_time then return nil, true end -- This machine isn't escapable. Something went wrong. Delete!
+    local average_escape_time = 
+            config.biter.types[biters_in_machine[1]].escape_period      -- always use the first found biter
+            * config.escapes.escapable_machine[entity.name]             -- the current building is a modifier
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
     if math.random() < probability then
         entity.create_build_effect_smoke()
-        local biters = escape_biters_from_entity(entity)
+        local biters = escape_biters_from_entity(entity, biters_in_machine)
         rally_biters_around(entity.surface, entity.position)
-        for i = 1, number_of_biters do
+        for i = 1, #biters_in_machine do
             if entity.valid then -- It might be destroyed in the loop. Only apply damage if it still exists                
                 entity.damage(entity.prototype.max_health * 0.2, "enemy", "physical")
             end
@@ -281,11 +223,13 @@ local function tick_escapes(tick)
 
     global.from_k = lib.table.for_n_of(
         global.escapables, global.from_k, 
-        10, -- Machines to update per second
+        5, -- Machines to update per second
         tick_escape_for_entity)
 end
 
-script.on_nth_tick(10, function (event) 
+script.on_nth_tick(10, function (event)
+    -- Nests that die leaves their corpse on top of the buried biter nest
+    -- so we clean it up ourselves after a while
     for _, nest in pairs(global.nests_to_clean) do
         if nest.valid then 
             for _, entity in pairs(nest.surface.find_entities_filtered{

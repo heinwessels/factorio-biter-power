@@ -1,10 +1,11 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.0
-Date: 23.11.2022
+Date: ??.12.2022
+  Features:
+    - Now have individual caged items for all biters/spitters with different fuel values and changes of escape.
   Changes:
-    - Biter Power is now effectively pollution neutral. 
-      - Significantly decreased Egg Extractor pollution.
-      - Removed pollution from Treadmill Generator.
+    - Biter escape changes are now mainly based on biter type, and not machine type.
+    - Improved biter on treadmill graphics. All biters are blackish. Not possible to have custom colours.
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.5
 Date: 23.11.2022

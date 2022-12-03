@@ -225,7 +225,7 @@ data:extend({
     type = "burner-generator",
     localised_description = {"",
       {"entity-description.bp-generator"},
-      {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-generator"])},
+      {"bp-text.escape-modifier", config.escapes.escapable_machine["bp-generator"]},
     },
     icon = "__biter-power__/graphics/generator/icon.png",
     icon_size = 64,

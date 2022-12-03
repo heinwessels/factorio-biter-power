@@ -181,7 +181,7 @@ data:extend({
         name = "bp-revitalization-center",
         localised_description = {"",
             {"entity-description.bp-revitalization-center"},
-            {"bp-text.escape-chance", lib.formattime(config.escapes.escapable_machine["bp-revitalization-center"])},
+            {"bp-text.escape-modifier", config.escapes.escapable_machine["bp-revitalization-center"]},
         },
         icon = "__biter-power__/graphics/revitalization-center/icon.png",
         icon_size = 64, icon_mipmaps = 4,

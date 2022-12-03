@@ -1,5 +1,6 @@
 local config = require("config")
 local util = require("util")
+local lib = require("lib.lib")
 
 data:extend({
     {
@@ -26,7 +27,10 @@ for biter_name, biter_data in pairs(config.biter.types) do
             type = "item",
             name = "bp-caged-"..biter_name,
             localised_name = {"bp-text.caged-biter", biter_name},
-            localised_description = {"", {"item-description.bp-caged-biter"}, {"bp-text.escape-modifier", biter_data.escape_modifier}},
+            localised_description = {"", 
+                {"item-description.bp-caged-biter"},
+                {"bp-text.escape-chance", lib.formattime(biter_data.escape_period)},
+            },
             icons = {
                 {
                     icon = "__biter-power__/graphics/cage/icon.png",
@@ -49,7 +53,10 @@ for biter_name, biter_data in pairs(config.biter.types) do
             type = "item",
             name = "bp-tired-caged-"..biter_name,
             localised_name = {"bp-text.tired-caged-biter", biter_name},
-            localised_description = {"", {"item-description.bp-caged-biter-tired"}, {"bp-text.escape-modifier", biter_data.escape_modifier / 10}},
+            localised_description = {"", 
+                {"item-description.bp-caged-biter-tired"},
+                {"bp-text.escape-chance", lib.formattime(biter_data.escape_period * config.biter.tired_modifier)},
+            },
             icons = {
                 {
                     icon = "__base__/graphics/icons/deconstruction-planner.png",
