@@ -26,7 +26,7 @@ for biter_name, biter_data in pairs(config.biter.types) do
             type = "item",
             name = "bp-caged-"..biter_name,
             localised_name = {"bp-text.caged-biter", biter_name},
-            localised_description = {"item-description.bp-caged-biter"},
+            localised_description = {"", {"item-description.bp-caged-biter"}, {"bp-text.escape-modifier", biter_data.escape_modifier}},
             icons = {
                 {
                     icon = "__biter-power__/graphics/cage/icon.png",
@@ -39,6 +39,7 @@ for biter_name, biter_data in pairs(config.biter.types) do
             },
             subgroup = "bp-biters",
             order = "b[caged-biter]",
+            fuel_glow_color = biter_data.tint,
             fuel_value = util.format_number(config.biter.fuel_value * biter_data.energy_modifer, true).."J",
             fuel_category = "bp-biter-power",
             burnt_result = "bp-tired-caged-"..biter_name,
@@ -48,7 +49,7 @@ for biter_name, biter_data in pairs(config.biter.types) do
             type = "item",
             name = "bp-tired-caged-"..biter_name,
             localised_name = {"bp-text.tired-caged-biter", biter_name},
-            localised_description = {"item-description.bp-caged-biter-tired"},
+            localised_description = {"", {"item-description.bp-caged-biter-tired"}, {"bp-text.escape-modifier", biter_data.escape_modifier / 10}},
             icons = {
                 {
                     icon = "__base__/graphics/icons/deconstruction-planner.png",

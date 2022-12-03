@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.0
+Date: 23.11.2022
+  Changes:
+    - Biter Power is now effectively pollution neutral. 
+      - Significantly decreased Egg Extractor pollution.
+      - Removed pollution from Treadmill Generator.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.5
 Date: 23.11.2022
   Changes:

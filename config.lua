@@ -9,7 +9,8 @@ config.generator.emissions_per_minute = 0
 
 config.biter = {}
 config.biter.fuel_value = config.generator.power_output * 30
-config.biter.tired_fuel_value = config.biter.fuel_value / 10
+config.biter.tired_modifier = 10
+config.biter.tired_fuel_value = config.biter.fuel_value / config.biter.tired_modifier
 config.biter.burn_time = config.biter.fuel_value / config.generator.power_output
 config.biter.egg_stack_size = 20
 config.biter.egg_to_biter_ratio = 10
@@ -144,42 +145,50 @@ config.biter.types = {
     ["small-biter"] = {
         energy_modifer = 0.8,
         density_modifier = 0.8,
-        escape_modifier = 0.5,        
+        escape_modifier = 0.5,
+        tint = {r=0.9 , g=0.83, b=0.54, a=1},
     },
     ["medium-biter"] = {
         energy_modifer = 1,
         density_modifier = 1,
-        escape_modifier = 0.8,        
+        escape_modifier = 0.8,
+        tint = {r=0.93, g=0.72, b=0.72, a=1},
     },
     ["big-biter"] = {
         energy_modifer = 2,
         density_modifier = 2,
-        escape_modifier = 1.4,        
+        escape_modifier = 1.4,
+        tint = {r=0.55, g=0.76, b=0.75, a=1},   
     },
     ["behemoth-biter"] = {
         energy_modifer = 3,
         density_modifier = 3,
-        escape_modifier = 1.4,        
+        escape_modifier = 1.4,
+        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
     },
     ["small-spitter"] = {
         energy_modifer = 0.8,
         density_modifier = 0.8,
-        escape_modifier = 0.5,        
+        escape_modifier = 0.5,
+        tint = {r=0.91 , g=0.92 , b=0.87 , a=1 },
     },
     ["medium-spitter"] = {
         energy_modifer = 1,
         density_modifier = 1,
-        escape_modifier = 0.8,        
+        escape_modifier = 0.8,
+        tint = {r=0.89 , g=0.84 , b=0.85 , a=1 },
     },
     ["big-spitter"] = {
         energy_modifer = 2,
         density_modifier = 2,
         escape_modifier = 1.4,
+        tint = {r=0.8  , g=0.82 , b=0.85 , a=1 },
     },
     ["behemoth-spitter"] = {
         energy_modifer = 3,
         density_modifier = 3,
-        escape_modifier = 1.4,        
+        escape_modifier = 1.4,
+        tint = {r = 0.7, g = 0.95, b = 0.4, a = 1.000},  
     },
 }
 

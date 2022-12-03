@@ -96,7 +96,48 @@ table.insert(animation.layers, {
     frame_count = 16,
     shift = util.mul_shift(util.by_pixel(-1 + biter_shift[1]*64, -5 + biter_shift[2]*64), biter_scale),
   }
-})  
+})
+table.insert(animation.layers, {
+  filename = "__base__/graphics/entity/biter/biter-run-mask1-02.png",
+  width = 118,
+  height = 94,
+  line_length = 8,
+  frame_count = 16,
+  scale = biter_scale,
+  tint = {r=0.21, g=0.19, b=0.25, a=1},  -- base tint of behemoth
+  shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -38 + biter_shift[2]*32), biter_scale),
+  hr_version = {
+    filename = "__base__/graphics/entity/biter/hr-biter-run-mask1-02.png",
+    width = 238,
+    height = 182,
+    scale = 0.5 * biter_scale,
+    line_length = 8,
+    frame_count = 16,
+    tint = {r=0.21, g=0.19, b=0.25, a=1}, -- base tint of behemoth
+    shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -38 + biter_shift[2]*64), biter_scale),
+  }
+})
+table.insert(animation.layers, {
+  filename = "__base__/graphics/entity/biter/biter-run-mask2-02.png",
+  width = 120,
+  height = 92,
+  line_length = 8,
+  frame_count = 16,
+  scale = biter_scale,
+  tint = {0.5, 0.5, 0.5, 0.5},  -- grayish, biters lose colour in the treadmill
+  shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -38 + biter_shift[2]*32), biter_scale),
+  hr_version = {
+    filename = "__base__/graphics/entity/biter/hr-biter-run-mask2-02.png",
+    width = 232,
+    height = 184,
+    scale = 0.5 * biter_scale,
+    line_length = 8,
+    frame_count = 16,
+    flags = { "mask" },
+    tint = {0.5, 0.5, 0.5, 0.5},  -- grayish, biters lose colour in the treadmill
+    shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -38 + biter_shift[2]*64), biter_scale),
+  }
+})
 
 -- Now add the outer cage edge to both
 for _, property in pairs{idle_animation, animation} do
