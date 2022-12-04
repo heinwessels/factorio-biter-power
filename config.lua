@@ -9,7 +9,7 @@ config.generator.emissions_per_minute = 0
 config.generator.reinforced_multiplyer = 10
 
 config.biter = {}
-config.biter.fuel_value = config.generator.power_output * 30
+config.biter.fuel_value = config.generator.power_output * 60
 config.biter.tired_modifier = 10
 config.biter.tired_fuel_value = config.biter.fuel_value / config.biter.tired_modifier
 config.biter.burn_time = config.biter.fuel_value / config.generator.power_output
@@ -89,7 +89,7 @@ config.buried_nest.spawn_amount =
         / config.biter.fuel_value_net 
         * config.biter.egg_to_biter_ratio 
         / (1+config.buried_nest.productivity_scaler )
-config.buried_nest.power_output = 10e6
+config.buried_nest.power_output = 20e6
 config.buried_nest.generators_supported = config.buried_nest.power_output / config.generator.power_output
 config.buried_nest.eggs_per_second = 
         (config.generator.power_output * config.buried_nest.generators_supported)   -- total power that needs to be supplied
