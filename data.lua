@@ -8,6 +8,7 @@ data:extend{{ -- No other good to place this for now
 require("prototypes.biters")
 require("prototypes.cage")
 require("prototypes.generator")
+require("prototypes.generator-reinforced")
 require("prototypes.incubator")
 require("prototypes.revitalization-center")
 require("prototypes.buried-biter-nest")

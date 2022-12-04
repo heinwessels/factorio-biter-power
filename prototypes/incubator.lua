@@ -40,7 +40,7 @@ data:extend({
         name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/icon.png",
         icon_size = 64,
-        flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
+        flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "bp-incubator"},
         max_health = 300,        
         corpse = "chemical-plant-remnants",

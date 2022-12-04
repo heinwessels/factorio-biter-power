@@ -6,6 +6,7 @@ local config = {}
 config.generator = {}
 config.generator.power_output = 1e6
 config.generator.emissions_per_minute = 0
+config.generator.reinforced_multiplyer = 10
 
 config.biter = {}
 config.biter.fuel_value = config.generator.power_output * 30
@@ -133,7 +134,7 @@ config.escapes = { }
 config.escapes.escapable_machine = {
     -- The 'value' is a multiplier for biters' escape_period
     ["bp-generator"] = 1,
-    ["bp-reinforced-generator"] = 0.5,
+    ["bp-generator-reinforced"] = 0.5,
     ["bp-revitalization-center"] = 1,
 }
 

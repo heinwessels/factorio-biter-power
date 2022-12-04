@@ -124,7 +124,7 @@ table.insert(animation.layers, {
   line_length = 8,
   frame_count = 16,
   scale = biter_scale,
-  tint = {0.5, 0.5, 0.5, 0.5},  -- grayish, biters lose colour in the treadmill
+  tint = {1, 0.74, 0.33, 0.1},  -- yellow, like the frame and belt
   shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -38 + biter_shift[2]*32), biter_scale),
   hr_version = {
     filename = "__base__/graphics/entity/biter/hr-biter-run-mask2-02.png",
@@ -134,7 +134,7 @@ table.insert(animation.layers, {
     line_length = 8,
     frame_count = 16,
     flags = { "mask" },
-    tint = {0.5, 0.5, 0.5, 0.5},  -- grayish, biters lose colour in the treadmill
+    tint = {1, 0.74, 0.33, 0.1},  -- yellow, like the frame and belt
     shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -38 + biter_shift[2]*64), biter_scale),
   }
 })
@@ -237,6 +237,8 @@ data:extend({
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
     max_power_output = util.format_number(config.generator.power_output, true).."W",
     minable = {mining_time = 1, result = "bp-generator"},
+    next_upgrade = "bp-generator-reinforced",
+    fast_replaceable_group = "bp-generators",
     burner = {
       fuel_category = "bp-biter-power",
       effectivity = 1,
