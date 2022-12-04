@@ -26,21 +26,11 @@ script.on_event(defines.events.on_script_trigger_effect , function(event)
     local trap = event.source_entity
     local victim = event.target_entity
     if not victim then return end
-    local whitelist = {
-        ["small-biter"] = true,
-        ["medium-biter"] = true,
-        ["big-biter"] = true,
-        ["behemoth-biter"] = true,
-        
-        ["small-spitter"] = true,
-        ["medium-spitter"] = true,
-        ["big-spitter"] = true,
-        ["behemoth-spitter"] = true,
-    }
-    if not whitelist[victim.name] then return end -- Will lose the cage
-    victim.surface.spill_item_stack(victim.position, {name="bp-caged-biter"}, true, trap.force)
+    if not config.biter.types[victim.name] then return end  -- Will lose the cage    
+    local caged_name = "bp-caged-"..victim.name
+    victim.surface.spill_item_stack(victim.position, {name=caged_name}, true, trap.force)
+    trap.force.item_production_statistics.on_flow(caged_name, 1)
     victim.destroy{raise_destroy = true}
-    trap.force.item_production_statistics.on_flow("bp-caged-biter", 1)
 end)
 
 -- retuns a table of biter types found
