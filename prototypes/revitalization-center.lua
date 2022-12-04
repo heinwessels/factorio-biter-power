@@ -257,7 +257,7 @@ data:extend({
 })
 
 -- create recipes for revitilization
-for biter_name, biter_data in pairs(config.biter.types) do
+for biter_name, biter_config in pairs(config.biter.types) do
     local recipe = {
         type = "recipe",
         name = "bp-revitalization-"..biter_name,
@@ -278,7 +278,7 @@ for biter_name, biter_data in pairs(config.biter.types) do
         category = "bp-biter-revitalization",
         order = "c[revitilization]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         ingredients = {{"bp-tired-caged-"..biter_name, 1}},
-        energy_required = config.revitalization.time * biter_data.density_modifier,
+        energy_required = config.revitalization.time * biter_config.density_modifier,
         results = util.table.deepcopy(config.revitalization.results),
     }
     recipe.results[1].name = "bp-caged-"..biter_name

@@ -13,7 +13,7 @@ config.biter.tired_modifier = 10
 config.biter.tired_fuel_value = config.biter.fuel_value / config.biter.tired_modifier
 config.biter.burn_time = config.biter.fuel_value / config.generator.power_output
 config.biter.egg_stack_size = 20
-config.biter.egg_to_biter_ratio = 10
+config.biter.egg_to_biter_ratio = 5
 
 config.incubator = {}
 config.incubator.power_usage = 200e3

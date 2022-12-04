@@ -157,7 +157,7 @@ data:extend({
 
 -- create recipes for revitilization
 -- biter density modifier will make higher densities take longer to incubate
-for biter_name, biter_data in pairs(config.biter.types) do
+for biter_name, biter_config in pairs(config.biter.types) do
     local recipe =     {
         type = "recipe",
         name = "bp-incubate-egg-"..biter_name,
@@ -181,12 +181,12 @@ for biter_name, biter_data in pairs(config.biter.types) do
         results = {
             {
                 name = "bp-caged-"..biter_name,
-                probability = config.incubator.biter_birth_probability / biter_data.density_modifier,
+                probability = config.incubator.biter_birth_probability / biter_config.density_modifier,
                 amount = 1,
             },
             {
                 name = "bp-cage",
-                probability = 1 - (config.incubator.biter_birth_probability / biter_data.density_modifier),
+                probability = 1 - (config.incubator.biter_birth_probability / biter_config.density_modifier),
                 amount = 1,
             }
         },
