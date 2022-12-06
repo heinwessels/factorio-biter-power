@@ -146,48 +146,56 @@ config.escapes.escapable_machine = {
 --  for a single escape from a single machine in ticks
 config.biter.types = {
     ["small-biter"] = {
+        tier = 1,
         energy_modifer = 0.8,
         density_modifier = 0.8,
         escape_period = 60 * 60 * 60 * 4,
         tint = {r=0.9 , g=0.83, b=0.54, a=1},
     },
     ["medium-biter"] = {
+        tier = 2,
         energy_modifer = 1,
         density_modifier = 1,
         escape_period = 60 * 60 * 60 * 3.5,
         tint = {r=0.93, g=0.72, b=0.72, a=1},
     },
     ["big-biter"] = {
+        tier = 3,
         energy_modifer = 2,
         density_modifier = 2,
         escape_period = 60 * 60 * 60 * 3,
         tint = {r=0.55, g=0.76, b=0.75, a=1},   
     },
     ["behemoth-biter"] = {
+        tier = 4,
         energy_modifer = 3,
         density_modifier = 3,
         escape_period = 60 * 60 * 60 * 2,
         tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
     },
     ["small-spitter"] = {
+        tier = 1,
         energy_modifer = 0.8,
         density_modifier = 0.8,
         escape_period = 60 * 60 * 60 * 4,
         tint = {r=0.91 , g=0.92 , b=0.87 , a=1 },
     },
     ["medium-spitter"] = {
+        tier = 2,
         energy_modifer = 1,
         density_modifier = 1,
         escape_period = 60 * 60 * 60 * 3.5,
         tint = {r=0.89 , g=0.84 , b=0.85 , a=1 },
     },
     ["big-spitter"] = {
+        tier = 3,
         energy_modifer = 2,
         density_modifier = 2,
         escape_period = 60 * 60 * 60 * 3,
         tint = {r=0.8  , g=0.82 , b=0.85 , a=1 },
     },
     ["behemoth-spitter"] = {
+        tier = 4,
         energy_modifer = 3,
         density_modifier = 3,
         escape_period = 60 * 60 * 60 * 2,

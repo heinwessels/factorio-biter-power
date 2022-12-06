@@ -1,0 +1,13 @@
+{
+    "item":
+    [
+        ["bp-caged-biter", "bp-caged-medium-biter"],
+        ["bp-caged-biter-tired", "bp-tired-caged-medium-biter"]
+    ],
+
+    "recipe":
+    [
+        ["bp-incubate-biter-egg", "bp-incubate-egg-medium-biter"],
+        ["bp-revitalization", "bp-revitalization-medium-biter"]
+    ]
+}

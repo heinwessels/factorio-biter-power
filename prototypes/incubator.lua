@@ -190,6 +190,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 amount = 1,
             }
         },
+        enabled = false, -- Now needs to be unlocked by tech
     } 
     data:extend{ recipe }
 end
