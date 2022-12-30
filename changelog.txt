@@ -11,6 +11,11 @@ Date: ??.12.2022
     - Improved biter on treadmill graphics. All biters are blackish. Not possible to have custom colours.
     - Changed base biter to egg ratio from 10-to-1 to 5-to-1.
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.6
+Date: 30.12.2022
+  Bugfixes:
+    - [AAI Programmable Vehicles] Add all biters to deadzone whitelist so that biter escapes are not denied (Thanks Preceti2!).
+---------------------------------------------------------------------------------------------------
 Version: 0.2.5
 Date: 23.11.2022
   Changes:

@@ -1,8 +1,12 @@
 {
     "factorio.versions": [
         {
-            "name": "1.1.72",
-            "factorioPath": "c:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.72\\bin\\x64\\factorio.exe",
+            "name": "1.1.69",
+            "factorioPath": "c:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.69\\bin\\x64\\factorio.exe"
+        },
+        {
+            "name": "1.1.74",
+            "factorioPath": "/home/hein/Documents/Personal/factorio_alpha_x64_1.1.74/factorio/bin/x64/factorio",
             "active": true
         }
     ]

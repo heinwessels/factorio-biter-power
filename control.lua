@@ -16,9 +16,11 @@ end
 -- create "compile-time" lookup-table between biter-names and their fuel items
 -- this will work fine because it's dependent on prototypes
 local fuel_to_biter_name = { }
+local supported_biters = { }
 for biter_name, _ in pairs(config.biter.types) do
     fuel_to_biter_name["bp-caged-"..biter_name] = biter_name
     fuel_to_biter_name["bp-tired-caged-"..biter_name] = biter_name
+    table.insert(supported_biters, biter_name)
 end
 
 script.on_event(defines.events.on_script_trigger_effect , function(event)
@@ -97,7 +99,7 @@ local function escape_biters_from_entity(entity, biter_names)
         local position = surface.find_non_colliding_position(
             biter_name, entity.position, 20, 0.2)
         if position then
-            biter = surface.create_entity{
+            local biter = surface.create_entity{
                 name=biter_name, position=position, 
                 force="enemy", raise_built=true
             }
@@ -282,6 +284,14 @@ script.on_event(defines.events.on_player_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
+
+if script.active_mods["aai-programmable-vehicles"] then
+    -- This mod will prevent placement of "enemy" biters close
+    -- to "player" structures. Add all biters to the whitelist
+    remote.add_interface("biter-power", {
+        ["aai_programmable_vehicles_non_combat_whitelist"] = function() return supported_biters end
+    })
+end
 
 script.on_init(function()
     global.escapables = { }
