@@ -164,9 +164,8 @@ local function escape_biters_from_entity(entity, number_biters)
         local biter_name = determine_biter_type_to_escape(entity)
         local position = surface.find_non_colliding_position(
             biter_name, entity.position, 20, 0.2)
-        local biter
         if position then
-            biter = surface.create_entity{
+            local biter = surface.create_entity{
                 name=biter_name, position=position, 
                 force="enemy", raise_built=true
             }
@@ -348,6 +347,17 @@ script.on_event(defines.events.on_player_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
+
+if script.active_mods["aai-programmable-vehicles"] then
+    -- This mod will prevent placement of "enemy" biters close
+    -- to "player" structures. Add all biters to the whitelist
+    remote.add_interface("biter-power", {
+        ["aai_programmable_vehicles_non_combat_whitelist"] = function()
+            -- Will currently always spawn one of these.
+            return {"small-biter", "medium-biter", "big-biter", "behemoth-biter"}
+        end
+    })
+end
 
 script.on_init(function()
     global.escapables = { }

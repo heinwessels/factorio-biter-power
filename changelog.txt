@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.6
+Date: 30.12.2022
+  Bugfixes:
+    - [AAI Programmable Vehicles] Add all biters to deadzone whitelist so that biter escapes are not denied (Thanks Preceti2!).
+---------------------------------------------------------------------------------------------------
 Version: 0.2.5
 Date: 23.11.2022
   Changes:
