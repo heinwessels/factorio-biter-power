@@ -47,6 +47,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             fuel_value = util.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = "bp-biter-power",
             burnt_result = "bp-tired-caged-"..biter_name,
+            place_result = biter_name,
             stack_size = 1,
         },
         {
@@ -75,6 +76,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             order = "c[caged-biter-tired]",
             fuel_value = util.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = "bp-biter-power",
+            place_result = biter_name,
             stack_size = 1
         },
     })

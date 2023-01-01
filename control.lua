@@ -292,6 +292,22 @@ local function on_built(event)
     
     if config.escapes.escapable_machine[entity.name] then 
         global.escapables[entity.unit_number] = create_escapable_data(entity)
+        return
+    end
+
+    if config.biter.types[entity.name] then
+        local stack = event.stack
+        if stack and stack.valid_for_read and (
+            stack.name:find("bp-caged-", 1, true) 
+            or stack.name:find("bp-tired-caged-", 1, true)
+        ) then
+            -- Player released a caged biter. Captured biters aren't wild
+            -- But first "consume" the item for the player's force, before
+            -- making the biter wild again.
+            entity.force.item_production_statistics.on_flow(stack.name, -1)
+            entity.force = "enemy"
+            return
+        end
     end
 end
 
