@@ -23,16 +23,64 @@ for biter_name, _ in pairs(config.biter.types) do
     table.insert(supported_biters, biter_name)
 end
 
+local function attemp_tiered_technology_unlock(force, tier, force_unlock)
+    
+    local tech = force.technologies["bp-biter-capture-tier-"..tier]
+    if tech.researched then return end
+
+    for _, prereq in pairs(tech.prerequisites) do
+        if not prereq.researched then return end
+    end
+
+    if not force_unlock then
+        local statistics = force.item_production_statistics
+        local biter_already_captured = false
+        for biter_name, biter_config in pairs(config.biter.types) do
+            if biter_config.tier == tier then
+                -- This check isn't perfect, but will only fail if player cheated
+                -- TODO could change this to a custom stored value in global
+                if statistics.get_input_count("bp-caged-"..biter_name) > 0 then
+                    biter_already_captured = true
+                    goto continue
+                end
+            end
+        end
+        
+        ::continue::
+        if not biter_already_captured then return end
+    end
+
+    -- If reach here then we can unlock the tech
+    tech.researched = true
+    return tech    
+end
+
 script.on_event(defines.events.on_script_trigger_effect , function(event)
     if event.effect_id ~= "bp-cage-trap-trigger" then return end
     local trap = event.source_entity
-    local victim = event.target_entity
-    if not victim then return end
-    if not config.biter.types[victim.name] then return end  -- Will lose the cage    
-    local caged_name = "bp-caged-"..victim.name
-    victim.surface.spill_item_stack(victim.position, {name=caged_name}, true, trap.force)
+    local biter = event.target_entity
+    if not biter then return end
+    local biter_config = config.biter.types[biter.name]
+    if not biter_config then return end  -- Will lose the cage    
+    local caged_name = "bp-caged-"..biter.name
+    local force = trap.force
+    biter.surface.spill_item_stack(biter.position, {name=caged_name}, true, force)
     trap.force.item_production_statistics.on_flow(caged_name, 1)
-    victim.destroy{raise_destroy = true}
+    local tech = attemp_tiered_technology_unlock(force, biter_config.tier, true) 
+    if tech then
+        force.print({"bp-text.capture-complete",
+            "[technology="..tech.name.."]", biter.name}, {1, 0.75, 0.4})
+    end
+    biter.destroy{raise_destroy = true}
+end)
+
+script.on_event(defines.events.on_research_started , function(event)
+    local tech = event.research
+    if tech.name:find("bp-biter-capture-tier-", 1, true) then
+        if not attemp_tiered_technology_unlock(tech.force, tech.level) then
+            tech.force.print("failed")
+        end
+    end
 end)
 
 -- retuns a table of biter types found

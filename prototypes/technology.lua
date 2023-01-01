@@ -79,9 +79,9 @@ local function generate_tech_tier(tier)
     effects = { },
     prerequisites = { },
     unit = {
-      count = 100,
+      count = 1,
       ingredients = { {"bp-capture", 1}, },
-      time = 30
+      time = 1
     },
     order = "b-2-a-"..tier
   }
