@@ -75,7 +75,6 @@ local function generate_tech_tier(tier)
       },
     },
     icon_size = 230,
-    icon = "__biter-power__/graphics/technology/bp-tech-2.png",
     effects = { },
     prerequisites = { },
     unit = {

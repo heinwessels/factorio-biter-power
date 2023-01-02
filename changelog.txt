@@ -5,6 +5,7 @@ Date: ??.12.2022
     - Now have individual caged items for all biters/spitters with different fuel values and changes of escape.
     - Biter husbandry only available after capturing an initial specimen with a Cage Trap.
     - Added Reinforced Treadmill Generator with higher power output.
+    - High tier biters (Big and Behemoth) can only be used in Reinforced Treadmill Generator.
     - Caged biters can now be released back into the wild.
   Changes:
     - Doubled Buried Biter Nest's effective power output to 20MW.

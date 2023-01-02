@@ -199,6 +199,10 @@ data:extend({
       name = "bp-biter-power"
   },
   {
+    type = "fuel-category",
+    name = "bp-biter-power-advanced"
+  },
+  {
     type = "item",
     name = "bp-generator",
     icon = "__biter-power__/graphics/generator/icon.png",
