@@ -1,13 +1,13 @@
 {
     "item":
     [
-        ["bp-caged-biter", "bp-caged-medium-biter"],
-        ["bp-caged-biter-tired", "bp-tired-caged-medium-biter"]
+        ["bp-caged-biter", "bp-caged-small-biter"],
+        ["bp-caged-biter-tired", "bp-tired-caged-small-biter"]
     ],
 
     "recipe":
     [
-        ["bp-incubate-biter-egg", "bp-incubate-egg-medium-biter"],
-        ["bp-revitalization", "bp-revitalization-medium-biter"]
+        ["bp-incubate-biter-egg", "bp-incubate-egg-small-biter"],
+        ["bp-revitalization", "bp-revitalization-small-biter"]
     ]
 }
