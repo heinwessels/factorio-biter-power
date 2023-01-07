@@ -42,7 +42,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 },
             },
             subgroup = "bp-biters",
-            order = "b[caged-biter]",
+            order = "b[caged-biter]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
             fuel_glow_color = biter_config.tint,
             fuel_value = util.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = biter_config.tier <= 2 and "bp-biter-power" or "bp-biter-power-advanced",
@@ -60,10 +60,6 @@ for biter_name, biter_config in pairs(config.biter.types) do
             },
             icons = {
                 {
-                    icon = "__base__/graphics/icons/deconstruction-planner.png",
-                    icon_size = 64, icon_mipmaps = 4,
-                },
-                {
                     icon = "__biter-power__/graphics/cage/icon.png",
                     icon_size = 64,
                 },
@@ -71,9 +67,14 @@ for biter_name, biter_config in pairs(config.biter.types) do
                     icon = "__base__/graphics/icons/"..biter_name..".png",
                     icon_size = 64, icon_mipmaps = 4,
                 },
+                {
+                    icon = "__base__/graphics/icons/"..biter_name..".png",
+                    icon_size = 64, icon_mipmaps = 4,
+                    tint = {a = 0.1, r = 1}
+                },
             },
             subgroup = "bp-biters",
-            order = "c[caged-biter-tired]",
+            order = "c[caged-biter-tired]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
             fuel_value = util.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = "bp-biter-power",
             place_result = biter_name,

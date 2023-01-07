@@ -77,9 +77,8 @@ end)
 script.on_event(defines.events.on_research_started , function(event)
     local tech = event.research
     if tech.name:find("bp-biter-capture-tier-", 1, true) then
-        if not attemp_tiered_technology_unlock(tech.force, tech.level) then
-            tech.force.print("failed")
-        end
+        -- this command will silently be ignored if the tech couldn't be researched
+        attemp_tiered_technology_unlock(tech.force, tech.level)
     end
 end)
 
