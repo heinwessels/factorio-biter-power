@@ -18,6 +18,31 @@ function lib.formattime(ticks)
   return str
 end
 
+-- Recreation of the one in lualib, except for
+-- fixing the odd usage of `B`
+-- Taken from Fluidic Power
+function lib.format_number(amount, append_suffix)
+  local suffix = ""
+  if append_suffix then
+      local suffix_list =
+      {
+          ["T"] = 1000000000000,
+          ["G"] = 1000000000,   -- `G` and not `B`!
+          ["M"] = 1000000,
+          ["k"] = 1000,
+          [""] = 1  -- Otherwise below 1k formats odd. Probably hack and not actual problemssa
+      }
+      for letter, limit in pairs (suffix_list) do
+          if math.abs(amount) >= limit then
+              amount = math.floor(amount/(limit/10))/10
+              suffix = letter
+              break
+          end
+      end
+  end
+  return amount..suffix
+end
+
 
 -- This function is pulled from flib. Thanks Raiguard, this is an epic function!
 --- Call the given function on a set number of items in a table, returning the next starting key.

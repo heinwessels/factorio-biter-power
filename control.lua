@@ -337,7 +337,7 @@ local function on_deconstructed(event)
     -- If this is a die event then the biters should escape!
     -- We should only reach here if entity is escapable
     if event.name == defines.events.on_entity_died then
-        escape_biters_from_entity(entity)
+        escape_biters_from_entity(entity, get_biters_in_machine(entity))
     end
     
     global.escapables[entity.unit_number] = nil

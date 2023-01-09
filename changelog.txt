@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.0
-Date: ??.12.2022
+Date: 09.01.2023
   Features:
     - Now have individual caged items for all biters/spitters with different fuel values and changes of escape.
     - Biter husbandry only available after capturing an initial specimen with a Cage Trap.
@@ -9,7 +9,7 @@ Date: ??.12.2022
     - Caged biters can now be released back into the wild.
   Changes:
     - Doubled Buried Biter Nest's effective power output to 20MW.
-    - Doubled biter's base energy levels.
+    - Quadrupled biter's base energy levels.
     - Biter escape changes are now mainly based on biter type, and not machine type.
     - Improved biter on treadmill graphics. All biters are blackish. Not possible to have custom colours.
     - Changed base biter-to-egg ratio from 10-to-1 to 5-to-1.

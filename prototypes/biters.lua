@@ -44,7 +44,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             subgroup = "bp-biters",
             order = "b[caged-biter]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
             fuel_glow_color = biter_config.tint,
-            fuel_value = util.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
+            fuel_value = lib.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = biter_config.tier <= 2 and "bp-biter-power" or "bp-biter-power-advanced",
             burnt_result = "bp-tired-caged-"..biter_name,
             place_result = biter_name,
@@ -75,7 +75,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             },
             subgroup = "bp-biters",
             order = "c[caged-biter-tired]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
-            fuel_value = util.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
+            fuel_value = lib.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = "bp-biter-power",
             place_result = biter_name,
             stack_size = 1
