@@ -18,7 +18,7 @@ config.biter.egg_to_biter_ratio = 5
 
 config.incubator = {}
 config.incubator.power_usage = 200e3
-config.incubator.number_per_generator = 1 / 5
+config.incubator.number_per_generator = 1 / 10
 config.incubator.success_rate = 1
 config.incubator.emissions_per_minute = -200 -- Note: K2 air purifier is -75, and there will be much less incubators
 config.incubator.ingredients = {
@@ -29,7 +29,7 @@ config.incubator.biter_birth_probability = config.incubator.success_rate / confi
 
 config.revitalization = {}
 config.revitalization.power_usage = 100e3
-config.revitalization.number_per_generator = 1 / 10 
+config.revitalization.number_per_generator = 1 / 20 
 config.revitalization.success_rate = 0.9
 config.revitalization.egg_drop_rate = 0 -- Disable it for now, it's too complicated.
 config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
