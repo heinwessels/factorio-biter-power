@@ -34,13 +34,13 @@ local idle_animation = {
             } 
         },
         {
-            filename = "__biter-power__/graphics/revitalization-center/center-back.png",
+            filename = "__biter-power__/graphics/revitalizer/center-back.png",
             width = 194,
             height = 173,
             scale = 0.25,
             repeat_count = #frame_sequence,
             hr_version = {
-                filename = "__biter-power__/graphics/revitalization-center/center-back.png",
+                filename = "__biter-power__/graphics/revitalizer/center-back.png",
                 width = 194,
                 height = 173,
                 scale = 0.5,
@@ -128,13 +128,13 @@ table.insert(animation.layers, {
 -- Now add the front to both
 for _, property in pairs{idle_animation, animation} do
     table.insert(property.layers, {
-        filename = "__biter-power__/graphics/revitalization-center/center-front.png",
+        filename = "__biter-power__/graphics/revitalizer/center-front.png",
         width = 194,
         height = 173,
         scale = 0.5,
         repeat_count = #frame_sequence,
         hr_version = {
-            filename = "__biter-power__/graphics/revitalization-center/center-front.png",
+            filename = "__biter-power__/graphics/revitalizer/center-front.png",
             width = 194,
             height = 173,
             scale = 0.5,
@@ -146,25 +146,25 @@ end
 data:extend({
     {
         type = "item",
-        name = "bp-revitalization-center",
-        icon = "__biter-power__/graphics/revitalization-center/icon.png",
+        name = "bp-revitalizer",
+        icon = "__biter-power__/graphics/revitalizer/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         subgroup = "bp-biter-machines",
-        order = "d[biter-revitalization-center]",
-        place_result = "bp-revitalization-center",
+        order = "d[biter-revitalizer]",
+        place_result = "bp-revitalizer",
         stack_size = 20
     },
     {
         type = "recipe",
-        name = "bp-revitalization-center",
-        icon = "__biter-power__/graphics/revitalization-center/icon.png",
+        name = "bp-revitalizer",
+        icon = "__biter-power__/graphics/revitalizer/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         ingredients = {
             {"steel-plate", 30},
             {"electronic-circuit", 10},
             {"copper-plate", 5},
         },
-        result = "bp-revitalization-center"
+        result = "bp-revitalizer"
     },
     {
         type = "recipe-category",
@@ -178,15 +178,15 @@ data:extend({
     },
     {
         type = "furnace",
-        name = "bp-revitalization-center",
+        name = "bp-revitalizer",
         localised_description = {"",
-            {"entity-description.bp-revitalization-center"},
-            {"bp-text.escape-modifier", config.escapes.escapable_machine["bp-revitalization-center"]},
+            {"entity-description.bp-revitalizer"},
+            {"bp-text.escape-modifier", config.escapes.escapable_machine["bp-revitalizer"]},
         },
-        icon = "__biter-power__/graphics/revitalization-center/icon.png",
+        icon = "__biter-power__/graphics/revitalizer/icon.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
-        minable = {mining_time = 0.2, result = "bp-revitalization-center"},
+        minable = {mining_time = 0.2, result = "bp-revitalizer"},
         max_health = 400,
         corpse = "lab-remnants",
         dying_explosion = "lab-explosion",
@@ -264,7 +264,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         localised_name = {"bp-text.revitalization", biter_name},
         icons = {
             {
-                icon = "__biter-power__/graphics/revitalization-center/icon.png",
+                icon = "__biter-power__/graphics/revitalizer/icon.png",
                 icon_size = 64, icon_mipmaps = 4,
             },
             {

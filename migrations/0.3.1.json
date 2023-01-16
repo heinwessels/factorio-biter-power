@@ -1,0 +1,19 @@
+
+{
+        "item":
+        [
+            ["bp-revitalization-center", "bp-revitalizer"]
+        ],
+        
+        "recipe":
+        [
+            ["bp-revitalization-center", "bp-revitalizer"]
+        ],
+
+        "entity":
+        [
+            ["bp-revitalization-center", "bp-revitalizer"]
+        ]
+
+        
+}

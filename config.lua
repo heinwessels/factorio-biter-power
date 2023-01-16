@@ -135,7 +135,7 @@ config.escapes.escapable_machine = {
     -- The 'value' is a multiplier for biters' escape_period
     ["bp-generator"] = 1,
     ["bp-generator-reinforced"] = 0.5,
-    ["bp-revitalization-center"] = 1,
+    ["bp-revitalizer"] = 1,
 }
 
 

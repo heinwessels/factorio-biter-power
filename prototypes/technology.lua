@@ -10,7 +10,7 @@ local bp_tech = {
         { type = "unlock-recipe", recipe = "bp-cage-trap" },
         { type = "unlock-recipe", recipe = "bp-generator" },
         { type = "unlock-recipe", recipe = "bp-incubator" },
-        { type = "unlock-recipe", recipe = "bp-revitalization-center" },
+        { type = "unlock-recipe", recipe = "bp-revitalizer" },
         { type = "unlock-recipe", recipe = "bp-egg-extractor" },
     },
     prerequisites = {"steel-processing", "military"},
