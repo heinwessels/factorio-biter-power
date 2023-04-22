@@ -203,4 +203,13 @@ config.biter.types = {
     },
 }
 
+
+-----------------------------------------------
+--[[        Here we add modded biters        ]] 
+-----------------------------------------------
+local enabled_mods = mods or script.active_mods
+
+
+
+-----------------------------------------------
 return config
