@@ -1,5 +1,7 @@
 # [Biter Power](https://mods.factorio.com/mod/biter-power)
 
+[![shield](https://img.shields.io/badge/dynamic/json?color=orange&label=Factorio&query=downloads_count&suffix=%20downloads&url=https%3A%2F%2Fmods.factorio.com%2Fapi%2Fmods%2Fbiter-power)](https://mods.factorio.com/mod/biter-power)
+
 ![](https://i.imgur.com/vesO4dr.mp4)
 
 Generate electricity by placing biters on treadmills. Biters can be caught with cage traps, or by placing an egg extractor on a buried biter nest. Biters get tired after running on the treadmill after which they need be revitalized, which could be hazardous. Warning, biters might escape!
