@@ -60,16 +60,32 @@ script.on_event(defines.events.on_script_trigger_effect , function(event)
     local trap = event.source_entity
     local biter = event.target_entity
     if not biter then return end
-    local biter_config = config.biter.types[biter.name]
+    
+    local biter_name = biter.name
+
+    -- Check for presence of Enemy Race Manager mode (https://mods.factorio.com/mod/enemyracemanager)
+    -- if present, split biter name by "/", name pattern in ERM is force/biter name/level, we only need biter name
+    -- parts of string are placed into table so we can easily get second part (string.gmatch is iterator and does not return table)
+    -- use parsed name to try to get config and return to check if config was found
+    if game.active_mods["enemyracemanager"] then
+        words = {}
+        for w in string.gmatch(biter_name, "[^/]+") do
+            table.insert(words, w)
+        end
+        biter_name = words[2]
+    end
+    
+    local biter_config = config.biter.types[biter_name]
+
     if not biter_config then return end  -- Will lose the cage    
-    local caged_name = "bp-caged-"..biter.name
+    local caged_name = "bp-caged-"..biter_name
     local force = trap.force
     biter.surface.spill_item_stack(biter.position, {name=caged_name}, true, force)
     trap.force.item_production_statistics.on_flow(caged_name, 1)
     local tech = attemp_tiered_technology_unlock(force, biter_config.tier, true) 
     if tech then
         force.print({"bp-text.capture-complete",
-            "[technology="..tech.name.."]", biter.name}, {1, 0.75, 0.4})
+            "[technology="..tech.name.."]", biter_name}, {1, 0.75, 0.4})
     end
     biter.destroy{raise_destroy = true}
 end)
