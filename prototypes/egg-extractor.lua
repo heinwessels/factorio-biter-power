@@ -1,5 +1,5 @@
 -- Holy moly mining-drills are complicated!
-local config = require("config")
+if not config then error("No config found!") end
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
 

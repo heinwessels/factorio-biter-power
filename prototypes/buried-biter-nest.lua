@@ -1,4 +1,4 @@
-local config = require("config")
+if not config then error("No config found!") end
 local sounds = require ("__base__.prototypes.entity.sounds")
 
 data:extend({
@@ -62,8 +62,19 @@ data:extend({
 })
 
 
-for _, spawner_name in pairs{"biter-spawner", "spitter-spawner"} do
-  local spawner = data.raw["unit-spawner"][spawner_name]
+for spawner_name, spawner in pairs(data.raw["unit-spawner"]) do
+
+  -- First determine if this spawner can spawn a biter that we can catch
+  -- If not then ignore this spawner
+  if not spawner.result_units then goto continue end
+  local spawns_catchable_unit = false
+  for _, definition in pairs(spawner.result_units) do
+    local unit = definition[unit] or definition[1]
+    if config.biter.types[unit] then 
+      spawns_catchable_unit = true
+    end
+  end
+  if not spawns_catchable_unit then goto continue end
   
   -- Add trigger effect to spawners to have a chance
   -- to create buried biter nest on death
@@ -89,4 +100,6 @@ for _, spawner_name in pairs{"biter-spawner", "spitter-spawner"} do
     count_min = 0.5 * config.biter.egg_to_biter_ratio,
     count_max = 1.5 * config.biter.egg_to_biter_ratio,
   })
+
+  ::continue::
 end

@@ -6,6 +6,7 @@
     "factorio_version": "1.1",
     "description": "Generate electricity pollution neutral by placing biters on treadmills. Biters can be caught with cage traps, or by placing an egg extractor on a buried biter nest. Biters get tired after running on the treadmill after which they need be revitalized, which could be hazardous. Warning, biters might escape!",
     "dependencies": [
-        "base >= 1.1.60"
+        "base >= 1.1.60",
+        "(?) Cold_biters"
     ]
 }

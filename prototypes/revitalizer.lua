@@ -1,8 +1,9 @@
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local config = require("config")
+if not config then error("No config found!") end
 local lib = require("lib.lib")
 local util = require("util")
+
 
 local frame_sequence = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 10, 9, 8, 7, 8, 9, 10, 11}
 
@@ -258,20 +259,17 @@ data:extend({
 
 -- create recipes for revitilization
 for biter_name, biter_config in pairs(config.biter.types) do
+    local icons = util.copy(biter_config.icons)
+    table.insert(icons, 1, {
+        icon = "__biter-power__/graphics/revitalizer/icon.png",
+        icon_size = 64, icon_mipmaps = 4,
+    })
+
     local recipe = {
         type = "recipe",
         name = "bp-revitalization-"..biter_name,
         localised_name = {"bp-text.revitalization", biter_name},
-        icons = {
-            {
-                icon = "__biter-power__/graphics/revitalizer/icon.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-            {
-                icon = "__base__/graphics/icons/"..biter_name..".png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-        },
+        icons = icons,
         show_amount_in_title = false,
         always_show_products = true,
         subgroup = "bp-biter-revitalization",

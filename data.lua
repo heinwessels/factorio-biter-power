@@ -5,6 +5,12 @@ data:extend{{ -- No other good to place this for now
     order = "m"
 }}
 
+-----------------------------------------------
+--[[        Here we add modded biters        ]] 
+-----------------------------------------------
+config = require("config")
+-----------------------------------------------
+
 require("prototypes.biters")
 require("prototypes.cage")
 require("prototypes.generator")
@@ -15,12 +21,10 @@ require("prototypes.buried-biter-nest")
 require("prototypes.egg-extractor")
 require("prototypes.cage-trap")
 require("prototypes.technology")
-require("prototypes.compatibility")
 
 
 if mods["debugadapter"] then
     log("====== Biter Power: Config [Stats for nerds] ======")
-    local config = require("config")
     log(serpent.block(config))
     log("--- Extra Stats ---")
     log("Biter Power Capacity: "..string.format("%.2f", config.biter.fuel_value/1e3/3600).." kW-hour")

@@ -1,4 +1,4 @@
-local config = require("config")
+if not config then error("No config found!") end
 local util = require("util")
 local lib = require("lib.lib")
 

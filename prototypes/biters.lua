@@ -1,6 +1,7 @@
-local config = require("config")
+if not config then error("No config found!") end
 local util = require("util")
 local lib = require("lib.lib")
+
 
 data:extend({
     {
@@ -22,6 +23,24 @@ data:extend({
 
 -- create biter items in cages
 for biter_name, biter_config in pairs(config.biter.types) do
+    
+    local caged_icons = util.copy(biter_config.icons)
+    table.insert(caged_icons, 1, {
+        icon = "__biter-power__/graphics/cage/icon.png",
+        icon_size = 64,
+    })
+
+    local tired_caged_icons = util.copy(biter_config.icons)
+    table.insert(tired_caged_icons, 1, {
+        icon = "__biter-power__/graphics/cage/icon.png",
+        icon_size = 64,
+    })
+    table.insert(tired_caged_icons, 
+        util.merge{tired_caged_icons[#tired_caged_icons], {
+            tint = {a = 0.1, r = 1}
+        }}
+    )
+
     data:extend({
         {
             type = "item",
@@ -31,16 +50,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 {"item-description.bp-caged-biter"},
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},
             },
-            icons = {
-                {
-                    icon = "__biter-power__/graphics/cage/icon.png",
-                    icon_size = 64,
-                },
-                {
-                    icon = "__base__/graphics/icons/"..biter_name..".png",
-                    icon_size = 64, icon_mipmaps = 4,
-                },
-            },
+            icons = caged_icons,
             subgroup = "bp-biters",
             order = "b[caged-biter]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
             fuel_glow_color = biter_config.tint,
@@ -58,21 +68,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 {"item-description.bp-caged-biter-tired"},
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period * config.biter.tired_modifier)},
             },
-            icons = {
-                {
-                    icon = "__biter-power__/graphics/cage/icon.png",
-                    icon_size = 64,
-                },
-                {
-                    icon = "__base__/graphics/icons/"..biter_name..".png",
-                    icon_size = 64, icon_mipmaps = 4,
-                },
-                {
-                    icon = "__base__/graphics/icons/"..biter_name..".png",
-                    icon_size = 64, icon_mipmaps = 4,
-                    tint = {a = 0.1, r = 1}
-                },
-            },
+            icons = tired_caged_icons,
             subgroup = "bp-biters",
             order = "c[caged-biter-tired]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
             fuel_value = lib.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",

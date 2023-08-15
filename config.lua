@@ -1,6 +1,8 @@
 -- This will contain the entire config of the mod
 -- to make sure everything as balanced as it should be
 
+local util = require("util")
+
 local config = {}
 
 config.generator = {}
@@ -174,31 +176,19 @@ config.biter.types = {
         tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
     },
     ["small-spitter"] = {
-        tier = 1,
-        energy_modifer = 0.8,
-        density_modifier = 0.8,
-        escape_period = 60 * 60 * 60 * 4,
+        copy = "small-biter",
         tint = {r=0.91 , g=0.92 , b=0.87 , a=1 },
     },
     ["medium-spitter"] = {
-        tier = 2,
-        energy_modifer = 1,
-        density_modifier = 1,
-        escape_period = 60 * 60 * 60 * 3.5,
+        copy = "medium-biter",
         tint = {r=0.89 , g=0.84 , b=0.85 , a=1 },
     },
     ["big-spitter"] = {
-        tier = 3,
-        energy_modifer = 2,
-        density_modifier = 2,
-        escape_period = 60 * 60 * 60 * 3,
+        copy = "big-biter",
         tint = {r=0.8  , g=0.82 , b=0.85 , a=1 },
     },
     ["behemoth-spitter"] = {
-        tier = 4,
-        energy_modifer = 3,
-        density_modifier = 3,
-        escape_period = 60 * 60 * 60 * 2,
+        copy = "behemoth-biter",
         tint = {r = 0.7, g = 0.95, b = 0.4, a = 1.000},  
     },
 }
@@ -209,7 +199,70 @@ config.biter.types = {
 -----------------------------------------------
 local enabled_mods = mods or script.active_mods
 
+if enabled_mods["Cold_biters"] then
+    config.biter.types["small-cold-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-cold-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-cold-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-cold-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["leviathan-cold-biter"] = {
+        tier = 5,   -- Scaled twice from behemoth
+        energy_modifer = 5,
+        density_modifier = 5,
+        escape_period = 60 * 60 * 30,
+        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
+    }
+    
+    config.biter.types["small-cold-spitter"] = {copy = "small-spitter"}
+    config.biter.types["medium-cold-spitter"] = {copy = "medium-spitter"}
+    config.biter.types["big-cold-spitter"] = {copy = "big-spitter"}
+    config.biter.types["behemoth-cold-spitter"] = {copy = "behemoth-spitter"}
+    config.biter.types["leviathan-cold-spitter"] = {copy = "leviathan-cold-biter"}
+end
 
 
 -----------------------------------------------
+
+-- We can base modded biters on the vanilla variants. Here we
+-- loop through the current config and see if we should handle those
+-- cases now
+for biter_name, biter_config in pairs(config.biter.types) do
+    if biter_config.copy then
+        local biter_config_to_copy = config.biter.types[biter_config.copy]
+        if not biter_config_to_copy then error("Biter config to copy '"..biter_config.copy.."' does not exist!") end
+        biter_config.copy = nil
+        config.biter.types[biter_name] = util.merge{biter_config_to_copy, biter_config}
+    end
+end
+
+
+-- If we're in the data-stage then it's useful to find biter icon information here
+-- because we will use it in quite a few occations.
+if data and data.raw then
+    for biter_name, biter_config in pairs(config.biter.types) do
+        local unit = data.raw.unit[biter_name]
+        if not unit then error("No '"..biter_name.."'unit found!") end
+        if unit.icons then
+            -- Takes precedence
+            biter_config.icons = util.copy(unit.icons)
+        else
+            biter_config.icons = {
+                {
+                    icon = unit.icon,
+                    icon_size = unit.icon_size,
+                    icon_mipmaps = unit.icon_mipmaps,                    
+                }
+            }
+        end
+    end
+end
+
+-- Calculate the amount of tiers we have defined
+config.biter.max_tier = 0
+for biter_name, biter_config in pairs(config.biter.types) do
+    if biter_config.tier > config.biter.max_tier then
+        config.biter.max_tier = biter_config.tier
+    end
+end
+if config.biter.max_tier == 0 then error("No tiers found! This should never happen") end
+
 return config

@@ -1,4 +1,4 @@
-local config = require("config")
+if not config then error("No config found!") end
 
 local bp_tech = {
     type = "technology",
@@ -90,11 +90,11 @@ local function generate_tech_tier(tier)
       table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-incubate-egg-"..biter_name})
       table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-revitalization-"..biter_name})
 
+      -- Only add the icon if we haven't already handled this tier.
       if #tech.icons == 1 then
-        table.insert(tech.icons, {
-          icon = "__base__/graphics/icons/"..biter_name..".png",
-          icon_size = 64, icon_mipmaps = 4,
-        })
+        for _, icon in pairs(biter_config.icons) do
+          table.insert(tech.icons, icon)
+        end
       end
     end
   end
@@ -102,11 +102,11 @@ local function generate_tech_tier(tier)
   return tech
 end
 
-for tier = 1,4 do
+for tier = 1, config.biter.max_tier do
   local tech = generate_tech_tier(tier)
   if tier > 1 then
     table.insert(tech.prerequisites, "bp-biter-capture-tier-"..(tier - 1))
-    if tier == 3 then
+    if tier >= 3 then
       table.insert(tech.prerequisites, "bp-biter-power-advanced")
     end
   else

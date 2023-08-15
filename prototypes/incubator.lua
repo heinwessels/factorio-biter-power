@@ -1,6 +1,6 @@
 local hit_effects = require("__base__.prototypes.entity.hit-effects")
 local sounds = require("__base__.prototypes.entity.sounds")
-local config = require("config")
+if not config then error("No config found!") end
 local util = require("util")
 
 data:extend({
@@ -158,20 +158,18 @@ data:extend({
 -- create recipes for revitilization
 -- biter density modifier will make higher densities take longer to incubate
 for biter_name, biter_config in pairs(config.biter.types) do
+    
+    local icons = util.copy(biter_config.icons)
+    table.insert(icons, 1, {
+        icon = "__biter-power__/graphics/incubator/biter-egg.png",
+        icon_size = 64, icon_mipmaps = 4,
+    })
+
     local recipe =     {
         type = "recipe",
         name = "bp-incubate-egg-"..biter_name,
         localised_name = {"bp-text.incubation", biter_name},
-        icons = {
-            {
-                icon = "__biter-power__/graphics/incubator/biter-egg.png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-            {
-                icon = "__base__/graphics/icons/"..biter_name..".png",
-                icon_size = 64, icon_mipmaps = 4,
-            },
-        },
+        icons = icons,
         category = "bp-biter-incubation",        
         subgroup = "bp-egg-incubation",
         order = "c[incubation]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
