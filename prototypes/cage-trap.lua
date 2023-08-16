@@ -7,8 +7,8 @@ data:extend{
         name = "bp-cage-trap",
         icon = "__biter-power__/graphics/cage-trap/icon.png",
         icon_size = 64,
-        subgroup = "gun",
-        order = "g[cage-trap]",
+        subgroup = "bp-husbandry-intermediates",
+        order = "c[cage-trap]",
         place_result = "bp-cage-trap",
         stack_size = 20
     },

@@ -3,6 +3,11 @@ local sounds = require("__base__.prototypes.entity.sounds")
 if not config then error("No config found!") end
 local util = require("util")
 
+local incubator_crafting_categories = {}
+for tier = 1, config.biter.max_tier do
+    table.insert(incubator_crafting_categories, "incubation-tier-"..tier)
+end
+
 data:extend({
     {
         type = "item",
@@ -26,16 +31,6 @@ data:extend({
         result = "bp-incubator"
     },
     {
-        type = "recipe-category",
-        name = "bp-biter-incubation"
-    },
-    {
-        type = "item-subgroup",
-        name = "bp-egg-incubation",
-        group = "intermediate-products",
-        order = "n"
-    },
-    {
         type = "assembling-machine",
         name = "bp-incubator",
         icon = "__biter-power__/graphics/incubator/icon.png",
@@ -45,7 +40,7 @@ data:extend({
         max_health = 300,        
         corpse = "chemical-plant-remnants",
         dying_explosion = "chemical-plant-explosion",
-        crafting_categories = {"bp-biter-incubation"},
+        crafting_categories = incubator_crafting_categories,
         resistances = {
             {
                 type = "fire",
@@ -157,6 +152,21 @@ data:extend({
 
 -- create recipes for revitilization
 -- biter density modifier will make higher densities take longer to incubate
+for tier = 1, config.biter.max_tier do
+    data:extend{
+        {
+            type = "recipe-category",
+            name = "incubation-tier-"..tier
+        },
+        {
+            type = "item-subgroup",
+            name = "incubation-tier-"..tier,
+            group = "biter-power-husbandry",
+            order = "[b]-[tier-"..tier.."]-[a]"
+        },
+    }
+end
+
 for biter_name, biter_config in pairs(config.biter.types) do
     
     local icons = util.copy(biter_config.icons)
@@ -170,8 +180,8 @@ for biter_name, biter_config in pairs(config.biter.types) do
         name = "bp-incubate-egg-"..biter_name,
         localised_name = {"bp-text.incubation", biter_name},
         icons = icons,
-        category = "bp-biter-incubation",        
-        subgroup = "bp-egg-incubation",
+        category = "incubation-tier-"..biter_config.tier,
+        subgroup = "incubation-tier-"..biter_config.tier,
         order = "c[incubation]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         crafting_machine_tint = {primary={r=226, g=22, b=190}},
         energy_required = config.incubator.duration,

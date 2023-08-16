@@ -1,16 +1,10 @@
-data:extend{{ -- No other good to place this for now
-    type = "item-subgroup",
-    name = "bp-biter-machines",
-    group = "production",
-    order = "m"
-}}
-
 -----------------------------------------------
---[[        Here we add modded biters        ]] 
+--[[        Create a global config           ]] 
 -----------------------------------------------
 config = require("config")
 -----------------------------------------------
 
+require("prototypes.organisation")
 require("prototypes.biters")
 require("prototypes.cage")
 require("prototypes.generator")

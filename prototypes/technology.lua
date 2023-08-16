@@ -53,10 +53,10 @@ data:extend{
   {
     type = "tool",
     name = "bp-capture",
-    order = "bp-capture",
+    order = "z",
     icon = "__biter-power__/graphics/cage-trap/icon.png",
     icon_size = 64,
-    subgroup = "science-pack",
+    subgroup = "bp-husbandry-intermediates",
     stack_size = 1,
     durability = 1,
     durability_description_key = "description.science-pack-remaining-amount-key",

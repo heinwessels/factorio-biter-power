@@ -4,7 +4,7 @@ data:extend({
         name = "bp-cage",
         icon = "__biter-power__/graphics/cage/icon.png",
         icon_size = 64,
-        subgroup = "bp-biters",
+        subgroup = "bp-husbandry-intermediates",
         order = "b[biter-cage]",
         stack_size = 20
     },

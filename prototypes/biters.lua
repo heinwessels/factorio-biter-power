@@ -5,21 +5,27 @@ local lib = require("lib.lib")
 
 data:extend({
     {
-        type = "item-subgroup",
-        name = "bp-biters",
-        group = "intermediate-products",
-        order = "m"
-    },
-    {
         type = "item",
         name = "bp-biter-egg",
         icon = "__biter-power__/graphics/incubator/biter-egg.png",
         icon_size = 64, icon_mipmaps = 4,
-        subgroup = "bp-biters",
+        subgroup = "bp-husbandry-intermediates",
         order = "a[biter-egg]",
         stack_size = config.biter.egg_stack_size,
     },
 })
+
+-- create recipes for revitilization
+for tier = 1, config.biter.max_tier do
+    data:extend{
+        {
+            type = "item-subgroup",
+            name = "bp-biters-tier-"..tier,
+            group = "biter-power-husbandry",
+            order = "b"
+        },
+    }
+end
 
 -- create biter items in cages
 for biter_name, biter_config in pairs(config.biter.types) do
@@ -51,8 +57,8 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},
             },
             icons = caged_icons,
-            subgroup = "bp-biters",
-            order = "b[caged-biter]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
+            subgroup = "bp-biters-tier-"..biter_config.tier,
+            order = "[b]-["..biter_name.."]-[a]",
             fuel_glow_color = biter_config.tint,
             fuel_value = lib.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = biter_config.tier <= 2 and "bp-biter-power" or "bp-biter-power-advanced",
@@ -69,8 +75,8 @@ for biter_name, biter_config in pairs(config.biter.types) do
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period * config.biter.tired_modifier)},
             },
             icons = tired_caged_icons,
-            subgroup = "bp-biters",
-            order = "c[caged-biter-tired]-[tier-"..biter_config.tier.."]-["..biter_name.."]",
+            subgroup = "bp-biters-tier-"..biter_config.tier,
+            order = "[b]-["..biter_name.."]-b[tired]",
             fuel_value = lib.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
             fuel_category = "bp-biter-power",
             place_result = biter_name,

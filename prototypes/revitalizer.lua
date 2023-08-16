@@ -144,6 +144,11 @@ for _, property in pairs{idle_animation, animation} do
     })
 end
 
+local revitalizer_crafting_categories = {}
+for tier = 1, config.biter.max_tier do
+    table.insert(revitalizer_crafting_categories, "revitalization-tier-"..tier)
+end
+
 data:extend({
     {
         type = "item",
@@ -168,16 +173,6 @@ data:extend({
         result = "bp-revitalizer"
     },
     {
-        type = "recipe-category",
-        name = "bp-biter-revitalization"
-    },
-    {
-        type = "item-subgroup",
-        name = "bp-biter-revitalization",
-        group = "intermediate-products",
-        order = "o"
-    },
-    {
         type = "furnace",
         name = "bp-revitalizer",
         localised_description = {"",
@@ -193,7 +188,7 @@ data:extend({
         dying_explosion = "lab-explosion",
         result_inventory_size = 1,
         source_inventory_size = 1, 
-        crafting_categories = {"bp-biter-revitalization"},
+        crafting_categories = revitalizer_crafting_categories,
         resistances = {
             {
                 type = "fire",
@@ -258,6 +253,21 @@ data:extend({
 })
 
 -- create recipes for revitilization
+for tier = 1, config.biter.max_tier do
+    data:extend{
+        {
+            type = "recipe-category",
+            name = "revitalization-tier-"..tier,
+        },
+        {
+            type = "item-subgroup",
+            name = "revitalization-tier-"..tier,
+            group = "biter-power-husbandry",
+            order = "[b]-[tier-"..tier.."]-[b]"
+        }
+    }
+end
+
 for biter_name, biter_config in pairs(config.biter.types) do
     local icons = util.copy(biter_config.icons)
     table.insert(icons, 1, {
@@ -272,8 +282,8 @@ for biter_name, biter_config in pairs(config.biter.types) do
         icons = icons,
         show_amount_in_title = false,
         always_show_products = true,
-        subgroup = "bp-biter-revitalization",
-        category = "bp-biter-revitalization",
+        subgroup = "revitalization-tier-"..biter_config.tier,
+        category =  "revitalization-tier-"..biter_config.tier,
         order = "c[revitilization]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         ingredients = {{"bp-tired-caged-"..biter_name, 1}},
         energy_required = config.revitalization.time * biter_config.density_modifier,
