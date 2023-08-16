@@ -4,6 +4,7 @@ Date: ??.08.2021
   Changes:
     - Compatibility with Frost Biters.
     - Compatibility with Explosive Biters.
+    - Compatibility with Toxic Biters.
     - Compatibility with Armoured Biters.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1

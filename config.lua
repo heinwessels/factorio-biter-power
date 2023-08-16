@@ -253,6 +253,26 @@ if enabled_mods["Explosive_biters"] then
     config.biter.types["leviathan-explosive-spitter"] = {copy = "explosive-leviathan-biter"}
 end
 
+if enabled_mods["Toxic_biters"] then
+    config.biter.types["small-toxic-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-toxic-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-toxic-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-toxic-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["leviathan-toxic-biter"] = {
+        tier = 5,   -- Scaled twice from behemoth
+        energy_modifer = 5,
+        density_modifier = 5,
+        escape_period = 60 * 60 * 30, 
+        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
+    }
+    
+    config.biter.types["small-toxic-spitter"] = {copy = "small-spitter"}
+    config.biter.types["medium-toxic-spitter"] = {copy = "medium-spitter"}
+    config.biter.types["big-toxic-spitter"] = {copy = "big-spitter"}
+    config.biter.types["behemoth-toxic-spitter"] = {copy = "behemoth-spitter"}
+    config.biter.types["leviathan-toxic-spitter"] = {copy = "leviathan-toxic-biter"}
+end
+
 
 -----------------------------------------------
 

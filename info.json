@@ -9,6 +9,7 @@
         "base >= 1.1.60",
         "(?) Cold_biters",
         "(?) ArmouredBiters",
-        "(?) Explosive_biters"
+        "(?) Explosive_biters",
+        "(?) Toxic_biters"
     ]
 }
