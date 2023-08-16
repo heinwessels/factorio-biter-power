@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Factorio Mod Debug",            
             "hookControl": ["biter-power"],
-            // "hookData": true
+            "hookData": true
         },
     ]
 }

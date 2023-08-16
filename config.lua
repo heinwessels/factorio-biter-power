@@ -233,6 +233,26 @@ if enabled_mods["Cold_biters"] then
     config.biter.types["leviathan-cold-spitter"] = {copy = "leviathan-cold-biter"}
 end
 
+if enabled_mods["Explosive_biters"] then
+    config.biter.types["small-explosive-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-explosive-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-explosive-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-explosive-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["explosive-leviathan-biter"] = {
+        tier = 5,   -- Scaled twice from behemoth
+        energy_modifer = 5,
+        density_modifier = 5,
+        escape_period = 60 * 60 * 30, 
+        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
+    }
+    
+    config.biter.types["small-explosive-spitter"] = {copy = "small-spitter"}
+    config.biter.types["medium-explosive-spitter"] = {copy = "medium-spitter"}
+    config.biter.types["big-explosive-spitter"] = {copy = "big-spitter"}
+    config.biter.types["behemoth-explosive-spitter"] = {copy = "behemoth-spitter"}
+    config.biter.types["leviathan-explosive-spitter"] = {copy = "explosive-leviathan-biter"}
+end
+
 
 -----------------------------------------------
 
@@ -255,9 +275,17 @@ if data and data.raw then
     for biter_name, biter_config in pairs(config.biter.types) do
         local unit = data.raw.unit[biter_name]
         if not unit then error("No '"..biter_name.."'unit found!") end
-        if unit.icons then
-            -- Takes precedence
+        if unit.icons then -- Takes precedence according to docs            
             biter_config.icons = util.copy(unit.icons)
+            
+            for _, icon in pairs(biter_config.icons) do
+                -- Remove any scaling, because it doesn't
+                -- look right on the item recipe's etc.
+                -- Specifically Explosive Biters
+                -- Might cause weird issues on weird icons, 
+                -- but we don't support such biters now.
+                icon.scale = 0.5 -- Not sure yet why 0.5?
+            end
         else
             biter_config.icons = {
                 {
