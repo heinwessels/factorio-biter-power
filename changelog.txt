@@ -2,7 +2,8 @@
 Version: 0.3.2
 Date: ??.08.2021
   Changes:
-    - Compatability with Frost Biters.
+    - Compatibility with Frost Biters.
+    - Compatibility with Armoured Biters.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1
 Date: 16.01.2021

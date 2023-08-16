@@ -199,6 +199,20 @@ config.biter.types = {
 -----------------------------------------------
 local enabled_mods = mods or script.active_mods
 
+if enabled_mods["ArmouredBiters"] then
+    config.biter.types["small-armoured-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-armoured-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-armoured-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-armoured-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["leviathan-armoured-biter"] = {
+        tier = 5,   -- Scaled twice from behemoth
+        energy_modifer = 5,
+        density_modifier = 5,
+        escape_period = 60 * 60 * 30,
+        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
+    }
+end
+
 if enabled_mods["Cold_biters"] then
     config.biter.types["small-cold-biter"] = {copy = "small-biter"}
     config.biter.types["medium-cold-biter"] = {copy = "medium-biter"}

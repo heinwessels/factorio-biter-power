@@ -93,7 +93,11 @@ local function generate_tech_tier(tier)
       -- Only add the icon if we haven't already handled this tier.
       if #tech.icons == 1 then
         for _, icon in pairs(biter_config.icons) do
-          table.insert(tech.icons, icon)
+          -- Scale each icon to the cage icon
+          local icon_copy = util.copy(icon)
+          icon_copy.scale = icon_copy.scale or 1
+          icon_copy.scale = icon_copy.scale * (64 / icon_copy.icon_size)
+          table.insert(tech.icons, icon_copy)
         end
       end
     end
@@ -106,7 +110,9 @@ for tier = 1, config.biter.max_tier do
   local tech = generate_tech_tier(tier)
   if tier > 1 then
     table.insert(tech.prerequisites, "bp-biter-capture-tier-"..(tier - 1))
-    if tier >= 3 then
+    if tier == 3 then
+      -- Everything from tier three requires advanced biter power. We
+      -- only have to add it once though
       table.insert(tech.prerequisites, "bp-biter-power-advanced")
     end
   else
