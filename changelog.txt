@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.2
-Date: ??.08.2021
+Date: 18.08.2021
   Features:
     - Compatibility with Frost Biters.
     - Compatibility with Explosive Biters.
@@ -10,6 +10,7 @@ Date: ??.08.2021
   Changes:
     - Reorganised crafting menu. Placed all incubator/revitalization recipes in a separate tab.
     - Higher tier biters now have a higher chance of surviving revitalization.
+    - Added some descriptions to biters to show the energy they can contain (when not tired).
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1
 Date: 16.01.2021

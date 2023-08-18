@@ -29,7 +29,8 @@ end
 
 -- create biter items in cages
 for biter_name, biter_config in pairs(config.biter.types) do
-    
+
+    -- Create the caged and tired caged items
     local caged_icons = util.copy(biter_config.icons)
     table.insert(caged_icons, 1, {
         icon = "__biter-power__/graphics/cage/icon.png",
@@ -83,4 +84,11 @@ for biter_name, biter_config in pairs(config.biter.types) do
             stack_size = 1
         },
     })
+
+    -- Add some description to the biter units
+    local unit = data.raw.unit[biter_name] -- Should exist
+    unit.localised_description = {"", 
+        {"bp-text.energy-capacity", data.raw.item["bp-caged-"..biter_name].fuel_value},
+        {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},
+    }
 end
