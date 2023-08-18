@@ -6,6 +6,7 @@ Date: ??.08.2021
     - Compatibility with Explosive Biters.
     - Compatibility with Toxic Biters.
     - Compatibility with Armoured Biters.
+    - Compatibility with Bob's Enemies.
   Changes:
     - Reorganised crafting menu. Placed all incubator/revitalization recipes in a separate tab. 
 ---------------------------------------------------------------------------------------------------

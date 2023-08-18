@@ -141,40 +141,78 @@ config.escapes.escapable_machine = {
 }
 
 
+
+-- We hardcode some tiers, so then it's all easier to manage. It's
+-- all based on tiers anyway, and we still have the power to customise
+-- individial units. We will define all here, even for modded cases
+config.biter.tiers = {
+    [1] = {
+        energy_modifer = 0.8,
+        density_modifier = 0.8,
+        escape_period = 60 * 60 * 60 * 4,
+    },
+    [2] = {
+        energy_modifer = 1,
+        density_modifier = 1,
+        escape_period = 60 * 60 * 60 * 3.5,
+    },
+    [3] = {
+        energy_modifer = 2,
+        density_modifier = 2,
+        escape_period = 60 * 60 * 60 * 3,
+    },
+    [4] = {
+        energy_modifer = 3,
+        density_modifier = 3,
+        escape_period = 60 * 60 * 60 * 2,
+    },
+    [5] = {
+        energy_modifer = 4,
+        density_modifier = 4,
+        escape_period = 60 * 60 * 60 * 1,
+    },
+    [6] = {
+        energy_modifer = 5,
+        density_modifier = 5,
+        escape_period = 60 * 60 * 30,
+    },
+    [7] = {
+        energy_modifer = 6,
+        density_modifier = 6,
+        escape_period = 60 * 60 * 20,
+    },
+    [8] = {
+        energy_modifer = 7,
+        density_modifier = 7,
+        escape_period = 60 * 60 * 15,
+    },
+}
+
 -- Here we define the different biter types. All stats
 -- will be relative to the base values because I don't 
 -- want the calculations to be that complicated.
 --  The 'escape_period' is the average time it will take 
 --  for a single escape from a single machine in ticks
+-- Note: tint is optional
 config.biter.types = {
     ["small-biter"] = {
         tier = 1,
-        energy_modifer = 0.8,
-        density_modifier = 0.8,
-        escape_period = 60 * 60 * 60 * 4,
         tint = {r=0.9 , g=0.83, b=0.54, a=1},
     },
     ["medium-biter"] = {
         tier = 2,
-        energy_modifer = 1,
-        density_modifier = 1,
-        escape_period = 60 * 60 * 60 * 3.5,
         tint = {r=0.93, g=0.72, b=0.72, a=1},
     },
     ["big-biter"] = {
         tier = 3,
-        energy_modifer = 2,
-        density_modifier = 2,
-        escape_period = 60 * 60 * 60 * 3,
         tint = {r=0.55, g=0.76, b=0.75, a=1},   
     },
     ["behemoth-biter"] = {
         tier = 4,
-        energy_modifer = 3,
-        density_modifier = 3,
-        escape_period = 60 * 60 * 60 * 2,
         tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
     },
+
+    -- We will copy from here on to keep changing things easy.
     ["small-spitter"] = {
         copy = "small-biter",
         tint = {r=0.91 , g=0.92 , b=0.87 , a=1 },
@@ -197,40 +235,14 @@ config.biter.types = {
 -----------------------------------------------
 --[[        Here we add modded biters        ]] 
 -----------------------------------------------
+local leviathan_tier = 4 -- Which tier leviathan is, depends on Bob.
 local enabled_mods = mods or script.active_mods
 
-if enabled_mods["ArmouredBiters"] then
-    config.biter.types["small-armoured-biter"] = {copy = "small-biter"}
-    config.biter.types["medium-armoured-biter"] = {copy = "medium-biter"}
-    config.biter.types["big-armoured-biter"] = {copy = "big-biter"}
-    config.biter.types["behemoth-armoured-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["leviathan-armoured-biter"] = {
-        tier = 5,   -- Scaled twice from behemoth
-        energy_modifer = 5,
-        density_modifier = 5,
-        escape_period = 60 * 60 * 30,
-        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
-    }
-end
-
-if enabled_mods["Cold_biters"] then
-    config.biter.types["small-cold-biter"] = {copy = "small-biter"}
-    config.biter.types["medium-cold-biter"] = {copy = "medium-biter"}
-    config.biter.types["big-cold-biter"] = {copy = "big-biter"}
-    config.biter.types["behemoth-cold-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["leviathan-cold-biter"] = {
-        tier = 5,   -- Scaled twice from behemoth
-        energy_modifer = 5,
-        density_modifier = 5,
-        escape_period = 60 * 60 * 30,
-        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
-    }
-    
-    config.biter.types["small-cold-spitter"] = {copy = "small-spitter"}
-    config.biter.types["medium-cold-spitter"] = {copy = "medium-spitter"}
-    config.biter.types["big-cold-spitter"] = {copy = "big-spitter"}
-    config.biter.types["behemoth-cold-spitter"] = {copy = "behemoth-spitter"}
-    config.biter.types["leviathan-cold-spitter"] = {copy = "leviathan-cold-biter"}
+if enabled_mods["bobenemies"] then
+    -- We don't add Bob's biters here, because that means it's icons
+    -- will be used for techs, and the icons are ugly. So if we can,
+    -- rather use MFerarri's or Armoured Biter's.
+    leviathan_tier = 8
 end
 
 if enabled_mods["Explosive_biters"] then
@@ -238,13 +250,7 @@ if enabled_mods["Explosive_biters"] then
     config.biter.types["medium-explosive-biter"] = {copy = "medium-biter"}
     config.biter.types["big-explosive-biter"] = {copy = "big-biter"}
     config.biter.types["behemoth-explosive-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["explosive-leviathan-biter"] = {
-        tier = 5,   -- Scaled twice from behemoth
-        energy_modifer = 5,
-        density_modifier = 5,
-        escape_period = 60 * 60 * 30, 
-        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
-    }
+    config.biter.types["explosive-leviathan-biter"] = {tier = leviathan_tier}
     
     config.biter.types["small-explosive-spitter"] = {copy = "small-spitter"}
     config.biter.types["medium-explosive-spitter"] = {copy = "medium-spitter"}
@@ -253,18 +259,27 @@ if enabled_mods["Explosive_biters"] then
     config.biter.types["leviathan-explosive-spitter"] = {copy = "explosive-leviathan-biter"}
 end
 
+if enabled_mods["Cold_biters"] then
+    config.biter.types["small-cold-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-cold-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-cold-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-cold-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["leviathan-cold-biter"] = {tier = leviathan_tier}
+    
+    config.biter.types["small-cold-spitter"] = {copy = "small-spitter"}
+    config.biter.types["medium-cold-spitter"] = {copy = "medium-spitter"}
+    config.biter.types["big-cold-spitter"] = {copy = "big-spitter"}
+    config.biter.types["behemoth-cold-spitter"] = {copy = "behemoth-spitter"}
+    config.biter.types["leviathan-cold-spitter"] = {copy = "leviathan-cold-biter"}
+end
+
+
 if enabled_mods["Toxic_biters"] then
     config.biter.types["small-toxic-biter"] = {copy = "small-biter"}
     config.biter.types["medium-toxic-biter"] = {copy = "medium-biter"}
     config.biter.types["big-toxic-biter"] = {copy = "big-biter"}
     config.biter.types["behemoth-toxic-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["leviathan-toxic-biter"] = {
-        tier = 5,   -- Scaled twice from behemoth
-        energy_modifer = 5,
-        density_modifier = 5,
-        escape_period = 60 * 60 * 30, 
-        tint = {r = 0.657, g = 0.95, b = 0.432, a = 1.000},
-    }
+    config.biter.types["leviathan-toxic-biter"] = {tier = leviathan_tier}
     
     config.biter.types["small-toxic-spitter"] = {copy = "small-spitter"}
     config.biter.types["medium-toxic-spitter"] = {copy = "medium-spitter"}
@@ -273,6 +288,35 @@ if enabled_mods["Toxic_biters"] then
     config.biter.types["leviathan-toxic-spitter"] = {copy = "leviathan-toxic-biter"}
 end
 
+if enabled_mods["ArmouredBiters"] then
+    config.biter.types["small-armoured-biter"] = {copy = "small-biter"}
+    config.biter.types["medium-armoured-biter"] = {copy = "medium-biter"}
+    config.biter.types["big-armoured-biter"] = {copy = "big-biter"}
+    config.biter.types["behemoth-armoured-biter"] = {copy = "behemoth-biter"}
+    config.biter.types["leviathan-armoured-biter"] = {tier = leviathan_tier}
+end
+
+if enabled_mods["bobenemies"] then
+    config.biter.types["behemoth-biter"].tier = 7   -- Something bob does. This will also change our biter
+
+    config.biter.types["bob-big-piercing-biter"] =      {tier = 3}    
+    config.biter.types["bob-huge-acid-biter"] =         {tier = 4}
+    config.biter.types["bob-huge-explosive-biter"] =    {tier = 4}
+    config.biter.types["bob-giant-fire-biter"] =        {tier = 5}
+    config.biter.types["bob-giant-poison-biter"] =      {tier = 5}
+    config.biter.types["bob-titan-biter"] =             {tier = 6}
+    config.biter.types["bob-behemoth-biter"] =          {tier = 7}
+    config.biter.types["bob-leviathan-biter"] =         {tier = leviathan_tier}
+
+    config.biter.types["bob-big-electric-spitter"] =    {tier = 3}
+    config.biter.types["bob-huge-acid-spitter"] =       {tier = 4}
+    config.biter.types["bob-huge-explosive-spitter"] =  {tier = 4}
+    config.biter.types["bob-giant-fire-spitter"] =      {tier = 5}
+    config.biter.types["bob-giant-poison-spitter"] =    {tier = 5}
+    config.biter.types["bob-titan-spitter"] =           {tier = 6}
+    config.biter.types["bob-behemoth-spitter"] =        {tier = 7}
+    config.biter.types["bob-leviathan-spitter"] =       {tier = leviathan_tier}
+end
 
 -----------------------------------------------
 
@@ -280,12 +324,17 @@ end
 -- loop through the current config and see if we should handle those
 -- cases now
 for biter_name, biter_config in pairs(config.biter.types) do
+
+    -- Some biter's config might be based on other's
     if biter_config.copy then
         local biter_config_to_copy = config.biter.types[biter_config.copy]
         if not biter_config_to_copy then error("Biter config to copy '"..biter_config.copy.."' does not exist!") end
         biter_config.copy = nil
         config.biter.types[biter_name] = util.merge{biter_config_to_copy, biter_config}
     end
+
+    -- Now add all the tier information for ease-of-use
+    config.biter.types[biter_name] = util.merge{config.biter.types[biter_name], config.biter.tiers[biter_config.tier]}
 end
 
 
