@@ -287,7 +287,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         order = "c[revitilization]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",
         ingredients = {{"bp-tired-caged-"..biter_name, 1}},
         energy_required = config.revitalization.time * biter_config.density_modifier,
-        results = util.table.deepcopy(config.revitalization.results),
+        results = util.table.deepcopy(config.revitalization.results(biter_config.tier)),
         enabled = false, -- Now needs to be unlocked by tech
     }
     recipe.results[1].name = "bp-caged-"..biter_name

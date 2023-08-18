@@ -8,7 +8,8 @@ Date: ??.08.2021
     - Compatibility with Armoured Biters.
     - Compatibility with Bob's Enemies.
   Changes:
-    - Reorganised crafting menu. Placed all incubator/revitalization recipes in a separate tab. 
+    - Reorganised crafting menu. Placed all incubator/revitalization recipes in a separate tab.
+    - Higher tier biters now have a higher chance of surviving revitalization.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1
 Date: 16.01.2021

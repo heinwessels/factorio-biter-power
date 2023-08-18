@@ -32,30 +32,21 @@ config.incubator.biter_birth_probability = config.incubator.success_rate / confi
 config.revitalization = {}
 config.revitalization.power_usage = 100e3
 config.revitalization.number_per_generator = 1 / 20 
-config.revitalization.success_rate = 0.9
+config.revitalization.success_rate = 0.9 -- This is a base rate. Each additional tier will add 1%
 config.revitalization.egg_drop_rate = 0 -- Disable it for now, it's too complicated.
 config.revitalization.time = config.biter.burn_time * config.revitalization.number_per_generator
 config.revitalization.emissions_per_minute = 4  -- Just like assembler 1
-config.revitalization.results = {
-    {
-        name = "bp-caged-",
-        probability = config.revitalization.success_rate * (1 - config.revitalization.egg_drop_rate),
-        amount = 1,
-    },
-    {
-        name = "bp-biter-egg",
-        -- amount_min = 0,
-        -- Equal to dropping enough eggs for one biter when `success` and but didn't drop actual biter
-        -- amount_max = 2 * config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
-        
-        -- This works better if the number is less than 1
-        amount = 1,
-        probability = config.revitalization.success_rate * config.revitalization.egg_drop_rate * config.biter.egg_to_biter_ratio,
-    }
-}
-if config.revitalization.results[2].probability and config.revitalization.results[2].probability > 1 then error("Probability above 1") end
-if config.revitalization.results[2].amount_max and config.revitalization.results[2].amount_max < 5 then error("Probability amount_max too small") end
-if config.revitalization.egg_drop_rate == 0 then config.revitalization.results[2] = nil end -- Remove entry from products in tooltip if not used
+config.revitalization.results = function (tier)
+    local probability = (tier - 1) * 0.01 + config.revitalization.success_rate
+    if probability > 0.99 then error("Invalid probability: "..probability) end
+    return {
+        {
+            name = "bp-caged-",
+            probability = probability,
+            amount = 1,
+        },
+    } 
+end
 
 -- The Factorio normal-tired-normal cycle effiency
 config.biter.loop_efficiency =  config.revitalization.success_rate * (1*(1-config.revitalization.egg_drop_rate) + config.incubator.success_rate*config.revitalization.egg_drop_rate)
