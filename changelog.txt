@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.3
+Date: 22.08.2021
+  Bugfixes:
+    - Prevent technology deadlock if Biter Power is added mid-game by unlocking previous tier
+      Husbandry technologies as well if a higher tier biter is caught. (Thanks mad_engineer!)
+---------------------------------------------------------------------------------------------------
 Version: 0.3.2
 Date: 18.08.2021
   Features:

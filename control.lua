@@ -13,36 +13,51 @@ local function create_escapable_data(entity)
     }
 end
 
--- create "compile-time" lookup-table between biter-names and their fuel items
--- this will work fine because it's dependent on prototypes
+-- create "compile-time" lookup-tables for some faster processing times
+local biter_configs = config.biter.types -- Because this is used often
 local fuel_to_biter_name = { }
 local supported_biters = { }
-for biter_name, _ in pairs(config.biter.types) do
+local biters_in_tier = { }
+for biter_name, biter_config in pairs(biter_configs) do
     fuel_to_biter_name["bp-caged-"..biter_name] = biter_name
     fuel_to_biter_name["bp-tired-caged-"..biter_name] = biter_name
     table.insert(supported_biters, biter_name)
+    biters_in_tier[biter_config.tier] = biters_in_tier[biter_config.tier] or { }
+    table.insert(biters_in_tier[biter_config.tier], biter_name)
+end
+local is_husbandry_technology = { }
+for tier = 1, config.biter.max_tier do 
+    is_husbandry_technology["bp-biter-capture-tier-"..tier] = true
 end
 
-local function attemp_tiered_technology_unlock(force, tier, force_unlock)
-    
-    local tech = force.technologies["bp-biter-capture-tier-"..tier]
+local function attemp_tiered_technology_unlock(tech, biter_name, force_unlock)
     if tech.researched then return end
 
-    for _, prereq in pairs(tech.prerequisites) do
-        if not prereq.researched then return end
-    end
+    local prereqs_satisfied = true
+    for prereq_name, prereq in pairs(tech.prerequisites) do
+        if force_unlock and not prereq.researched and is_husbandry_technology[prereq_name] then
+            -- We will recursively unlock earlier husbandry techs if a later
+            -- tier biter is caught. This is to prevent a deadlock if a player
+            -- only adds this mod in the late game. It also makes sense.
+            attemp_tiered_technology_unlock(prereq, biter_name, true)
+            -- This will not print the notification
+        end
 
+        -- Cannot early return here, incase we need to still check
+        -- out other prereqs which might be husbandry techs
+        if not prereq.researched then prereqs_satisfied = false end
+    end
+    if not prereqs_satisfied then return end
+    
     if not force_unlock then
-        local statistics = force.item_production_statistics
+        local statistics = tech.force.item_production_statistics
         local biter_already_captured = false
-        for biter_name, biter_config in pairs(config.biter.types) do
-            if biter_config.tier == tier then
-                -- This check isn't perfect, but will only fail if player cheated
-                -- TODO could change this to a custom stored value in global
-                if statistics.get_input_count("bp-caged-"..biter_name) > 0 then
-                    biter_already_captured = true
-                    goto continue
-                end
+        for _, biter_name in pairs(biters_in_tier[tech.level]) do
+            -- This check isn't perfect, but will only fail if player cheated
+            -- TODO could change this to a custom stored value in global
+            if statistics.get_input_count("bp-caged-"..biter_name) > 0 then
+                biter_already_captured = true
+                goto continue
             end
         end
         
@@ -52,7 +67,10 @@ local function attemp_tiered_technology_unlock(force, tier, force_unlock)
 
     -- If reach here then we can unlock the tech
     tech.researched = true
-    return tech    
+    if force_unlock then
+        tech.force.print({"bp-text.capture-complete",
+            "[technology="..tech.name.."]", biter_name}, {1, 0.75, 0.4})
+    end
 end
 
 script.on_event(defines.events.on_script_trigger_effect , function(event)
@@ -60,25 +78,23 @@ script.on_event(defines.events.on_script_trigger_effect , function(event)
     local trap = event.source_entity
     local biter = event.target_entity
     if not biter then return end
-    local biter_config = config.biter.types[biter.name]
+    local biter_config = biter_configs[biter.name]
     if not biter_config then return end  -- Will lose the cage    
     local caged_name = "bp-caged-"..biter.name
     local force = trap.force
     biter.surface.spill_item_stack(biter.position, {name=caged_name}, true, force)
     trap.force.item_production_statistics.on_flow(caged_name, 1)
-    local tech = attemp_tiered_technology_unlock(force, biter_config.tier, true) 
-    if tech then
-        force.print({"bp-text.capture-complete",
-            "[technology="..tech.name.."]", biter.name}, {1, 0.75, 0.4})
-    end
+    attemp_tiered_technology_unlock(force.technologies["bp-biter-capture-tier-"..biter_config.tier], biter.name, true)
     biter.destroy{raise_destroy = true}
 end)
 
 script.on_event(defines.events.on_research_started , function(event)
     local tech = event.research
-    if tech.name:find("bp-biter-capture-tier-", 1, true) then
+    if is_husbandry_technology[tech.name] then
+        -- This is so that if a player chooses to research the tech it could be unlocked
+        -- if the player somehow already captured the biters before.
         -- this command will silently be ignored if the tech couldn't be researched
-        attemp_tiered_technology_unlock(tech.force, tech.level)
+        attemp_tiered_technology_unlock(tech)
     end
 end)
 
@@ -111,7 +127,6 @@ local function get_biters_in_machine(entity)
         if entity.crafting_progress > 0 then 
             -- assume the not-tired-biter is the first product of the current recipe
             table.insert(biters_found, fuel_to_biter_name[entity.get_recipe().products[1].name])
-            
         end
         count_in_inventory(entity.get_output_inventory())
         count_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input))
@@ -241,7 +256,7 @@ local function tick_escape_for_entity(data)
     local time_since_last_roll = tick - data.last_dice_roll
     if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
     local average_escape_time = 
-            config.biter.types[biters_in_machine[1]].escape_period      -- always use the first found biter
+            biter_configs[biters_in_machine[1]].escape_period      -- always use the first found biter
             * config.escapes.escapable_machine[entity.name]             -- the current building is a modifier
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
@@ -294,7 +309,7 @@ local function on_built(event)
         return
     end
 
-    if config.biter.types[entity.name] then
+    if biter_configs[entity.name] then
         local stack = event.stack
         if stack and stack.valid_for_read and (
             stack.name:find("bp-caged-", 1, true) 
