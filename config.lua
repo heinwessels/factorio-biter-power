@@ -126,8 +126,9 @@ config.egg_extractor.emissions_per_minute =
 config.escapes = { }
 config.escapes.escapable_machine = {
     -- The 'value' is a multiplier for biters' escape_period
+    -- The bigger the vaue, the less chance of escape
     ["bp-generator"] = 1,
-    ["bp-generator-reinforced"] = 0.5,
+    ["bp-generator-reinforced"] = 2,
     ["bp-revitalizer"] = 1,
 }
 

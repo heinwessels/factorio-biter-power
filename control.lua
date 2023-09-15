@@ -257,7 +257,7 @@ local function tick_escape_for_entity(data)
     if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
     local average_escape_time = 
             biter_configs[biters_in_machine[1]].escape_period      -- always use the first found biter
-            * config.escapes.escapable_machine[entity.name]             -- the current building is a modifier
+            * config.escapes.escapable_machine[entity.name]        -- the current building is a modifier
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
     if math.random() < probability then
