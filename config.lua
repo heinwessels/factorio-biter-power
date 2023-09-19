@@ -227,7 +227,7 @@ config.biter.types = {
 -----------------------------------------------
 --[[        Here we add modded biters        ]] 
 -----------------------------------------------
-local leviathan_tier = 4 -- Which tier leviathan is, depends on Bob.
+local leviathan_tier = 5 -- Which tier leviathan is, depends on Bob.
 local enabled_mods = mods or script.active_mods
 
 if enabled_mods["bobenemies"] then
@@ -299,7 +299,7 @@ if enabled_mods["bobenemies"] then
     config.biter.types["bob-titan-biter"] =             {tier = 6}
     config.biter.types["bob-behemoth-biter"] =          {tier = 7}
     config.biter.types["bob-leviathan-biter"] =         {tier = leviathan_tier}
-
+    
     config.biter.types["bob-big-electric-spitter"] =    {tier = 3}
     config.biter.types["bob-huge-acid-spitter"] =       {tier = 4}
     config.biter.types["bob-huge-explosive-spitter"] =  {tier = 4}
@@ -308,6 +308,22 @@ if enabled_mods["bobenemies"] then
     config.biter.types["bob-titan-spitter"] =           {tier = 6}
     config.biter.types["bob-behemoth-spitter"] =        {tier = 7}
     config.biter.types["bob-leviathan-spitter"] =       {tier = leviathan_tier}
+end
+
+if enabled_mods["ArachnidsFaction"] then
+    config.biter.types["arachnid-biter-drone-unit"] = {tier = 1}
+    config.biter.types["arachnid-biter-warrior-unit"] = {tier = 2}
+    config.biter.types["arachnid-biter-tiger-unit"] = {tier = 3}
+    config.biter.types["arachnid-biter-royalwarrior-unit"] = {tier = 4}
+
+    config.biter.types["arachnid-spitter-smallspitter-unit"] = {tier = 1}
+    config.biter.types["arachnid-spitter-mediumspitter-unit"] = {tier = 2}
+    config.biter.types["arachnid-spitter-bigspitter-unit"] = {tier = 3}
+    config.biter.types["arachnid-spitter-behemothspitter-unit"] = {tier = 4}
+    
+    if enabled_mods["Arachnids_enemy"] then        
+        config.biter.types["arachnid-biter-leviathan-unit"] = {tier = leviathan_tier}
+    end
 end
 
 -----------------------------------------------
@@ -335,7 +351,7 @@ end
 if data and data.raw then
     for biter_name, biter_config in pairs(config.biter.types) do
         local unit = data.raw.unit[biter_name]
-        if not unit then error("No '"..biter_name.."'unit found!") end
+        if not unit then error("No '"..biter_name.."' unit found!") end
         if unit.icons then -- Takes precedence according to docs            
             biter_config.icons = util.copy(unit.icons)
             

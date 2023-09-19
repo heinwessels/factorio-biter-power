@@ -29,6 +29,7 @@ end
 
 -- create biter items in cages
 for biter_name, biter_config in pairs(config.biter.types) do
+    local unit = data.raw.unit[biter_name] -- Should exist
 
     -- Create the caged and tired caged items
     local caged_icons = util.copy(biter_config.icons)
@@ -52,7 +53,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         {
             type = "item",
             name = "bp-caged-"..biter_name,
-            localised_name = {"bp-text.caged-biter", biter_name},
+            localised_name = {"bp-text.caged-biter", unit.localised_name or {"entity-name."..unit.name}},
             localised_description = {"", 
                 {"item-description.bp-caged-biter"},
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},
@@ -70,7 +71,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         {
             type = "item",
             name = "bp-tired-caged-"..biter_name,
-            localised_name = {"bp-text.tired-caged-biter", biter_name},
+            localised_name = {"bp-text.tired-caged-biter", unit.localised_name or {"entity-name."..unit.name}},
             localised_description = {"", 
                 {"item-description.bp-caged-biter-tired"},
                 {"bp-text.escape-chance", lib.formattime(biter_config.escape_period * config.biter.tired_modifier)},
@@ -86,7 +87,6 @@ for biter_name, biter_config in pairs(config.biter.types) do
     })
 
     -- Add some description to the biter units
-    local unit = data.raw.unit[biter_name] -- Should exist
     unit.localised_description = {"", 
         {"bp-text.energy-capacity", data.raw.item["bp-caged-"..biter_name].fuel_value},
         {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},

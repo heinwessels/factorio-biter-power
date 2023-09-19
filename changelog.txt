@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.3.5
+Date: 19.09.2021
+  Features:
+    - Compatibility with Arachnids (Biter Faction and Enemy Force).
+  Bugfixes:
+    - Fixed leviathans being Tier 4 instead of Tier 5 without Bobs Enemies.
+---------------------------------------------------------------------------------------------------
 Version: 0.3.4
 Date: 16.09.2021
   Bugfixes:
