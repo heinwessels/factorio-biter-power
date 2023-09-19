@@ -381,4 +381,9 @@ script.on_configuration_changed(function (event)
     global.escapables = global.escapables or { }
     global.nests_to_clean = global.nests_to_clean or { }
     global.biter_distribution_cache = global.biter_distribution_cache or { }
+
+    -- Technically we don't have to do this every time, but it makes it easy.
+    for _, force in pairs(game.forces) do
+        force.reset_technology_effects()
+    end
 end)
