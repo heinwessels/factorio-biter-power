@@ -40,19 +40,21 @@ local idle_animation = {
       width = 195,
       height = 230,        
       scale = 0.5 * 4 / 3,
+      shift = {0, -0.3},
       repeat_count = 16,
       hr_version = {
         filename = "__biter-power__/graphics/generator/generator-back.png",
         width = 195,
         height = 230,        
+        shift = {0, -0.3},
         scale = 0.5 * 4 / 3,
         repeat_count = 16,
       }
     },
-    belt_sprite_at({-2.1, 0.4}, "left"),
-    belt_sprite_at({-1.1, 0.4}),
-    belt_sprite_at({-0.1, 0.4}),
-    belt_sprite_at({0.9, 0.4}, "right"),
+    belt_sprite_at({-2.1, -0.2}, "left"),
+    belt_sprite_at({-1.1, -0.2}),
+    belt_sprite_at({-0.1, -0.2}),
+    belt_sprite_at({0.9, -0.2}, "right"),
   }
 }
 
@@ -60,7 +62,7 @@ local idle_animation = {
 local animation = table.deepcopy(idle_animation)
 
 local biter_scale = 0.45
-local biter_shift = {-0.55, 0.2}
+local biter_shift = {-0.55, -0.1}
 table.insert(animation.layers, {
   filename = "__base__/graphics/entity/biter/biter-run-shadow-02.png",
   width = 216,
@@ -148,7 +150,7 @@ for _, property in pairs{idle_animation, animation} do
     frame_count = 16,
     line_length = 4,
     scale = 0.5 * 0.8,
-    shift = {1.2, 0},
+    shift = {1.2, -0.3},
     hr_version = {
       filename = "__biter-power__/graphics/generator/hr-motor.png",
       width = 114,
@@ -156,7 +158,7 @@ for _, property in pairs{idle_animation, animation} do
       frame_count = 16,
       line_length = 4,
       scale = 0.5 * 0.8,
-      shift = {1.2, 0},
+      shift = {1.2, -0.3},
     }
   })
   table.insert(property.layers, {
@@ -165,7 +167,7 @@ for _, property in pairs{idle_animation, animation} do
     width = 274,
     height = 196,
     scale = 0.5 * 4 / 3,
-    shift = {0.8, 0.3},
+    shift = {0.8, 0},
     repeat_count = 16,
     hr_version = {
       filename = "__biter-power__/graphics/generator/hr-generator-shadow.png",
@@ -173,7 +175,7 @@ for _, property in pairs{idle_animation, animation} do
       width = 274,
       height = 196,
       scale = 0.5 * 4 / 3,
-      shift = {0.8, 0.3},
+      shift = {0.8, 0},
       repeat_count = 16,
     }
   })
@@ -182,12 +184,14 @@ for _, property in pairs{idle_animation, animation} do
     width = 195,
     height = 230,
     scale = 0.5 * 4 / 3,
+    shift = {0, -0.3},
     repeat_count = 16,
     hr_version = {
       filename = "__biter-power__/graphics/generator/generator-front.png",
       width = 195,
       height = 230,
       scale = 0.5 * 4 / 3,
+      shift = {0, -0.3},
       repeat_count = 16,
     }
   })
@@ -272,37 +276,16 @@ data:extend({
         width = 220,
         height = 222,
         scale = 0.5 * 4 / 3,
-        shift = util.by_pixel(0, 230/2-222/2),
+        shift = util.by_pixel(0, 230/2 - 222/2 - 0.3*32),
         repeat_count = 16,
         hr_version = {
           filename = "__biter-power__/graphics/generator/hr-integration-patch.png",
           width = 220,
           height = 222,
           scale = 0.5 * 4 / 3,
-          shift = util.by_pixel(0, 230/2-222/2),
+          shift = util.by_pixel(0, 230/2 - 222/2 - 0.3*32),
           repeat_count = 16,
         }
     },
   }
 })
-
--- I'm placing all sprites at the wrong place with the middle in the middle, and not 
--- the bottom on the bottom tile edge. Shift everything up
-local shift_correction = {0, -0.3}
-local generator = data.raw["burner-generator"]["bp-generator"]
-for _, property in pairs({"idle_animation", "animation"}) do
-  for _, layer in pairs(generator[property].layers) do    
-    layer.shift = layer.shift or {0, 0}
-    layer.shift[1] = layer.shift[1] + shift_correction[1]
-    layer.shift[2] = layer.shift[2] + shift_correction[2]
-    layer.hr_version.shift = layer.hr_version.shift or {0, 0}
-    layer.hr_version.shift[1] = layer.hr_version.shift[1] + shift_correction[1]
-    layer.hr_version.shift[2] = layer.hr_version.shift[2] + shift_correction[2]
-  end
-end
-generator.integration_patch.shift = generator.integration_patch.shift or {0, 0}
-generator.integration_patch.shift[1] = generator.integration_patch.shift[1] + shift_correction[1]
-generator.integration_patch.shift[2] = generator.integration_patch.shift[2] + shift_correction[2]
-generator.integration_patch.hr_version.shift = generator.integration_patch.hr_version.shift or {0, 0}
-generator.integration_patch.hr_version.shift[1] = generator.integration_patch.hr_version.shift[1] + shift_correction[1]
-generator.integration_patch.hr_version.shift[2] = generator.integration_patch.hr_version.shift[2] + shift_correction[2]
