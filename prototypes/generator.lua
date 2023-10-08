@@ -51,95 +51,15 @@ local idle_animation = {
         repeat_count = 16,
       }
     },
-    belt_sprite_at({-2.1, -0.2}, "left"),
-    belt_sprite_at({-1.1, -0.2}),
-    belt_sprite_at({-0.1, -0.2}),
-    belt_sprite_at({0.9, -0.2}, "right"),
+    belt_sprite_at({-2.0, -0.2}, "left"),
+    belt_sprite_at({-1.0, -0.2}),
+    belt_sprite_at({-0.0, -0.2}),
+    belt_sprite_at({1.0, -0.2}, "right"),
   }
 }
 
 -- Now copy copy and start working on the working animation
 local animation = table.deepcopy(idle_animation)
-
-local biter_scale = 0.45
-local biter_shift = {-0.55, -0.1}
-table.insert(animation.layers, {
-  filename = "__base__/graphics/entity/biter/biter-run-shadow-02.png",
-  width = 216,
-  height = 144,
-  line_length = 8,
-  frame_count = 16,
-  scale = biter_scale,
-  shift = util.mul_shift(util.by_pixel(8 + biter_shift[1]*32, 0 + biter_shift[2]*32), biter_scale),
-  hr_version = {
-    filename ="__base__/graphics/entity/biter/hr-biter-run-shadow-02.png",
-    width = 432,
-    height = 292,
-    scale = 0.5 * biter_scale,
-    line_length = 8,
-    frame_count = 16,
-    shift = util.mul_shift(util.by_pixel(8 + biter_shift[1]*64, -1 + biter_shift[2]*64), biter_scale),
-  }
-})
-table.insert(animation.layers, {
-  filename = "__base__/graphics/entity/biter/biter-run-02.png",
-  width = 202,
-  height = 158,
-  line_length = 8,
-  frame_count = 16,
-  scale = biter_scale,
-  shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -6 + biter_shift[2]*32), biter_scale),
-  hr_version = {
-    filename ="__base__/graphics/entity/biter/hr-biter-run-02.png",
-    width = 398,
-    height = 310,
-    scale = 0.5 * biter_scale,
-    line_length = 8,
-    frame_count = 16,
-    shift = util.mul_shift(util.by_pixel(-1 + biter_shift[1]*64, -5 + biter_shift[2]*64), biter_scale),
-  }
-})
-table.insert(animation.layers, {
-  filename = "__base__/graphics/entity/biter/biter-run-mask1-02.png",
-  width = 118,
-  height = 94,
-  line_length = 8,
-  frame_count = 16,
-  scale = biter_scale,
-  tint = {r=0.21, g=0.19, b=0.25, a=1},  -- base tint of behemoth
-  shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -38 + biter_shift[2]*32), biter_scale),
-  hr_version = {
-    filename = "__base__/graphics/entity/biter/hr-biter-run-mask1-02.png",
-    width = 238,
-    height = 182,
-    scale = 0.5 * biter_scale,
-    line_length = 8,
-    frame_count = 16,
-    tint = {r=0.21, g=0.19, b=0.25, a=1}, -- base tint of behemoth
-    shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -38 + biter_shift[2]*64), biter_scale),
-  }
-})
-table.insert(animation.layers, {
-  filename = "__base__/graphics/entity/biter/biter-run-mask2-02.png",
-  width = 120,
-  height = 92,
-  line_length = 8,
-  frame_count = 16,
-  scale = biter_scale,
-  tint = {1, 0.74, 0.33, 0.1},  -- yellow, like the frame and belt
-  shift = util.mul_shift(util.by_pixel(-2 + biter_shift[1]*32, -38 + biter_shift[2]*32), biter_scale),
-  hr_version = {
-    filename = "__base__/graphics/entity/biter/hr-biter-run-mask2-02.png",
-    width = 232,
-    height = 184,
-    scale = 0.5 * biter_scale,
-    line_length = 8,
-    frame_count = 16,
-    flags = { "mask" },
-    tint = {1, 0.74, 0.33, 0.1},  -- yellow, like the frame and belt
-    shift = util.mul_shift(util.by_pixel(0 + biter_shift[1]*64, -38 + biter_shift[2]*64), biter_scale),
-  }
-})
 
 -- Now add the outer cage edge to both
 for _, property in pairs{idle_animation, animation} do
@@ -150,7 +70,7 @@ for _, property in pairs{idle_animation, animation} do
     frame_count = 16,
     line_length = 4,
     scale = 0.5 * 0.8,
-    shift = {1.2, -0.3},
+    shift = {1.4, -0.3},
     hr_version = {
       filename = "__biter-power__/graphics/generator/hr-motor.png",
       width = 114,
@@ -158,7 +78,7 @@ for _, property in pairs{idle_animation, animation} do
       frame_count = 16,
       line_length = 4,
       scale = 0.5 * 0.8,
-      shift = {1.2, -0.3},
+      shift = {1.4, -0.3},
     }
   })
   table.insert(property.layers, {
