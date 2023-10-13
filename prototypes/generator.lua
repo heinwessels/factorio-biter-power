@@ -70,7 +70,7 @@ for _, property in pairs{idle_animation, animation} do
     frame_count = 16,
     line_length = 4,
     scale = 0.5 * 0.8,
-    shift = {1.4, -0.3},
+    shift = {1.5, -0.3},
     hr_version = {
       filename = "__biter-power__/graphics/generator/hr-motor.png",
       width = 114,
@@ -78,7 +78,7 @@ for _, property in pairs{idle_animation, animation} do
       frame_count = 16,
       line_length = 4,
       scale = 0.5 * 0.8,
-      shift = {1.4, -0.3},
+      shift = {1.5, -0.3},
     }
   })
   table.insert(property.layers, {

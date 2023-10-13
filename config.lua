@@ -268,16 +268,16 @@ end
 
 
 if enabled_mods["Toxic_biters"] then
-    config.biter.types["small-toxic-biter"] = {copy = "small-biter"}
-    config.biter.types["medium-toxic-biter"] = {copy = "medium-biter"}
-    config.biter.types["big-toxic-biter"] = {copy = "big-biter"}
-    config.biter.types["behemoth-toxic-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["leviathan-toxic-biter"] = {tier = leviathan_tier}
+    config.biter.types["small-toxic-biter"] =       {copy = "small-biter",      scale = 0.48}
+    config.biter.types["medium-toxic-biter"] =      {copy = "medium-biter",     scale = 0.49}
+    config.biter.types["big-toxic-biter"] =         {copy = "big-biter",        scale = 0.50}
+    config.biter.types["behemoth-toxic-biter"] =    {copy = "behemoth-biter",   scale = 0.51}
+    config.biter.types["leviathan-toxic-biter"] =   {tier = leviathan_tier,     scale = 0.30}
     
-    config.biter.types["small-toxic-spitter"] = {copy = "small-spitter"}
-    config.biter.types["medium-toxic-spitter"] = {copy = "medium-spitter"}
-    config.biter.types["big-toxic-spitter"] = {copy = "big-spitter"}
-    config.biter.types["behemoth-toxic-spitter"] = {copy = "behemoth-spitter"}
+    config.biter.types["small-toxic-spitter"] =     {copy = "small-spitter"}
+    config.biter.types["medium-toxic-spitter"] =    {copy = "medium-spitter"}
+    config.biter.types["big-toxic-spitter"] =       {copy = "big-spitter"}
+    config.biter.types["behemoth-toxic-spitter"] =  {copy = "behemoth-spitter"}
     config.biter.types["leviathan-toxic-spitter"] = {copy = "leviathan-toxic-biter"}
 end
 
