@@ -63,7 +63,7 @@ local function shift_layer_with_scale(layer, scale, shift)
     layer.shift = util.add_shift(layer.shift, shift)
 end
 
-local function determine_scale(layers)
+local function determine_scale(layers, biter_name)
     -- All biters will be at least this amount smaller
     local base_scale = 0.5
 
@@ -90,6 +90,7 @@ local function create_variant(base_name, biter_name)
     if not generator then error("Generator '"..base_name.."' not found!") end
     local biter = data.raw.unit[biter_name]
     if not biter then error("Unit '"..biter_name.."' not found!") end
+    local biter_config = config.biter.types[biter_name]
 
     generator.name = base_name.."-"..biter_name
     generator.localised_name = {"entity-name."..base_name}
@@ -97,7 +98,7 @@ local function create_variant(base_name, biter_name)
     -- Get biter animations and adjust them
     local biter_shift = {-0.45, -0.1}
     local layers_to_add = get_biter_run_animation(biter)
-    local biter_scale = determine_scale(layers_to_add)
+    local biter_scale = biter_config.scale or determine_scale(layers_to_add, biter_name)
     for _, layer in pairs(layers_to_add) do
         shift_layer_with_scale(layer, biter_scale, biter_shift)
         if layer.hr_version then
@@ -110,8 +111,14 @@ local function create_variant(base_name, biter_name)
         local base_layers = generator[property].layers
 
         -- Take off cover
-        local cover_layer = base_layers[#base_layers]
-        base_layers[#base_layers] = nil       
+        local layer_stash = { }
+        table.insert(layer_stash, base_layers[#base_layers])
+        base_layers[#base_layers] = nil
+        if base_name:find("reinforced", 1, true) then
+            -- The reinforced one has a mask too
+            table.insert(layer_stash, 1, base_layers[#base_layers])
+            base_layers[#base_layers] = nil
+        end
 
         -- Add biter
         for _, layer in pairs(layers_to_add) do
@@ -119,13 +126,17 @@ local function create_variant(base_name, biter_name)
         end
 
         -- Add cover back on
-        table.insert(base_layers, cover_layer)
+        for _, l in pairs(layer_stash) do
+            table.insert(base_layers, l)
+        end
     end
 
     data:extend{ generator }
 end
 
 for biter_name, biter_config in pairs(config.biter.types) do
-    create_variant("bp-generator", biter_name)
+    if biter_config.tier <= config.generator.normal_maximum_tier then
+        create_variant("bp-generator", biter_name)
+    end
     create_variant("bp-generator-reinforced", biter_name)
 end

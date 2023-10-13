@@ -9,6 +9,7 @@ config.generator = {}
 config.generator.power_output = 1e6
 config.generator.emissions_per_minute = 0
 config.generator.reinforced_multiplyer = 10
+config.generator.normal_maximum_tier = 2 -- Maximum tier that works in a normal treadmil
 
 config.biter = {}
 config.biter.fuel_value = config.generator.power_output * 2 * 60
@@ -311,18 +312,18 @@ if enabled_mods["bobenemies"] then
 end
 
 if enabled_mods["ArachnidsFaction"] then
-    config.biter.types["arachnid-biter-drone-unit"] = {tier = 1}
-    config.biter.types["arachnid-biter-warrior-unit"] = {tier = 2}
-    config.biter.types["arachnid-biter-tiger-unit"] = {tier = 3}
-    config.biter.types["arachnid-biter-royalwarrior-unit"] = {tier = 4}
+    config.biter.types["arachnid-biter-drone-unit"] =           {tier = 1, scale = 0.38}
+    config.biter.types["arachnid-biter-warrior-unit"] =         {tier = 2, scale = 0.39}
+    config.biter.types["arachnid-biter-tiger-unit"] =           {tier = 3, scale = 0.40}
+    config.biter.types["arachnid-biter-royalwarrior-unit"] =    {tier = 4, scale = 0.41}
 
-    config.biter.types["arachnid-spitter-smallspitter-unit"] = {tier = 1}
-    config.biter.types["arachnid-spitter-mediumspitter-unit"] = {tier = 2}
-    config.biter.types["arachnid-spitter-bigspitter-unit"] = {tier = 3}
-    config.biter.types["arachnid-spitter-behemothspitter-unit"] = {tier = 4}
+    config.biter.types["arachnid-spitter-smallspitter-unit"] =  {tier = 1, scale = 0.38}
+    config.biter.types["arachnid-spitter-mediumspitter-unit"] = {tier = 2, scale = 0.39}
+    config.biter.types["arachnid-spitter-bigspitter-unit"] =    {tier = 3, scale = 0.40}
+    config.biter.types["arachnid-spitter-behemothspitter-unit"]= {tier = 4, scale = 0.41}
     
     if enabled_mods["Arachnids_enemy"] then        
-        config.biter.types["arachnid-biter-leviathan-unit"] = {tier = leviathan_tier}
+        config.biter.types["arachnid-biter-leviathan-unit"] ={tier = leviathan_tier, scale = 0.3}
     end
 end
 

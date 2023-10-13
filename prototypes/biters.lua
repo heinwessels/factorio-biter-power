@@ -49,6 +49,11 @@ for biter_name, biter_config in pairs(config.biter.types) do
         }}
     )
 
+    local fuel_category = "bp-biter-power"
+    if biter_config.tier > config.generator.normal_maximum_tier then
+        fuel_category = "bp-biter-power-advanced"
+    end
+
     data:extend({
         {
             type = "item",
@@ -63,7 +68,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             order = "[b]-["..biter_name.."]-[a]",
             fuel_glow_color = biter_config.tint,
             fuel_value = lib.format_number(config.biter.fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
-            fuel_category = biter_config.tier <= 2 and "bp-biter-power" or "bp-biter-power-advanced",
+            fuel_category = fuel_category,
             burnt_result = "bp-tired-caged-"..biter_name,
             place_result = biter_name,
             stack_size = 1,
@@ -80,7 +85,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
             subgroup = "bp-biters-tier-"..biter_config.tier,
             order = "[b]-["..biter_name.."]-b[tired]",
             fuel_value = lib.format_number(config.biter.tired_fuel_value * biter_config.energy_modifer * biter_config.density_modifier, true).."J",
-            fuel_category = "bp-biter-power",
+            fuel_category = fuel_category,
             place_result = biter_name,
             stack_size = 1
         },

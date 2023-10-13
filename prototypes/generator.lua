@@ -165,6 +165,7 @@ data:extend({
     selection_box = {{-2.0, -2.0}, {2.0, 2.0}},
     max_power_output = util.format_number(config.generator.power_output, true).."W",
     minable = {mining_time = 1, result = "bp-generator"},
+    placeable_by = {item = "bp-generator", count = 1},
     next_upgrade = "bp-generator-reinforced",
     fast_replaceable_group = "bp-generators",
     burner = {
