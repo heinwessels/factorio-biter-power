@@ -6,6 +6,7 @@ local function create_escapable_data(entity)
     return {
         entity = entity,
         position = entity.position,         -- So that cleanup is clearer when something goes wrong
+        surface = entity.surface,           -- Need the surface for the previous thing. Forgot, oops.
         unit_number = entity.unit_number,   -- Usefull I guess
 
         last_escape = nil,                  -- Tick the last escape occured
@@ -13,7 +14,10 @@ local function create_escapable_data(entity)
     }
 end
 
--- create "compile-time" lookup-tables for some faster processing times
+-------------------------------------------------------------------------
+-- Pre-calculate things at save loading for faster in-game processing
+-------------------------------------------------------------------------
+
 local biter_configs = config.biter.types -- Because this is used often
 local fuel_to_biter_name = { }
 local supported_biters = { }
@@ -29,6 +33,21 @@ local is_husbandry_technology = { }
 for tier = 1, config.biter.max_tier do 
     is_husbandry_technology["bp-biter-capture-tier-"..tier] = true
 end
+
+-- Handle all treadmil biter derivatives
+local escapable_machines = config.escapes.escapable_machine
+local escapable_machine_base = { } -- For machines with derivates
+for biter_name, biter_config in pairs(biter_configs) do
+    escapable_machines["bp-generator-reinforced-"..biter_name] = escapable_machines["bp-generator-reinforced"]
+    escapable_machine_base["bp-generator-reinforced-"..biter_name] = "bp-generator-reinforced"
+    if biter_config.tier <= config.generator.normal_maximum_tier then
+        escapable_machines["bp-generator-"..biter_name] = escapable_machines["bp-generator"]
+        escapable_machine_base["bp-generator-"..biter_name] = "bp-generator"
+    end
+end
+escapable_machine_base["bp-generator"] = "bp-generator"
+escapable_machine_base["bp-generator-reinforced"] = "bp-generator-reinforced"
+-------------------------------------------------------------------------
 
 local function attemp_tiered_technology_unlock(tech, biter_name, force_unlock)
     if tech.researched then return end
@@ -182,7 +201,7 @@ local function rally_biters_around(surface, position)
     if not enemies then return end -- No enemies found, ignore
 
     local machines_to_target = {}
-    for machine_name, _ in pairs(config.escapes.escapable_machine) do
+    for machine_name, _ in pairs(escapable_machines) do
         table.insert(machines_to_target, machine_name)
     end
     local machines = surface.find_entities_filtered{
@@ -235,14 +254,91 @@ local function rally_biters_around(surface, position)
     end
 end
 
+local function update_escapable_derivates(entity, biters_in_machine)
+    local base_name = escapable_machine_base[entity.name]
+    if not base_name then return end -- Entity has no derivatives
+
+    -- Determine the required derivative name
+    local required_name = base_name
+    local biter_name = biters_in_machine[1]
+    if biter_name then required_name = required_name .. "-" .. biter_name end
+    if entity.name == required_name then return end;    -- nothing to do
+
+    -- TODO WHY DONT WE SEE BURNT RESULT FOR BITERS IN MACHINE?
+    -- TODO HANDLE CASE WHEN MODS ARE REMOVED
+
+    -- This entity is the wrong derivative. Let's replace it with the correct
+    -- variant. I could not get the fast replace mechanism to work, so I will
+    -- just manually transfer all the properties
+    -- Note: Do not delete the old entities' global data because it will break
+    -- the iterator. We will delete it gracefully later.
+    
+    local new_entity = entity.surface.create_entity {
+        name = required_name,
+        position = entity.position,
+        raise_built = true,
+        create_build_effect_smoke = false,
+    }
+
+    local function copy_inventory (source, destination)
+        -- For slots in the machine, so size of 1
+        destination[1].set_stack(source[1])
+    end
+    
+    new_entity.health = entity.health
+    new_entity.burner.currently_burning = entity.burner.currently_burning
+    new_entity.burner.remaining_burning_fuel = entity.burner.remaining_burning_fuel
+    copy_inventory(entity.burner.inventory, new_entity.burner.inventory)
+    copy_inventory(entity.burner.burnt_result_inventory, new_entity.burner.burnt_result_inventory)
+    
+    -- Before we destroy the old entity, check if the GUI was open for any players, and then
+    -- open the GUI of the new entity for those players
+    local gui_was_open = { } -- array of table ids
+    for _, player in pairs(game.connected_players) do
+        if player.opened == entity then table.insert(gui_was_open, player) end
+    end
+
+    -- We need to prevent destruction of this entity to release biters
+    global.ignore_build_destroy_events_for = entity.unit_number
+    entity.destroy { raise_destroy = true }
+    global.ignore_build_destroy_events = nil
+
+    for _, player in pairs(gui_was_open) do player.opened = new_entity end
+    
+    -- Keep track of new entry
+    global.escapables[new_entity.unit_number] = create_escapable_data(new_entity)
+
+    return new_entity
+end
+
 local function tick_escape_for_entity(data)
     local entity = data.entity
     if not entity or not entity.valid then return nil, true end -- Delete entry
     local tick = game.tick
+
+    -- Escape early if we already processed the entity this tick
+    -- This also prevents rolling again for a derivative entity newly created
+    local time_since_last_roll = tick - data.last_dice_roll
+    if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
     
-    -- Does it contain biters?
+    -- Make sure to call this only once, because it can probably take long.
+    -- TODO Cache the inventory?
     local biters_in_machine = get_biters_in_machine(entity)
-    if not next(biters_in_machine) then
+    
+    -- Ensure the right treadmil derivative is used. We will update it here because
+    -- this function will already be called quite often.
+    local new_entity = update_escapable_derivates(entity, biters_in_machine)
+    local delete_current_entry = false
+    if new_entity then
+        -- If the entity derivative was updated to a new entity then we need
+        -- to carefully delete the old one's data from global to not break
+        -- the iterator.
+        delete_current_entry = true
+        entity = new_entity
+    end
+
+    -- Does it contain biters?
+        if not next(biters_in_machine) then
         -- If it doesn't contain biters then "reset" the "timer".
         -- Otherwise when it's empty for a long time and suddenly gets a biter
         -- then the time_since_last_roll will be massive, and biter will escape!
@@ -253,11 +349,9 @@ local function tick_escape_for_entity(data)
     -- The idea is that if the odds are that the biter will escape every 10 seconds,
     -- and we roll the dice every second, then each time we roll the biter has a 10% chance
     -- of escaping. I think this should work.
-    local time_since_last_roll = tick - data.last_dice_roll
-    if time_since_last_roll == 0 then return nil, nil, true end   -- Already rolled this tick
     local average_escape_time = 
             biter_configs[biters_in_machine[1]].escape_period      -- always use the first found biter
-            * config.escapes.escapable_machine[entity.name]        -- the current building is a modifier
+            * escapable_machines[entity.name]        -- the current building is a modifier
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
     if math.random() < probability then
@@ -270,12 +364,14 @@ local function tick_escape_for_entity(data)
             end
         end
     end
+
+    if delete_current_entry then return nil, true end
 end
 
 local function tick_escapes(tick)
     if tick % 60 ~= 0 then return end
 
-    global.from_k = lib.table.for_n_of(
+    global.iterate_escapables = lib.table.for_n_of(
         global.escapables, global.from_k, 
         5, -- Machines to update per second
         tick_escape_for_entity)
@@ -302,9 +398,10 @@ end)
 
 local function on_built(event)
     local entity = event.created_entity or event.entity
-    if not entity or not entity.valid then return end
-    
-    if config.escapes.escapable_machine[entity.name] then 
+    if not entity or not entity.valid then return end    
+    if global.ignore_build_destroy_events == entity.unit_number then return end
+
+    if escapable_machines[entity.name] then 
         global.escapables[entity.unit_number] = create_escapable_data(entity)
         return
     end
@@ -347,7 +444,8 @@ end)
 local function on_deconstructed(event)
     local entity = event.created_entity or event.entity
     if not entity or not entity.valid then return end
-    if not config.escapes.escapable_machine[entity.name] then return end
+    if global.ignore_build_destroy_events == entity.unit_number then return end
+    if not escapable_machines[entity.name] then return end
 
     -- If this is a die event then the biters should escape!
     -- We should only reach here if entity is escapable

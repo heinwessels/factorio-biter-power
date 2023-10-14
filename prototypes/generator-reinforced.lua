@@ -14,6 +14,7 @@ reinforced_generator.icon = "__biter-power__/graphics/generator/reinforced-icon.
 reinforced_generator.max_power_output = util.format_number(config.generator.power_output * config.generator.reinforced_multiplyer, true).."W"
 reinforced_generator.minable.result = "bp-generator-reinforced"
 reinforced_generator.placeable_by.item = "bp-generator-reinforced"
+reinforced_generator.next_upgrade = nil
 reinforced_generator.fast_replaceable_group = "bp-generators"
 reinforced_generator.burner.fuel_category = nil
 reinforced_generator.burner.fuel_categories = {"bp-biter-power", "bp-biter-power-advanced"}
