@@ -5,8 +5,11 @@ local util = require("util")
 local function create_escapable_data(entity)
     return {
         entity = entity,
+        name = entity.name,
+        force = entity.force,
         position = entity.position,         -- So that cleanup is clearer when something goes wrong
         surface = entity.surface,           -- Need the surface for the previous thing. Forgot, oops.
+        
         unit_number = entity.unit_number,   -- Usefull I guess
 
         last_escape = nil,                  -- Tick the last escape occured
@@ -276,7 +279,9 @@ local function update_escapable_derivates(entity, biters_in_machine)
     local new_entity = entity.surface.create_entity {
         name = required_name,
         position = entity.position,
+        force = entity.force,
         raise_built = true,
+        player = entity.last_user,
         create_build_effect_smoke = false,
     }
 
@@ -469,6 +474,42 @@ if script.active_mods["aai-programmable-vehicles"] then
     })
 end
 
+local function sanitize_escapables()
+    -- Sanitize the escapable derivatives, because a mod might be removed which had a biter running
+    -- Removing the mod should remove the items, not the machines.
+    local entries_to_delete = { }
+    for unit_number, entry in pairs(global.escapables) do
+        if not entry.entity.valid then
+            table.insert(entries_to_delete, unit_number)
+            
+            -- Should we spawn a new one in it's position?
+            if entry.name and not escapable_machine_base[entry.name] then
+                -- This machine was most likely destroyed when the mod adding the biters
+                -- was removed. Let's replace it with a base machine. The player might lose
+                -- items that was inside, but there is no way to recover that.
+                
+                local base_name = "bp-generator"
+                if entry.name:find("bp-generator-reinforced", 1, true) then
+                    base_name = "bp-generator-reinforced"
+                end 
+                
+                entry.surface.create_entity {
+                    name = base_name,
+                    position = entry.position,
+                    force = entry.force,
+                    create_build_effect_smoke = false,
+                    raise_built = true, -- To create the new data
+                } -- If this fails then we just give up. Nothing better to do
+
+            end
+        end
+    end
+
+    for _, unit_number in pairs(entries_to_delete) do
+        global.escapables[unit_number] = nil
+    end
+end
+
 script.on_init(function()
     global.escapables = { }
     global.nests_to_clean = { }
@@ -479,6 +520,8 @@ script.on_configuration_changed(function (event)
     global.escapables = global.escapables or { }
     global.nests_to_clean = global.nests_to_clean or { }
     global.biter_distribution_cache = global.biter_distribution_cache or { }
+
+    sanitize_escapables()
 
     -- Technically we don't have to do this every time, but it makes it easy.
     for _, force in pairs(game.forces) do
