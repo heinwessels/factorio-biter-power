@@ -239,11 +239,11 @@ if enabled_mods["bobenemies"] then
 end
 
 if enabled_mods["Explosive_biters"] then
-    config.biter.types["small-explosive-biter"] = {copy = "small-biter"}
-    config.biter.types["medium-explosive-biter"] = {copy = "medium-biter"}
-    config.biter.types["big-explosive-biter"] = {copy = "big-biter"}
-    config.biter.types["behemoth-explosive-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["explosive-leviathan-biter"] = {tier = leviathan_tier}
+    config.biter.types["small-explosive-biter"] =       {copy = "small-biter",      scale = 0.48}
+    config.biter.types["medium-explosive-biter"] =      {copy = "medium-biter",     scale = 0.49}
+    config.biter.types["big-explosive-biter"] =         {copy = "big-biter",        scale = 0.50}
+    config.biter.types["behemoth-explosive-biter"] =    {copy = "behemoth-biter",   scale = 0.51}
+    config.biter.types["explosive-leviathan-biter"] =   {tier = leviathan_tier,     scale = 0.30}
     
     config.biter.types["small-explosive-spitter"] = {copy = "small-spitter"}
     config.biter.types["medium-explosive-spitter"] = {copy = "medium-spitter"}
@@ -282,11 +282,11 @@ if enabled_mods["Toxic_biters"] then
 end
 
 if enabled_mods["ArmouredBiters"] then
-    config.biter.types["small-armoured-biter"] = {copy = "small-biter"}
-    config.biter.types["medium-armoured-biter"] = {copy = "medium-biter"}
-    config.biter.types["big-armoured-biter"] = {copy = "big-biter"}
-    config.biter.types["behemoth-armoured-biter"] = {copy = "behemoth-biter"}
-    config.biter.types["leviathan-armoured-biter"] = {tier = leviathan_tier}
+    config.biter.types["small-armoured-biter"] =        {copy = "small-biter",      }
+    config.biter.types["medium-armoured-biter"] =       {copy = "medium-biter",     }
+    config.biter.types["big-armoured-biter"] =          {copy = "big-biter",        scale = 0.43}
+    config.biter.types["behemoth-armoured-biter"] =     {copy = "behemoth-biter",   scale = 0.48}
+    config.biter.types["leviathan-armoured-biter"] =    {tier = leviathan_tier,     scale = 0.50}
 end
 
 if enabled_mods["bobenemies"] then

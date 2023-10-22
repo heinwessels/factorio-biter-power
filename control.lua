@@ -379,7 +379,7 @@ local function tick_escapes(tick)
     if tick % 60 ~= 0 then return end
 
     global.iterate_escapables = lib.table.for_n_of(
-        global.escapables, global.from_k, 
+        global.escapables, global.iterate_escapables, 
         5, -- Machines to update per second
         tick_escape_for_entity)
 end

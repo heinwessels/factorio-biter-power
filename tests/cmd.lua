@@ -30,11 +30,13 @@ local function get_test_surface()
         surface.daytime = 0
     end
 
-    -- Clear the surface. Can't use surface.clear because that only kicks in at the
-    -- end of the tick, and will delete everything we create now
+    -- Clear the surface. Can't use surface.clear because that removes the chunks
+    -- as well, which acts weird when placing entities on them now.
     for _, entity in pairs(surface.find_entities_filtered{force = "player"}) do
         entity.destroy { raise_destroy = true }
     end
+
+    rendering.clear("biter-power")
 
     -- Move the players there. All of them. I don't care. This is a test!
     for _, player in pairs(game.connected_players) do
@@ -74,7 +76,7 @@ local function show_derivatives()
             target = {x - offset + 1, y + offset - 1},
             surface = surface,
             color = {r = 0.5, a = 1},
-            scale = 2,
+            scale = 1.5,
         }
 
         -- Source chest
