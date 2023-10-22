@@ -8,7 +8,7 @@
             "type": "factoriomod",
             "request": "launch",
             "name": "Factorio Mod Debug",            
-            "hookControl": ["biter-power"]
+            // "hookControl": ["biter-power"]
         },
         {
             "type": "factoriomod",

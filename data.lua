@@ -17,7 +17,7 @@ require("prototypes.cage-trap")
 require("prototypes.technology")
 
 
-if mods["debugadapter"] then
+if mods["debugadapter"] and false then
     log("====== Biter Power: Config [Stats for nerds] ======")
     log(serpent.block(config))
     log("--- Extra Stats ---")

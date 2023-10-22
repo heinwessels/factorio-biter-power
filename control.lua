@@ -2,6 +2,8 @@ local config = require("config")
 local lib = require("lib.lib")
 local util = require("util")
 
+if script.active_mods["debugadapter"] then require("tests.cmd") end
+
 local function create_escapable_data(entity)
     return {
         entity = entity,
@@ -488,19 +490,22 @@ local function sanitize_escapables()
                 -- was removed. Let's replace it with a base machine. The player might lose
                 -- items that was inside, but there is no way to recover that.
                 
-                local base_name = "bp-generator"
+                local base_name -- Make sure it was actually a generator
                 if entry.name:find("bp-generator-reinforced", 1, true) then
                     base_name = "bp-generator-reinforced"
+                elseif entry.name:find("bp-generator", 1, true) then
+                    base_name = "bp-generator"
                 end 
                 
-                entry.surface.create_entity {
-                    name = base_name,
-                    position = entry.position,
-                    force = entry.force,
-                    create_build_effect_smoke = false,
-                    raise_built = true, -- To create the new data
-                } -- If this fails then we just give up. Nothing better to do
-
+                if base_name then
+                    entry.surface.create_entity {
+                        name = base_name,
+                        position = entry.position,
+                        force = entry.force,
+                        create_build_effect_smoke = false,
+                        raise_built = true, -- To create the new data
+                    } -- If this fails then we just give up. Nothing better to do
+                end
             end
         end
     end
@@ -521,7 +526,7 @@ script.on_configuration_changed(function (event)
     global.nests_to_clean = global.nests_to_clean or { }
     global.biter_distribution_cache = global.biter_distribution_cache or { }
 
-    sanitize_escapables()
+    -- sanitize_escapables()
 
     -- Technically we don't have to do this every time, but it makes it easy.
     for _, force in pairs(game.forces) do
