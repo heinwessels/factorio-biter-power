@@ -404,7 +404,7 @@ script.on_nth_tick(10, function (event)
 end)
 
 local function on_built(event)
-    local entity = event.created_entity or event.entity
+    local entity = event.created_entity or event.entity or event.destination
     if not entity or not entity.valid then return end    
     if global.ignore_build_destroy_events == entity.unit_number then return end
 
@@ -433,6 +433,7 @@ script.on_event(defines.events.on_robot_built_entity, on_built)
 script.on_event(defines.events.on_built_entity, on_built)
 script.on_event(defines.events.script_raised_built, on_built)
 script.on_event(defines.events.script_raised_revive, on_built)
+script.on_event(defines.events.on_entity_cloned, on_built)
 
 script.on_event(defines.events.on_trigger_created_entity, function(event) 
     local entity = event.created_entity or event.entity
