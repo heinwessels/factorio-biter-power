@@ -2,6 +2,7 @@
 
 local config = require("config")
 local util = require("util")
+local lib = require("lib.lib")
 
 local function get_biter_run_animation(biter)
     local layers = util.table.deepcopy(biter.run_animation.layers)
@@ -91,9 +92,16 @@ local function create_variant(base_name, biter_name)
     local biter = data.raw.unit[biter_name]
     if not biter then error("Unit '"..biter_name.."' not found!") end
     local biter_config = config.biter.types[biter_name]
+    local containment_modifier = config.escapes.escapable_machine[base_name]
 
     generator.name = base_name.."-"..biter_name
     generator.localised_name = {"entity-name."..base_name}
+    generator.localised_description = {"",
+        {"entity-description.bp-generator"},
+        {"bp-text.escape-modifier", containment_modifier},
+        {"bp-text.inhabitant", biter.localised_name or {"entity-name."..biter.name}},
+        {"bp-text.expected-containment", lib.formattime(biter_config.escape_period * containment_modifier)},
+    }
     
     -- Get biter animations and adjust them
     local biter_shift = {-0.45, -0.1}

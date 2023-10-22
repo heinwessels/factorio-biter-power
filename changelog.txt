@@ -2,7 +2,7 @@
 Version: 0.4.0
 Date: 22.10.2021
   Features:
-    - Treadmil now shows which biter is currently running, where previous a generic biter was shown.
+    - Treadmil Generator now shows the specific type of biter it contains.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.5
 Date: 19.09.2021
