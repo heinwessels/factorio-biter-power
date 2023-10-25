@@ -39,18 +39,31 @@ data:extend {
         stack_size = 1,
         ammo_type = {
             category = "bp-cage-projectile",
-            target_type = "position",
+            target_type = "entity",
             action = {
+                -- Action is the same as the cage trap
+
                 type = "direct",
                 action_delivery = {
-                    type = "artillery",
-                    projectile = "artillery-projectile",
-                    starting_speed = 1,
-                    direction_deviation = 0,
-                    range_deviation = 0,
-                    source_effects = {
-                        type = "create-explosion",
-                        entity_name = "artillery-cannon-muzzle-flash"
+                    type = "instant",
+                    target_effects = {
+                        {
+                            -- Cannot drop item-on-ground with triggers.
+                            -- Also would need a custom collision to only trigger for biters
+                            -- So handling by script. Should be fine though, not doing much,
+                            -- and currently not allowing placing this as a ghost
+                            type = "script",
+                            effect_id = "bp-cage-trap-trigger",
+                            affects_target = true,
+                        },
+                        {
+                            type = "create-entity",
+                            entity_name = "electric-mining-drill-explosion"
+                        },
+                        {
+                            type = "damage",
+                            damage = { amount = 100, type = "physical"}
+                        }
                     }
                 }
             }
