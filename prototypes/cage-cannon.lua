@@ -6,6 +6,8 @@ local util = require("util")
 -- TODO HR graphics
 -- TODO Cannon shadow?
 -- TODO Base shadow?
+-- TODO Better projectile recipe
+-- TODO Better icons for items
 
 data:extend {
     {
@@ -33,48 +35,6 @@ data:extend {
         name = "bp-cage-projectile",
     },
     {
-        type = "ammo",
-        name = "bp-cage-projectile",
-        icon = "__biter-power__/graphics/cage/icon.png",
-        subgroup = "bp-biter-machines",
-        icon_size = 64,
-        magazine_size = 1,
-        stack_size = 1,
-        ammo_type = {
-            category = "bp-cage-projectile",
-            target_type = "entity",
-            action = {
-                -- Action is the same as the cage trap
-
-                type = "direct",
-                action_delivery = {
-                    type = "instant",
-                    target_effects = {
-                        {
-                            -- Cannot drop item-on-ground with triggers.
-                            -- Also would need a custom collision to only trigger for biters
-                            -- So handling by script. Should be fine though, not doing much,
-                            -- and currently not allowing placing this as a ghost
-                            type = "script",
-                            effect_id = "bp-cage-trap-trigger",
-                            affects_target = true,
-                        },
-                        {
-                            -- TODO Can this be better? I only want the particle effects, not
-                            -- the explosion itself.
-                            type = "create-entity",
-                            entity_name = "electric-mining-drill-explosion"
-                        },
-                        {
-                            type = "damage",
-                            damage = { amount = 100, type = "physical"}
-                        }
-                    }
-                }
-            }
-        },
-    },
-    {
         type = "recipe",
         name = "bp-cage-projectile",
         enabled = false,
@@ -86,10 +46,102 @@ data:extend {
         result = "bp-cage-projectile",
         result_count = 1
     },
+    {
+        type = "ammo",
+        name = "bp-cage-projectile",
+        icon = "__biter-power__/graphics/cage/icon.png",
+        subgroup = "bp-biter-machines",
+        icon_size = 64,
+        magazine_size = 1,
+        stack_size = 5,
+        ammo_type = {
+            cooldown = 75,
+            category = "bp-cage-projectile",
+            action = {
+                type = "direct",
+                action_delivery = {
+                    type = "projectile",
+                    projectile = "bp-cage-projectile-entity",
+                    starting_speed = 1,
+                    max_range = 20,
+                    source_effects = {
+                        type = "create-entity",
+                        entity_name = "explosion-hit"
+                    }
+                }
+            }
+        },
+    },
+    {
+        type = "projectile",
+        name = "bp-cage-projectile-entity",
+        flags = {"not-on-map"},
+        acceleration = 0,
+        direction_only = true,
+        hit_at_collision_position = true,
+        collision_box = {{-0.2, -0.20}, {0.2, 0.2}},
+        action = {
+            type = "direct",
+            action_delivery = {
+                type = "instant",
+                target_effects = {
+                    {
+                        -- Cannot drop item-on-ground with triggers.
+                        -- Also would need a custom collision to only trigger for biters
+                        -- So handling by script. Should be fine though, not doing much,
+                        -- and currently not allowing placing this as a ghost
+                        type = "script",
+                        effect_id = "bp-cage-trap-trigger",
+                        affects_target = true,
+                    },
+                    {
+                        -- TODO Can this be better? I only want the particle effects, not
+                        -- the explosion itself.
+                        type = "create-entity",
+                        entity_name = "electric-mining-drill-explosion"
+                    },
+                    {
+                        type = "damage",
+                        damage = { amount = 100, type = "physical"}
+                    }
+                }
+            }
+        },
+        animation = {
+            filename = "__biter-power__/graphics/cage/icon.png",
+            draw_as_glow = true,
+            frame_count = 1,
+            line_length = 1,
+            width = 64,
+            height = 64,
+            scale = 0.3,
+            shift = {0, 0},
+            priority = "high"
+        },
+        -- shadow =  {
+        --     filename = "__base__/graphics/entity/rocket/rocket-shadow.png",
+        --     frame_count = 1,
+        --     width = 7,
+        --     height = 24,
+        --     priority = "high",
+        --     shift = {0, 0}
+        -- },
+            -- smoke = {{
+            --     name = "smoke-fast",
+            --     deviation = {0.15, 0.15},
+            --     frequency = 1,
+            --     position = {0, 1},
+            --     slow_down_factor = 1,
+            --     starting_frame = 3,
+            --     starting_frame_deviation = 5,
+            --     starting_frame_speed = 0,
+            --     starting_frame_speed_deviation = 5
+            -- }}
+    },
 }
 
-local cannon_scale = 0.62
-local cannon_shift = {0, -0.25}
+local cannon_scale = 0.65
+local cannon_shift = {0, -0.5}
 
 local function create_stripes(names)
     stripes = { }
@@ -119,7 +171,7 @@ data:extend{
         damaged_trigger_effect = hit_effects.entity(),
         rotation_speed = 0.004,
         inventory_size = 1,
-        automated_ammo_count = 10,
+        automated_ammo_count = 1,
         alert_when_attacking = true,
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
@@ -270,7 +322,7 @@ data:extend{
                 starting_frame_speed = 0.2,
                 starting_frame_speed_deviation = 0.1
             },
-            range = 18,
+            range = 20,
             sound = sounds.gun_turret_gunshot
         },
 
