@@ -1,8 +1,8 @@
+if not config then error("No config found!") end
 local sounds = require("__base__.prototypes.entity.sounds")
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local util = require("util")
 
--- TODO Should only target biters!
 -- TODO HR graphics
 -- TODO Cannon shadow?
 -- TODO Base shadow?
@@ -47,6 +47,12 @@ data:extend {
         result_count = 1
     },
     {
+        -- We need this to only shoot at biters that can be caged.
+        -- And more importantly, not the nests.
+        type = "trigger-target-type",
+        name = "bp-cagable",
+    },
+    {
         type = "ammo",
         name = "bp-cage-projectile",
         icon = "__biter-power__/graphics/cage/icon.png",
@@ -77,9 +83,9 @@ data:extend {
         name = "bp-cage-projectile-entity",
         flags = {"not-on-map"},
         acceleration = 0,
-        direction_only = true,
+        rotatable = true,
+        turn_speed = 0.0007,
         hit_at_collision_position = true,
-        collision_box = {{-0.2, -0.20}, {0.2, 0.2}},
         action = {
             type = "direct",
             action_delivery = {
@@ -172,6 +178,7 @@ data:extend{
         rotation_speed = 0.004,
         inventory_size = 1,
         automated_ammo_count = 1,
+        attack_target_mask = {"bp-cagable"},
         alert_when_attacking = true,
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
@@ -342,3 +349,10 @@ data:extend{
         }
     },
 }
+
+-- We need to add the target mask to all the biters we support.
+for biter_name, biter_config in pairs(config.biter.types) do
+    local unit = data.raw.unit[biter_name]
+    if not unit then error("No '"..biter_name.."' unit found!") end
+    unit.trigger_target_mask = {"bp-cagable"}
+end
