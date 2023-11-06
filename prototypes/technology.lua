@@ -33,6 +33,8 @@ local bp_tech_advanced = {
   icon = "__biter-power__/graphics/technology/bp-tech-2.png",
   effects = {
     { type = "unlock-recipe", recipe = "bp-generator-reinforced" },
+    { type = "unlock-recipe", recipe = "bp-cage-projectile" },
+    { type = "unlock-recipe", recipe = "bp-cage-cannon" },
   },
   prerequisites = {"bp-biter-power", "military-2", "sulfur-processing"},
   unit = {

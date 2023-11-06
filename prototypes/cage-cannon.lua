@@ -4,10 +4,12 @@ local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local util = require("util")
 
 -- TODO HR graphics
--- TODO Cannon shadow?
 -- TODO Base shadow?
--- TODO Better projectile recipe
 -- TODO Better icons for items
+
+local min_range = 4
+local max_range = 20
+local cooldown = 75
 
 data:extend {
     {
@@ -41,7 +43,7 @@ data:extend {
         energy_required = 5,
         ingredients = {
           {"bp-cage", 1},
-          -- Something needed here
+          {"explosives", 1}
         },
         result = "bp-cage-projectile",
         result_count = 1
@@ -55,21 +57,32 @@ data:extend {
     {
         type = "ammo",
         name = "bp-cage-projectile",
-        icon = "__biter-power__/graphics/cage/icon.png",
+        icons = {
+            {
+                icon = "__biter-power__/graphics/cage/icon.png",
+                icon_size = 64,
+            },
+            {
+                icon = "__base__/graphics/icons/explosives.png",
+                icon_size = 64, icon_mipmaps = 4,
+                scale = 0.35, shift = { -7, -7 },
+            },
+        },
         subgroup = "bp-biter-machines",
-        icon_size = 64,
         magazine_size = 1,
         stack_size = 5,
+        reload_time = cooldown,
         ammo_type = {
-            cooldown = 75,
+            cooldown = cooldown,
             category = "bp-cage-projectile",
             action = {
                 type = "direct",
                 action_delivery = {
                     type = "projectile",
                     projectile = "bp-cage-projectile-entity",
-                    starting_speed = 1,
-                    max_range = 20,
+                    starting_speed = 0.8,
+                    min_range = min_range,
+                    max_range = max_range,
                     source_effects = {
                         type = "create-entity",
                         entity_name = "explosion-hit"
@@ -84,8 +97,11 @@ data:extend {
         flags = {"not-on-map"},
         acceleration = 0,
         rotatable = true,
-        turn_speed = 0.0007,
-        hit_at_collision_position = true,
+        -- Technically we don't want this, but I got it in weird positions
+        -- where it would continually miss a biter standing still while attacking
+        -- a wall. The projectile still moves so fast though that you barely see
+        -- the homing behaviour, so meh. Keeping this.
+        turn_speed = 0.005,
         action = {
             type = "direct",
             action_delivery = {
@@ -124,25 +140,28 @@ data:extend {
             shift = {0, 0},
             priority = "high"
         },
-        -- shadow =  {
-        --     filename = "__base__/graphics/entity/rocket/rocket-shadow.png",
-        --     frame_count = 1,
-        --     width = 7,
-        --     height = 24,
-        --     priority = "high",
-        --     shift = {0, 0}
-        -- },
-            -- smoke = {{
-            --     name = "smoke-fast",
-            --     deviation = {0.15, 0.15},
-            --     frequency = 1,
-            --     position = {0, 1},
-            --     slow_down_factor = 1,
-            --     starting_frame = 3,
-            --     starting_frame_deviation = 5,
-            --     starting_frame_speed = 0,
-            --     starting_frame_speed_deviation = 5
-            -- }}
+        shadow =  {
+            filename = "__biter-power__/graphics/cage/icon.png",
+            draw_as_shadow = true,
+            frame_count = 1,
+            line_length = 1,
+            width = 64,
+            height = 64,
+            scale = 0.3,
+            shift = {0, 0},
+            priority = "high"
+        },
+        smoke = {{
+            name = "smoke-fast",
+            deviation = {0.15, 0.15},
+            frequency = 1,
+            position = {0, 1},
+            slow_down_factor = 1,
+            starting_frame = 3,
+            starting_frame_deviation = 5,
+            starting_frame_speed = 0,
+            starting_frame_speed_deviation = 5
+        }}
     },
 }
 
@@ -168,7 +187,7 @@ data:extend{
         icon = "__base__/graphics/icons/gun-turret.png",
         icon_size = 64, icon_mipmaps = 4,
         flags = {"placeable-player", "player-creation"},
-        minable = {mining_time = 0.5, result = "gun-turret"},
+        minable = {mining_time = 0.5, result = "bp-cage-cannon"},
         max_health = 400,
         corpse = "gun-turret-remnants",
         dying_explosion = "gun-turret-explosion",
@@ -316,20 +335,11 @@ data:extend{
         attack_parameters = {
             type = "projectile",
             ammo_category = "bp-cage-projectile",
-            cooldown = 6,
-            projectile_creation_distance = 1.39375,
-            projectile_center = {0, -0.0875}, -- same as gun_turret_attack shift
-            shell_particle = {
-                name = "shell-particle",
-                direction_deviation = 0.1,
-                speed = 0.1,
-                speed_deviation = 0.03,
-                center = {-0.0625, 0},
-                creation_distance = -1.925,
-                starting_frame_speed = 0.2,
-                starting_frame_speed_deviation = 0.1
-            },
-            range = 20,
+            cooldown = cooldown,
+            projectile_creation_distance = 1.8,
+            projectile_center = {0, -0.25},
+            min_range = min_range,
+            range = max_range,
             sound = sounds.gun_turret_gunshot
         },
 

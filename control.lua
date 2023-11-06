@@ -99,7 +99,8 @@ end
 
 script.on_event(defines.events.on_script_trigger_effect , function(event)
     if event.effect_id ~= "bp-cage-trap-trigger" then return end
-    local trap = event.source_entity
+    local trap = event.source_entity -- Could also be the cage cannon
+    if not trap then return end
     local biter = event.target_entity
     if not biter then return end
     local biter_config = biter_configs[biter.name]
