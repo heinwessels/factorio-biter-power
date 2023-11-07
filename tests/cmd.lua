@@ -105,8 +105,9 @@ local function show_derivatives()
 
 end
 
-remote.add_interface("biter-power", {
+-- Urgh, need to be smarter here
+-- remote.add_interface("biter-power", {
 
-    -- /c remote.call("biter-power", "show-derivates")
-    ["show-derivates"] = show_derivatives
-})
+--     -- /c remote.call("biter-power", "show-derivates")
+--     ["show-derivates"] = show_derivatives
+-- })

@@ -470,13 +470,25 @@ script.on_event(defines.events.on_robot_mined_entity, on_deconstructed)
 script.on_event(defines.events.on_entity_died, on_deconstructed)
 script.on_event(defines.events.script_raised_destroy, on_deconstructed)
 
-if script.active_mods["aai-programmable-vehicles"] then
+remote.add_interface("biter-power", {
     -- This mod will prevent placement of "enemy" biters close
     -- to "player" structures. Add all biters to the whitelist
-    remote.add_interface("biter-power", {
-        ["aai_programmable_vehicles_non_combat_whitelist"] = function() return supported_biters end
-    })
-end
+    ["aai_programmable_vehicles_non_combat_whitelist"] = function() return supported_biters end,
+    
+    -- Add some custom milestones, cause that's cool
+    ["milestones_preset_addons"] = function()
+        return {
+            ["biter-power"] = {
+                required_mods = {"biter-power"},
+                milestones = {
+                    {type="group", name="Kills"},
+                    {type="item",  name="bp-biter-egg", quantity=1, next="x100"},
+                    {type="item",  name="bp-cage", quantity=1, next="x100"},
+                }
+            },
+        }
+    end
+})
 
 local function sanitize_escapables()
     -- Sanitize the escapable derivatives, because a mod might be removed which had a biter running

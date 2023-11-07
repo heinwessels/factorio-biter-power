@@ -3,6 +3,7 @@ Version: 0.5.0
 Date: ??.11.2023
   Features:
     - Added Cage Cannon to capture biters from a distance.
+    - Added some Milestones.
   Bugfixes:
     - Handle cloning event correctly.
 ---------------------------------------------------------------------------------------------------
