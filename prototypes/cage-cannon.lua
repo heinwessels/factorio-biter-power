@@ -3,27 +3,25 @@ local sounds = require("__base__.prototypes.entity.sounds")
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local util = require("util")
 
--- TODO Base shadow?
--- TODO Better icons for items
-
 local min_range = 4
 local max_range = 20
-local cooldown = 75
+local cooldown = 60
 
 data:extend {
     {
         type = "item",
         name = "bp-cage-cannon",
-        icon = "__base__/graphics/icons/gun-turret.png",
-        icon_size = 64, icon_mipmaps = 4,
-        subgroup = "bp-biter-machines",
-        order = "a[biter-egg-extractor]",
+        icon = "__biter-power__/graphics/cage-cannon/icon.png",
+        icon_size = 64,
+        subgroup = "bp-husbandry-intermediates",
+        order = "e[cage-cannon]",
         place_result = "bp-cage-cannon",
         stack_size = 10
     },
     {
         type = "recipe",
         name = "bp-cage-cannon",
+        energy_required = 10,
         ingredients = {
             {"steel-plate", 8},
             {"stone-brick", 5},
@@ -67,7 +65,8 @@ data:extend {
                 scale = 0.35, shift = { -7, -7 },
             },
         },
-        subgroup = "bp-biter-machines",
+        subgroup = "bp-husbandry-intermediates",
+        order = "d[cage-cannon-projectile]",
         magazine_size = 1,
         stack_size = 5,
         reload_time = cooldown,
@@ -166,6 +165,7 @@ data:extend {
 
 local cannon_scale = 0.65
 local cannon_shift = {0, -0.5}
+local cannon_shadow_shift = util.add_shift(cannon_shift, {-0.5, -0.5})
 
 local function create_stripes(names)
     stripes = { }
@@ -195,7 +195,7 @@ data:extend{
         damaged_trigger_effect = hit_effects.entity(),
         rotation_speed = 0.004,
         inventory_size = 1,
-        automated_ammo_count = 1,
+        automated_ammo_count = 2, -- Prevents the intermittent out-of-ammo icon
         attack_target_mask = {"bp-cagable"},
         alert_when_attacking = true,
         open_sound = sounds.machine_open,
@@ -241,8 +241,10 @@ data:extend{
                 lines_per_file = 4,                
                 draw_as_shadow = true,
                 scale = cannon_scale,
-                shift = util.add_shift(util.mul_shift(util.by_pixel(54+58, -1+46), cannon_scale), cannon_shift),
+                shift = util.add_shift(util.mul_shift(util.by_pixel(54+58, -1+46), cannon_scale), cannon_shadow_shift),
                 stripes = create_stripes{
+                    -- Technically the in these shadow sprites the barrel is too long. 
+                    -- Doubt anyone will notice though, so will keep it like this for now.
                     "__base__/graphics/entity/artillery-wagon/artillery-wagon-cannon-base-shadow-1.png",
                     "__base__/graphics/entity/artillery-wagon/artillery-wagon-cannon-base-shadow-2.png",
                     "__base__/graphics/entity/artillery-wagon/artillery-wagon-cannon-base-shadow-3.png",
@@ -284,29 +286,23 @@ data:extend{
                     scale = 0.5
                 }
             },
-            -- {
-            --     filename = "__base__/graphics/entity/gun-turret/gun-turret-base-shadow.png",
-            --     line_length = 1,
-            --     width = 78,
-            --     height = 62,
-            --     axially_symmetrical = false,
-            --     direction_count = 1,
-            --     frame_count = 1,
-            --     shift = util.by_pixel(5, 3),
-            --     draw_as_shadow = true,
-            --     hr_version = {
-            --         filename = "__base__/graphics/entity/gun-turret/hr-gun-turret-base-shadow.png",
-            --         line_length = 1,
-            --         width = 154,
-            --         height = 122,
-            --         axially_symmetrical = false,
-            --         direction_count = 1,
-            --         frame_count = 1,
-            --         shift = util.by_pixel(5, 2.5),
-            --         draw_as_shadow = true,
-            --         scale = 0.5
-            --     }
-            -- },
+            {
+                filename = "__biter-power__/graphics/cage-cannon/base-shadow.png",
+                width = 126,
+                height = 62,
+                shift = util.by_pixel(19, 2),
+                axially_symmetrical = false,
+                draw_as_shadow = true,
+                hr_version = {
+                    filename = "__biter-power__/graphics/cage-cannon/hr-base-shadow.png",
+                    width = 250,
+                    height = 124,
+                    shift = util.by_pixel(19, 2.5),
+                    axially_symmetrical = false,
+                    draw_as_shadow = true,
+                    scale = 0.5
+                }
+            },
             {
                 filename = "__base__/graphics/entity/gun-turret/gun-turret-base-mask.png",
                 flags = { "mask", "low-object" },
