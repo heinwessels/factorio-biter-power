@@ -5,7 +5,7 @@ local util = require("util")
 
 local min_range = 4
 local max_range = 20
-local cooldown = 60
+local cooldown = 75
 
 data:extend {
     {

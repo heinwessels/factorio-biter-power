@@ -1,36 +1,38 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.4.1
-Date: 22.10.2021
+Version: 0.5.0
+Date: ??.11.2023
+  Features:
+    - Added Cage Cannon to capture biters from a distance.
   Bugfixes:
     - Handle cloning event correctly.
 ---------------------------------------------------------------------------------------------------
 Version: 0.4.0
-Date: 22.10.2021
+Date: 22.10.2023
   Features:
     - Treadmil Generator now shows the specific type of biter it contains.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.5
-Date: 19.09.2021
+Date: 19.09.2023
   Features:
     - Compatibility with Arachnids (Biter Faction and Enemy Force).
   Bugfixes:
     - Fixed leviathans being Tier 4 instead of Tier 5 without Bobs Enemies.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.4
-Date: 16.09.2021
+Date: 16.09.2023
   Bugfixes:
     - Fix Reinforced Treadmil making it easier for biters to escape instead of harder (Thanks Hameleha!).
   Changes:
     - Renamed Escape Modifier to Containment Modifier.
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.3
-Date: 22.08.2021
+Date: 22.08.2023
   Bugfixes:
     - Prevent technology deadlock if Biter Power is added mid-game by unlocking previous tier
       Husbandry technologies as well if a higher tier biter is caught. (Thanks mad_engineer!)
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.2
-Date: 18.08.2021
+Date: 18.08.2023
   Features:
     - Compatibility with Frost Biters.
     - Compatibility with Explosive Biters.
@@ -43,7 +45,7 @@ Date: 18.08.2021
     - Added some descriptions to biters to show the energy they can contain (when not tired).
 ---------------------------------------------------------------------------------------------------
 Version: 0.3.1
-Date: 16.01.2021
+Date: 16.01.2023
   Changes:
     - Renamed `Biter Revitalization` Center to `Biter Revitalizer`.
   Bugfixes:
