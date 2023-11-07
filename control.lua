@@ -540,7 +540,7 @@ script.on_configuration_changed(function (event)
     global.nests_to_clean = global.nests_to_clean or { }
     global.biter_distribution_cache = global.biter_distribution_cache or { }
 
-    -- sanitize_escapables()
+    sanitize_escapables()
 
     -- Technically we don't have to do this every time, but it makes it easy.
     for _, force in pairs(game.forces) do
