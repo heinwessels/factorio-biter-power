@@ -3,7 +3,6 @@ local sounds = require("__base__.prototypes.entity.sounds")
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local util = require("util")
 
--- TODO HR graphics
 -- TODO Base shadow?
 -- TODO Better icons for items
 
@@ -30,7 +29,7 @@ data:extend {
             {"stone-brick", 5},
             {"iron-gear-wheel", 10},
         },
-        result = "bp-egg-extractor",
+        result = "bp-cage-cannon",
     },
     {
         type = "ammo-category",
@@ -202,6 +201,10 @@ data:extend{
         open_sound = sounds.machine_open,
         close_sound = sounds.machine_close,
         folded_animation = { layers = {
+            -- We don't need HR resolution, because the artillery-cannon will basically be HR
+            -- already, because I need to almost scale it to half it's resolution. Now it actually
+            -- looks a little weird with normal resolution because the cage-cannon's turret is
+            -- higher resolution than the other sprites.
             {
                 width = 180,
                 height = 136,
