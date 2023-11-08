@@ -4,6 +4,8 @@ Date: ??.11.2023
   Features:
     - Added Cage Cannon to capture biters from a distance.
     - Added some Milestones.
+  Changes:
+    - Improved the Husbandry Icon Group icon.
   Bugfixes:
     - Handle cloning event correctly.
 ---------------------------------------------------------------------------------------------------

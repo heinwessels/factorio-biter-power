@@ -12,8 +12,8 @@ data:extend{
         name = "biter-power-husbandry",
         order = "p",
         order_in_recipe = "0",
-        icon = "__base__/graphics/icons/behemoth-biter.png",
-        icon_size = 64, icon_mipmaps = 4,
+        icon = "__biter-power__/graphics/husbundry-item-group.png",
+        icon_size = 128,
     },
     {
         type = "item-subgroup",
