@@ -4,6 +4,7 @@ Date: ??.11.2023
   Features:
     - Added Cage Cannon to capture biters from a distance.
     - Added some Milestones.
+    - Added full support for Picker Dollies.
   Changes:
     - Improved the Husbandry Icon Group icon.
   Bugfixes:

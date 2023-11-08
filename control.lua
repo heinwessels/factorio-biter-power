@@ -490,6 +490,18 @@ remote.add_interface("biter-power", {
     end
 })
 
+local function handle_picker_dollies()
+    if remote.interfaces["PickerDollies"] and remote.interfaces["PickerDollies"]["dolly_moved_entity_id"] then
+        script.on_event(remote.call("PickerDollies", "dolly_moved_entity_id"), function(event)
+            local entity = event.moved_entity
+            if not entity or not entity.valid then return end
+            local escapable_data = global.escapables[entity.unit_number]
+            if not escapable_data then return end
+            escapable_data.position = entity.position
+        end)
+    end
+end
+
 local function sanitize_escapables()
     -- Sanitize the escapable derivatives, because a mod might be removed which had a biter running
     -- Removing the mod should remove the items, not the machines.
@@ -521,6 +533,12 @@ local function sanitize_escapables()
                     } -- If this fails then we just give up. Nothing better to do
                 end
             end
+        else
+            -- This is a perfectly normal entry. Lets just make sure the position is still correct.
+            -- It might have because out-of-sync if the player has used picker dollies on the
+            -- escapable machines.
+            entry.position = entry.entity.position
+            entry.surface = entry.entity.surface
         end
     end
 
@@ -533,6 +551,8 @@ script.on_init(function()
     global.escapables = { }
     global.nests_to_clean = { }
     global.biter_distribution_cache = { }
+
+    handle_picker_dollies()
 end)
 
 script.on_configuration_changed(function (event)
@@ -541,6 +561,7 @@ script.on_configuration_changed(function (event)
     global.biter_distribution_cache = global.biter_distribution_cache or { }
 
     sanitize_escapables()
+    handle_picker_dollies()
 
     -- Technically we don't have to do this every time, but it makes it easy.
     for _, force in pairs(game.forces) do
