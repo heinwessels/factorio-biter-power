@@ -10,12 +10,12 @@
         },
         {
             "name": "Windows - 1.1.80",
-            "factorioPath": "c:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.80\\bin\\x64\\factorio.exe",
-            "active": true
+            "factorioPath": "c:\\Users\\heinw\\Documents\\Factorio\\Versions\\Factorio_1.1.80\\bin\\x64\\factorio.exe"
         },
         {
             "name": "1.1.87 - Ubuntu",
-            "factorioPath": "/home/hein/Documents/Personal/factorio_alpha_x64_1.1.87/factorio/bin/x64/factorio"
+            "factorioPath": "/home/hein/Documents/Personal/factorio_alpha_x64_1.1.87/factorio/bin/x64/factorio",
+            "active": true
         }
     ]
 }

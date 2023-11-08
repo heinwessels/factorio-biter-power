@@ -3,9 +3,9 @@ local sounds = require("__base__.prototypes.entity.sounds")
 local hit_effects = require ("__base__.prototypes.entity.hit-effects")
 local util = require("util")
 
-local min_range = 4
-local max_range = 20
-local cooldown = 75
+local min_range = 2
+local max_range = 15
+local cooldown = 120
 
 data:extend {
     {

@@ -15,6 +15,7 @@ Generate electricity by placing biters on treadmills. Biters can be caught with 
 - **Incubator**: Biters begin their live as eggs, and these devices are used to raise (grow?) strong biters to run in generators.
 - **Egg Extractor**: Placed on a **Buried Biter Nest** these devices extract **Biter Eggs** that can later be carefully placed in **Incubators**.
 - **Cage Trap**: Catch live biters in a cage trap! For those days that you don't want to wait around until all your eggs hatch.
+- **Cage Turret**: Catch live biters from a distance by launching cages at them through a turret! Great for guarding your treadmills.
 - **Escaping**: Biters can escape from some machines if they are unhappy about the working conditions. Be sure to add protective measures around such machines.
 
 
