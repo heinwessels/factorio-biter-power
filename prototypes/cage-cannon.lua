@@ -188,6 +188,7 @@ data:extend{
         flags = {"placeable-player", "player-creation"},
         minable = {mining_time = 0.5, result = "bp-cage-cannon"},
         max_health = 400,
+        is_military_target = true, -- So that biters attack it!
         corpse = "gun-turret-remnants",
         dying_explosion = "gun-turret-explosion",
         collision_box = {{-0.7, -0.7 }, {0.7, 0.7}},

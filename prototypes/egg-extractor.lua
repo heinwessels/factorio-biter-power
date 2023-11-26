@@ -33,6 +33,7 @@ data:extend({
         flags = {"placeable-neutral", "player-creation"},
         minable = {mining_time = 0.3, result = "bp-egg-extractor"},
         max_health = 300,
+        is_military_target = true, -- So that biters attack it!
         resource_categories = {"bp-biter-nest"},
         corpse = "electric-mining-drill-remnants",
         dying_explosion = "electric-mining-drill-explosion",

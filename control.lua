@@ -197,69 +197,6 @@ local function escape_biters_from_entity(entity, biter_names)
     return biters
 end
 
-local function rally_biters_around(surface, position)
-    -- This function will rally biter around this position
-    -- to attack a machine which contains other biters.
-    -- Will also rallies spitters, because why not, they
-    -- should also be angry
-    
-    local enemies = surface.find_enemy_units(position, 50, "player")
-    if not enemies then return end -- No enemies found, ignore
-
-    local machines_to_target = {}
-    for machine_name, _ in pairs(escapable_machines) do
-        table.insert(machines_to_target, machine_name)
-    end
-    local machines = surface.find_entities_filtered{
-        position = position,
-        radius = 50,
-        name = machines_to_target,
-        force = nil, -- Any force
-    }
-
-    
-    local command 
-    
-    -- Loop through current biters and see if they are attacking a machine
-    -- containing biters. If one is, let the other join in
-    for _, enemy in pairs(enemies) do
-        local this_command = enemy.command
-        if this_command and this_command.name == defines.command.attack then
-            local target = this_command.target
-            if target.valid and #get_biters_in_machine(this_command.target) > 1 then
-                command = this_command
-                command.distraction = defines.distraction.none
-                goto done
-            end
-        end
-    end
-    
-    for _, machine in pairs(machines) do
-        if #get_biters_in_machine(machine) > 0 then
-            command = {
-                type = defines.command.attack,
-                target = machine,
-                radius = 30,
-            }
-            goto done
-        end
-    end
-
-    if not command then
-        command = {
-            type = defines.command.attack_area,
-            destination = position,
-            radius = 30,
-            distraction = defines.distraction.none, 
-        }
-    end
-
-    ::done::
-    for _, enemy in pairs(enemies) do
-        enemy.set_command(command)
-    end
-end
-
 local function update_escapable_derivates(entity, biters_in_machine)
     local base_name = escapable_machine_base[entity.name]
     if not base_name then return end -- Entity has no derivatives
@@ -271,7 +208,6 @@ local function update_escapable_derivates(entity, biters_in_machine)
     if entity.name == required_name then return end;    -- nothing to do
 
     -- TODO WHY DONT WE SEE BURNT RESULT FOR BITERS IN MACHINE?
-    -- TODO HANDLE CASE WHEN MODS ARE REMOVED
 
     -- This entity is the wrong derivative. Let's replace it with the correct
     -- variant. I could not get the fast replace mechanism to work, so I will
@@ -365,7 +301,6 @@ local function tick_escape_for_entity(data)
     if math.random() < probability then
         entity.create_build_effect_smoke()
         local biters = escape_biters_from_entity(entity, biters_in_machine)
-        rally_biters_around(entity.surface, entity.position)
         for i = 1, #biters_in_machine do
             if entity.valid then -- It might be destroyed in the loop. Only apply damage if it still exists                
                 entity.damage(entity.prototype.max_health * 0.2, "enemy", "physical")

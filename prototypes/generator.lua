@@ -159,6 +159,7 @@ data:extend({
     icon_size = 64,
     flags = {"placeable-neutral","player-creation"},
     max_health = 400,
+    is_military_target = true, -- So that biters attack it!
     dying_explosion = "big-explosion",
     corpse = "big-remnants",
     collision_box = {{-1.7, -1.7}, {1.7, 1.7}},

@@ -184,6 +184,7 @@ data:extend({
         flags = {"placeable-neutral", "placeable-player", "player-creation", "hide-alt-info"},
         minable = {mining_time = 0.2, result = "bp-revitalizer"},
         max_health = 400,
+        is_military_target = true, -- So that biters attack it!
         corpse = "lab-remnants",
         dying_explosion = "lab-explosion",
         result_inventory_size = 1,

@@ -37,7 +37,8 @@ data:extend({
         icon_size = 64,
         flags = {"placeable-neutral", "placeable-player", "player-creation"},
         minable = {mining_time = 0.2, result = "bp-incubator"},
-        max_health = 300,        
+        max_health = 300,
+        is_military_target = true, -- So that biters attack it!
         corpse = "chemical-plant-remnants",
         dying_explosion = "chemical-plant-explosion",
         crafting_categories = incubator_crafting_categories,

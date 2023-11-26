@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.5.1
+Date: ??.??.2023
+  Changes:
+    - Biters now consistently attack the Egg Extractor, Incubator, Treadmills, Revitalizer and Cage Cannon. 
+---------------------------------------------------------------------------------------------------
 Version: 0.5.0
 Date: 08.11.2023
   Features:
