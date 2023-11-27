@@ -13,7 +13,7 @@ data:extend {
         name = "bp-cage-cannon",
         icon = "__biter-power__/graphics/cage-cannon/icon.png",
         icon_size = 64,
-        subgroup = "bp-husbandry-intermediates",
+        subgroup = "bp-peacekeeping",
         order = "e[cage-cannon]",
         place_result = "bp-cage-cannon",
         stack_size = 10
@@ -65,7 +65,7 @@ data:extend {
                 scale = 0.35, shift = { -7, -7 },
             },
         },
-        subgroup = "bp-husbandry-intermediates",
+        subgroup = "bp-peacekeeping",
         order = "d[cage-cannon-projectile]",
         magazine_size = 1,
         stack_size = 5,

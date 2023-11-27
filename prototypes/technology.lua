@@ -58,7 +58,7 @@ data:extend{
     order = "z",
     icon = "__biter-power__/graphics/cage-trap/icon.png",
     icon_size = 64,
-    subgroup = "bp-husbandry-intermediates",
+    subgroup = "bp-peacekeeping",
     stack_size = 1,
     durability = 1,
     durability_description_key = "description.science-pack-remaining-amount-key",

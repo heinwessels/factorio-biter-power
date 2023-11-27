@@ -281,6 +281,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         name = "bp-revitalization-"..biter_name,
         localised_name = {"bp-text.revitalization", biter_name},
         icons = icons,
+        hide_from_player_crafting = true,
         show_amount_in_title = false,
         always_show_products = true,
         subgroup = "revitalization-tier-"..biter_config.tier,

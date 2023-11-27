@@ -8,6 +8,7 @@ data:extend{
         order = "m"
     },
     {   -- A separate tab for all the biter information
+        -- This will never be visisble, as only used for Incubator and Revitalizer
         type = "item-group",
         name = "biter-power-husbandry",
         order = "p",
@@ -20,5 +21,11 @@ data:extend{
         name = "bp-husbandry-intermediates",
         group = "biter-power-husbandry",
         order = "[a]"
+    },
+    {   -- The row that the "peacekeeping" devices will be in the military (Defense?) tab
+        type = "item-subgroup",
+        name = "bp-peacekeeping",
+        group = "combat",
+        order = "p"
     },
 }

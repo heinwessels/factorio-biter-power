@@ -3,6 +3,7 @@ Version: 0.5.1
 Date: ??.??.2023
   Changes:
     - Biters now consistently attack the Egg Extractor, Incubator, Treadmills, Revitalizer and Cage Cannon. 
+    - Player can no longer incubate or revitalize biters in their mere hands.
     - (Internal) Big refactor of control stage to use event-handler and Sumneko Language Server.
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.0
@@ -93,7 +94,7 @@ Date: 23.11.2022
 Version: 0.2.4
 Date: 23.11.2022
   Bugfixes:
-    - Fix Revitilizatio Center graphics not being scaled properly for normal resolution. (Thanks Ray1claw!)
+    - Fix Revitilization Center graphics not being scaled properly for normal resolution. (Thanks Ray1claw!)
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.3
 Date: 14.11.2022

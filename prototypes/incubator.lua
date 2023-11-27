@@ -181,6 +181,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
         name = "bp-incubate-egg-"..biter_name,
         localised_name = {"bp-text.incubation", biter_name},
         icons = icons,
+        hide_from_player_crafting = true,
         category = "incubation-tier-"..biter_config.tier,
         subgroup = "incubation-tier-"..biter_config.tier,
         order = "c[incubation]-["..data.raw.unit[biter_name].order:sub(-1).."]-["..biter_name.."]",

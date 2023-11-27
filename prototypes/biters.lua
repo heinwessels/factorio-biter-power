@@ -9,7 +9,7 @@ data:extend({
         name = "bp-biter-egg",
         icon = "__biter-power__/graphics/incubator/biter-egg.png",
         icon_size = 64, icon_mipmaps = 4,
-        subgroup = "bp-husbandry-intermediates",
+        subgroup = "bp-peacekeeping",
         order = "a[biter-egg]",
         stack_size = config.biter.egg_stack_size,
     },
