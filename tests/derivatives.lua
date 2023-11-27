@@ -1,50 +1,8 @@
+
 local config = require("config")
+local test_util = require("tests.util")
 
--- Based on Editor Extensions. Thanks Raiguard!
-local function get_test_surface()
-
-    local empty_map_gen_settings = {
-        default_enable_all_autoplace_controls = false,
-        property_expression_names = { cliffiness = 0 },
-        autoplace_settings = {
-              tile = { settings = { ["out-of-map"] = { frequency = "normal", size = "normal", richness = "normal" } } },
-        },
-        starting_area = "none",
-        width = 0,
-        height = 0,
-    }
-      
-    
-    local surface_name = "bp-test-surface"
-    local surface = game.get_surface(surface_name)
-    if not surface then
-        surface = game.create_surface(surface_name, empty_map_gen_settings)
-        if not surface then
-            player.print("Could not create test surface")
-            return
-        end
-
-        surface.generate_with_lab_tiles = true
-        surface.freeze_daytime = true
-        surface.show_clouds = false
-        surface.daytime = 0
-    end
-
-    -- Clear the surface. Can't use surface.clear because that removes the chunks
-    -- as well, which acts weird when placing entities on them now.
-    for _, entity in pairs(surface.find_entities_filtered{force = "player"}) do
-        entity.destroy { raise_destroy = true }
-    end
-
-    rendering.clear("biter-power")
-
-    -- Move the players there. All of them. I don't care. This is a test!
-    for _, player in pairs(game.connected_players) do
-        player.teleport({-10, -10}, surface)
-    end
-
-    return surface
-end
+local derivates = { }
 
 local function show_derivatives()
     local size = 4  -- of machines
@@ -55,8 +13,10 @@ local function show_derivatives()
     local N = #config.biter.types + 2
     local w = 10 * (offset + offset)
 
-    local surface = get_test_surface()
+    local surface = test_util.get_test_surface()
+    if not surface then error("Could not create surface") end
 
+    ---@diagnostic disable-next-line: missing-fields
     surface.create_entity{name = "solar-panel", position = {0, -4.5}, force = "player" }
     local eei = surface.create_entity{name = "electric-energy-interface", position = {-7, 0}, force = "player" }
     eei.power_production = 10e3 -- For the inserters
@@ -105,9 +65,10 @@ local function show_derivatives()
 
 end
 
--- Urgh, need to be smarter here
--- remote.add_interface("biter-power", {
+function derivates.handle_command(args)
+    if args[1] == "show" then
+        show_derivatives()
+    end
+end
 
---     -- /c remote.call("biter-power", "show-derivates")
---     ["show-derivates"] = show_derivatives
--- })
+return derivates

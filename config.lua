@@ -122,7 +122,7 @@ config.egg_extractor.emissions_per_minute =
            * config.revitalization.emissions_per_minute)
         - (config.buried_nest.generators_supported      -- account for generators
            * config.generator.emissions_per_minute)
-        
+
 
 config.escapes = { }
 config.escapes.escapable_machine = {
@@ -355,7 +355,7 @@ if data and data.raw then
         if not unit then error("No '"..biter_name.."' unit found!") end
         if unit.icons then -- Takes precedence according to docs            
             biter_config.icons = util.copy(unit.icons)
-            
+
             for _, icon in pairs(biter_config.icons) do
                 -- Remove any scaling, because it doesn't
                 -- look right on the item recipe's etc.

@@ -3,6 +3,7 @@ Version: 0.5.1
 Date: ??.??.2023
   Changes:
     - Biters now consistently attack the Egg Extractor, Incubator, Treadmills, Revitalizer and Cage Cannon. 
+    - (Internal) Big refactor of control stage to use event-handler and Sumneko Language Server.
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.0
 Date: 08.11.2023
