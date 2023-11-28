@@ -20,6 +20,7 @@ Generate electricity by placing biters on treadmills. Biters can be caught with 
 - **Cage Turret**: Catch live biters from a distance by launching cages at them with a cannon! Great for guarding your treadmills with minimal headaches.
 - **Escaping**: Biters can escape from some machines if they are unhappy about the working conditions. Be sure to add protective measures around such machines.
 
+[![Support me on kofi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/stringweasel)
 
 # Credits
 -  _stann_co_ for the [original idea](https://forums.factorio.com/103767) to utilize biters for power which sparked this mod.
