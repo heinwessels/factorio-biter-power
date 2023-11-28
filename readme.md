@@ -8,6 +8,8 @@ Generate electricity by placing biters on treadmills. Biters can be caught with 
 
 `This mod is still in it's early stages and might contains some (unintended) bugs and balance issues. If you have any feedback, please let me know.`
 
+[![Support me on kofi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/stringweasel)
+
 ## Features:
 
 - **Treadmill Generator**: Generate power by placing biters on a treadmil-like device. This might have hazardous effects if the biter is tired, but device will still function optimally.
