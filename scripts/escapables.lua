@@ -197,6 +197,14 @@ local function update_escapable_derivates(entity, biters_in_machine)
     return new_entity
 end
 
+--- Calculate the average escape time in ticks
+---@param biter_name string
+---@param machine_name string
+---@return uint
+function escapables.calculate_average_escape_time(biter_name, machine_name)
+    return biter_configs[biter_name].escape_period * escapables.machines[machine_name]
+end
+
 ---@param data Escapable
 ---@return any? 
 ---@return boolean?  | True if this entry in the iterator should be deleted
@@ -239,12 +247,11 @@ local function tick_escape_for_entity(data)
     -- The idea is that if the odds are that the biter will escape every 10 seconds,
     -- and we roll the dice every second, then each time we roll the biter has a 10% chance
     -- of escaping. I think this should work.
-    local average_escape_time = 
-            biter_configs[biters_in_machine[1]].escape_period      -- always use the first found biter
-            * escapables.machines[entity.name]        -- the current building is a modifier
+    local average_escape_time = escapables.calculate_average_escape_time(biters_in_machine[1], entity.name)
     local probability = time_since_last_roll / average_escape_time
     data.last_dice_roll = tick
     if math.random() < probability then
+        -- ESCAPE!
         entity.create_build_effect_smoke()
         local biters = escape_biters_from_entity(entity, biters_in_machine)
         for i = 1, #biters_in_machine do

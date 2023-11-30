@@ -5,6 +5,7 @@ Date: ??.??.2023
     - Biters now consistently attack the Egg Extractor, Incubator, Treadmills, Revitalizer and Cage Cannon. 
     - Player can no longer incubate or revitalize biters in their mere hands.
     - (Internal) Big refactor of control stage to use event-handler and Sumneko Language Server.
+    - (Internal) Added rudemental integration test to verify escape periods.
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.0
 Date: 08.11.2023
