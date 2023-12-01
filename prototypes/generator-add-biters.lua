@@ -7,7 +7,7 @@ local lib = require("lib.lib")
 local function get_biter_run_animation(biter)
     local layers = util.table.deepcopy(biter.run_animation.layers)
     local has_hr = layers[1].hr_version ~= nil
-    
+
     -- These animations are for all for directions. Extract only
     -- the one that runs to the right, which is number 2
     local index = 2
@@ -102,7 +102,7 @@ local function create_variant(base_name, biter_name)
         {"bp-text.inhabitant", biter.localised_name or {"entity-name."..biter.name}},
         {"bp-text.expected-containment", lib.formattime(biter_config.escape_period * containment_modifier)},
     }
-    
+
     -- Get biter animations and adjust them
     local biter_shift = {-0.45, -0.1}
     local layers_to_add = get_biter_run_animation(biter)
