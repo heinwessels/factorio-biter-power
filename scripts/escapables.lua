@@ -274,7 +274,7 @@ end
 
 local function on_constructed(event)
     local entity = event.created_entity or event.entity or event.destination
-    if not entity or not entity.valid then return end    
+    if not entity or not entity.valid then return end
     if global.ignore_build_destroy_events == entity.unit_number then return end
 
     if escapables.machines[entity.name] then 

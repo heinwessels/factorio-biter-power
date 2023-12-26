@@ -270,6 +270,8 @@ for tier = 1, config.biter.max_tier do
 end
 
 for biter_name, biter_config in pairs(config.biter.types) do
+    local unit = data.raw.unit[biter_name] -- Should exist, have checked already
+
     local icons = util.copy(biter_config.icons)
     table.insert(icons, 1, {
         icon = "__biter-power__/graphics/revitalizer/icon.png",
@@ -279,7 +281,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
     local recipe = {
         type = "recipe",
         name = "bp-revitalization-"..biter_name,
-        localised_name = {"bp-text.revitalization", biter_name},
+        localised_name = {"bp-text.revitalization", unit.localised_name or {"entity-name."..unit.name}},
         icons = icons,
         hide_from_player_crafting = true,
         show_amount_in_title = false,

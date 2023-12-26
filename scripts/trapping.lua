@@ -5,7 +5,7 @@ local trapping = { }
 local biter_configs = config.biter.types
 
 --- @param event EventData.on_script_trigger_effect
-function attempt_trapping_biter(event)
+local function attempt_trapping_biter(event)
     if event.effect_id ~= "bp-cage-trap-trigger" then return end
     local trap = event.source_entity -- Could also be the cage cannon
     if not trap then return end

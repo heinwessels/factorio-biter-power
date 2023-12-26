@@ -1,6 +1,6 @@
 {
     "name": "biter-power",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "title": "Biter Power",
     "author": "stringweasel",
     "factorio_version": "1.1",
@@ -13,6 +13,7 @@
         "? Toxic_biters",
         "? bobenemies",
         "? Arachnids_enemy",
-        "? ArachnidsFaction"
+        "? ArachnidsFaction",
+        "? Rampant"
     ]
 }

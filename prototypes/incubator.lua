@@ -169,7 +169,8 @@ for tier = 1, config.biter.max_tier do
 end
 
 for biter_name, biter_config in pairs(config.biter.types) do
-    
+    local unit = data.raw.unit[biter_name] -- Should exist, have checked already
+
     local icons = util.copy(biter_config.icons)
     table.insert(icons, 1, {
         icon = "__biter-power__/graphics/incubator/biter-egg.png",
@@ -179,7 +180,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
     local recipe =     {
         type = "recipe",
         name = "bp-incubate-egg-"..biter_name,
-        localised_name = {"bp-text.incubation", biter_name},
+        localised_name = {"bp-text.incubation", unit.localised_name or {"entity-name."..unit.name}},
         icons = icons,
         hide_from_player_crafting = true,
         category = "incubation-tier-"..biter_config.tier,

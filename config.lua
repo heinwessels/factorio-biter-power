@@ -179,6 +179,16 @@ config.biter.tiers = {
         density_modifier = 7,
         escape_period = 60 * 60 * 15,
     },
+    [9] = {
+        energy_modifer = 8,
+        density_modifier = 8,
+        escape_period = 60 * 60 * 10,
+    },
+    [10] = {
+        energy_modifer = 8,
+        density_modifier = 8,
+        escape_period = 60 * 60 * 7,
+    },
 }
 
 -- Here we define the different biter types. All stats
@@ -220,7 +230,7 @@ config.biter.types = {
     },
     ["behemoth-spitter"] = {
         copy = "behemoth-biter",
-        tint = {r = 0.7, g = 0.95, b = 0.4, a = 1.000},  
+        tint = {r = 0.7, g = 0.95, b = 0.4, a = 1.000},
     },
 }
 
@@ -238,13 +248,18 @@ if enabled_mods["bobenemies"] then
     leviathan_tier = 8
 end
 
+if enabled_mods["Rampant"] then
+    -- Oof. Rampant is rough
+    leviathan_tier = 10
+end
+
 if enabled_mods["Explosive_biters"] then
     config.biter.types["small-explosive-biter"] =       {copy = "small-biter",      scale = 0.48}
     config.biter.types["medium-explosive-biter"] =      {copy = "medium-biter",     scale = 0.49}
     config.biter.types["big-explosive-biter"] =         {copy = "big-biter",        scale = 0.50}
     config.biter.types["behemoth-explosive-biter"] =    {copy = "behemoth-biter",   scale = 0.51}
     config.biter.types["explosive-leviathan-biter"] =   {tier = leviathan_tier,     scale = 0.30}
-    
+
     config.biter.types["small-explosive-spitter"] = {copy = "small-spitter"}
     config.biter.types["medium-explosive-spitter"] = {copy = "medium-spitter"}
     config.biter.types["big-explosive-spitter"] = {copy = "big-spitter"}
@@ -258,7 +273,7 @@ if enabled_mods["Cold_biters"] then
     config.biter.types["big-cold-biter"] = {copy = "big-biter"}
     config.biter.types["behemoth-cold-biter"] = {copy = "behemoth-biter"}
     config.biter.types["leviathan-cold-biter"] = {tier = leviathan_tier}
-    
+
     config.biter.types["small-cold-spitter"] = {copy = "small-spitter"}
     config.biter.types["medium-cold-spitter"] = {copy = "medium-spitter"}
     config.biter.types["big-cold-spitter"] = {copy = "big-spitter"}
@@ -273,7 +288,7 @@ if enabled_mods["Toxic_biters"] then
     config.biter.types["big-toxic-biter"] =         {copy = "big-biter",        scale = 0.50}
     config.biter.types["behemoth-toxic-biter"] =    {copy = "behemoth-biter",   scale = 0.51}
     config.biter.types["leviathan-toxic-biter"] =   {tier = leviathan_tier,     scale = 0.30}
-    
+
     config.biter.types["small-toxic-spitter"] =     {copy = "small-spitter"}
     config.biter.types["medium-toxic-spitter"] =    {copy = "medium-spitter"}
     config.biter.types["big-toxic-spitter"] =       {copy = "big-spitter"}
@@ -300,7 +315,7 @@ if enabled_mods["bobenemies"] then
     config.biter.types["bob-titan-biter"] =             {tier = 6}
     config.biter.types["bob-behemoth-biter"] =          {tier = 7}
     config.biter.types["bob-leviathan-biter"] =         {tier = leviathan_tier}
-    
+
     config.biter.types["bob-big-electric-spitter"] =    {tier = 3}
     config.biter.types["bob-huge-acid-spitter"] =       {tier = 4}
     config.biter.types["bob-huge-explosive-spitter"] =  {tier = 4}
@@ -321,9 +336,40 @@ if enabled_mods["ArachnidsFaction"] then
     config.biter.types["arachnid-spitter-mediumspitter-unit"] = {tier = 2, scale = 0.39}
     config.biter.types["arachnid-spitter-bigspitter-unit"] =    {tier = 3, scale = 0.40}
     config.biter.types["arachnid-spitter-behemothspitter-unit"]= {tier = 4, scale = 0.41}
-    
-    if enabled_mods["Arachnids_enemy"] then        
+
+    if enabled_mods["Arachnids_enemy"] then    
         config.biter.types["arachnid-biter-leviathan-unit"] ={tier = leviathan_tier, scale = 0.3}
+    end
+
+end
+
+if enabled_mods["Rampant"] then
+    for _, mutation in pairs{
+        "neutral-biter",
+        "neutral-spitter",
+        "acid-biter",
+        "acid-spitter",
+        "laser-biter",
+        "laser-spitter",
+        "fire-biter",
+        "fire-spitter",
+        "inferno-spitter",
+        "wasp-spitter",
+        "spawner-spawn", --?
+        "spawner-spitter", --?
+        "electric-biter",
+        "physical-biter",
+        "troll-biter",
+        "poison-biter",
+        "suicide-biter",
+        "nuclear-biter",
+        "energy-thief-biter",
+        "fast-biter",
+        "fast-spitter"
+    } do
+        for tier=1,10 do
+            config.biter.types[mutation .. "-v1-t" .. tier .. "-rampant"] = {tier = tier}
+        end
     end
 end
 
@@ -378,11 +424,12 @@ end
 
 -- Calculate the amount of tiers we have defined
 config.biter.max_tier = 0
-for biter_name, biter_config in pairs(config.biter.types) do
+for _, biter_config in pairs(config.biter.types) do
     if biter_config.tier > config.biter.max_tier then
         config.biter.max_tier = biter_config.tier
     end
 end
 if config.biter.max_tier == 0 then error("No tiers found! This should never happen") end
+if not config.biter.tiers[config.biter.max_tier] then error("We do not support "..config.biter.max_tier.." tiers yet") end
 
 return config
