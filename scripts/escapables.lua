@@ -1,5 +1,6 @@
 local config = require("config")
 local lib = require("lib.lib")
+local debug = require("scripts.debug")
 
 --- @class Escapable
 --- @field entity LuaEntity
@@ -57,28 +58,36 @@ local function create_escapable_data(entity)
     }
 end
 
+---@param inventory LuaInventory?
+---@param biters_found string[] (OUTPUT) list of biters found
+local function get_biters_in_inventory(inventory, biters_found)
+    if not inventory then return 0 end
+    for i = 1, #inventory do
+        if inventory[i].valid_for_read and inventory[i].prototype.fuel_category == "bp-biter-power" then
+            table.insert(biters_found, escapables.fuel_to_biter_name[inventory[i].name])
+        end
+    end
+end
+
 ---@param entity LuaEntity
 ---@return string[]
 local function get_biters_in_machine(entity)
     local biters_found = {}
     local burner = entity.burner
 
-    local count_in_inventory = function (inventory)
-        if not inventory then return 0 end
-        for i = 1, #inventory do
-            if inventory[i].valid_for_read and inventory[i].prototype.fuel_category == "bp-biter-power" then
-                table.insert(biters_found, escapables.fuel_to_biter_name[inventory[i].name])
-            end
-        end
-    end
-
     -- If this is a burner
     if burner then
-        if burner.remaining_burning_fuel > 0 then
+        -- Check the input slot
+        get_biters_in_inventory(burner.inventory, biters_found)
+
+        -- Check the thing currently burning
+        if burner.currently_burning then
             -- There is a biter running on this treadmil!
             table.insert(biters_found, escapables.fuel_to_biter_name[burner.currently_burning.name])
         end
-        count_in_inventory(burner.inventory)
+
+        -- Check the burnt result slot
+        get_biters_in_inventory(burner.burnt_result_inventory, biters_found)
     end
 
     -- If this is an assembler
@@ -88,12 +97,13 @@ local function get_biters_in_machine(entity)
             -- assume the not-tired-biter is the first product of the current recipe
             table.insert(biters_found, escapables.fuel_to_biter_name[entity.get_recipe().products[1].name])
         end
-        count_in_inventory(entity.get_output_inventory())
-        count_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input))
+        get_biters_in_inventory(entity.get_output_inventory(), biters_found)
+        get_biters_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input), biters_found)
     end
 
     return biters_found
 end
+if debug.debugger_active then escapables.get_biters_in_machine = get_biters_in_machine end
 
 ---@param entity LuaEntity
 local function clear_all_biters_in_machine(entity)
@@ -125,7 +135,7 @@ local function escape_biters_from_entity(entity, biter_names)
             biter_name, entity.position, 20, 0.2)
         if position then
             local biter = surface.create_entity{
-                name=biter_name, position=position, 
+                name=biter_name, position=position,
                 force="enemy", raise_built=true
             }
             if biter then table.insert(biters, biter) end

@@ -1,84 +1,88 @@
 if not script.active_mods["debugadapter"] then return { } end
+
 local util = require("util")
+local test_util = require("tests.test-util")
+local test_suite = require("tests.test-suite")
 
-local tests = { }
+local STATUS = test_suite.STATUS
 
---- @class HarnessData
---- @field name string?
---- @field test function?
---- @field active boolean
---- @field data table
---- @field handle_command function
---- @field events table<integer, function>
+local module = { }
 
----@return HarnessData
-local function create_harness(harness)
-    harness.active = false
-    return harness
-end
+local data_key = "__tests"
+local data = {
+    status = STATUS.WAITING,
 
----@type HarnessData[]
-local harnesses = {
-    create_harness(require("tests.escapables"))
+    current_suite_name = nil,
+    suites_executed = 0,
+    tests_executed = 0,
 }
 
----@param harness HarnessData
-local function start_test(harness)
-    harness.test()
+---@type SuiteData[]
+local suites = { }
+
+local function add_suite(required_suite)
+    local suite = required_suite.suite
+    suites[suite.name] = suite
 end
 
----@param event EventData.on_console_command
-local function handle_command(event)
-    local player = game.get_player(event.player_index)
-    if not player then error("Where is the player?") end
+add_suite(require("tests.escapables"))
+-- add_suite(require("tests.escapables-period")) -- This test takes a loooong time
 
-    if event.command ~= "bp" then return end
+module.events = {
+    [defines.events.on_tick] = function()
+        if not data.current_suite_name then return end
+        local suite = suites[data.current_suite_name]
 
-    local args = util.split_whitespace(event.parameters)
-    for _, harness in pairs(harnesses) do
-        if harness.name and harness.name == args[1] then
-            if args[2] == "test" then
-                if not harness.test then
-                    player.print("Harness "..args[1].." has no tests!")
-                    return
-                end
+        if suite.status == STATUS.DONE then
+            -- This suite has completed all tests.
+            data.suites_executed = data.suites_executed + 1
+            data.tests_executed = data.tests_executed + suite.tests_executed
+            game.print("[TESTS] Finished "..suite.tests_executed.." tests in '"..suite.name.."' suite.")
 
-                start_test(harness)
+            -- Start the next one
+            data.current_suite_name, suite = next(suites, data.current_suite_name)
+            if not data.current_suite_name then
+                -- DONE! All tests passed successfully.
+                data.status = STATUS.DONE
+
+                game.print("[TESTS] Success! Executed "..data.tests_executed.." tests across "..data.suites_executed.." suites.")
+
                 return
             end
-
-            -- Pop!
-            table.remove(args, 1)
-            harness.handle_command(args)
-            return
         end
-    end
-    player.print("Unknown test harness "..args[1])
-end
 
-tests.events = {
-    [defines.events.on_console_command] = handle_command
+        -- Tick the suite. This will also start the suite if it hasn't been started yet
+        test_suite.tick(suite)
+    end,
 }
 
+function module.add_commands()
+    commands.add_command("bp-test", nil, function(command)
+        if game.is_multiplayer() then error("Test suite is not MP safe") end
+        game.reload_script()
+        -- game.speed = 1000
 
--- Add support for all events harnesses might need
-local function generic_event_handler(event)
-    local handlers = tests.harness_events[event.name]
-    if not handlers then return end
-    for harness_index, handler in pairs(handlers) do 
-        if harnesses[harness_index].active then handler(event) end
+        data.status = STATUS.ACTIVE
+        data.suites_executed = 0
+        data.tests_executed = 0
+
+        -- Find the first test suite to execute
+        data.current_suite_name = next(suites)
+        if not data.current_suite_name then error("To tests to execute!") end
+    end)
+end
+
+function initialize(event_handler)
+    event_handler.add_lib(module)
+    for _, suite in pairs(suites) do
+        test_suite.initalize(suite, event_handler)
     end
 end
 
-tests.harness_events = { }
-for harnesses_index, harness in pairs(harnesses) do
-    if harness.events then
-        for event, handler in pairs(harness.events) do
-            tests.harness_events[event] = tests.harness_events[event] or { }
-            tests.harness_events[event][harnesses_index] = handler
-            tests.events[event] = generic_event_handler -- Might override, meh
-        end
-    end
+function module.on_init()
+    global[data_key] = global[data_key] or data
+    data = global[data_key]
 end
+module.on_load = function() data = global[data_key] or data end
 
-return tests
+return module
