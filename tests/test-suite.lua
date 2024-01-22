@@ -58,15 +58,16 @@ function module.create(name)
         current_test_name = nil,
         tests_executed = 0,
 
-        timeout = 60, --30 * 60,
+        timeout = 5 * 60,
     }
 end
 
 -- Add support for all events suites might need
 local function propgating_event_handler(suite)
    return function(event)
-        for test_name, handler in pairs(suite.test_event_handlers) do
-            if suite.tests[test_name].active then handler(event, suite.test_data) end
+        for test_name, handler in pairs(suite.test_event_handlers[event.name]) do
+            local test = suite.tests[test_name]
+            if test.status == STATUS.ACTIVE then handler(event, test) end
         end
     end
 end
@@ -165,11 +166,11 @@ function module.tick(suite)
         -- Has this test timed out?
         local timeout = test.timeout_override or suite.timeout
         if game.tick > test.tick_started + timeout then
-            error("Test '"..test.name.."' (Harness '"..suite.name.."') timed out!")
+            error("Test '"..test.name.."' (Suite '"..suite.name.."') timed out!")
         end
         return
     end
-    if test.status ~= STATUS.DONE then error("Test '"..test.name.."' (Harness '"..suite.name.."') has unexpected status "..test.status) end
+    if test.status ~= STATUS.DONE then error("Test '"..test.name.."' (Suite '"..suite.name.."') has unexpected status "..test.status) end
 
     -- If we are here then the current test is done, and we should start a new one. Or end the suite
     test.data = { } -- Some garbage collection

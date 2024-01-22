@@ -29,6 +29,7 @@ end
 
 add_suite(require("tests.escapables"))
 add_suite(require("tests.treadmill"))
+add_suite(require("tests.cannon"))
 -- add_suite(require("tests.escapables-period")) -- This test takes a loooong time
 
 module.events = {
@@ -80,7 +81,7 @@ function module.add_commands()
     end)
 end
 
-function initialize(event_handler)
+function module.initialize(event_handler)
     event_handler.add_lib(module)
     for _, suite in pairs(suites) do
         test_suite.initalize(suite, event_handler)

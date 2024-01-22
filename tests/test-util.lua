@@ -38,7 +38,7 @@ function test_util.assert_falsy(a)
 end
 
 function test_util.assert_not_nil(a)
-    if a == nil then error(pre.. a .." is nil") end
+    if a == nil then error(pre.." object is nil") end
 end
 
 function test_util.assert_nil(a)
@@ -75,6 +75,14 @@ function test_util.assert_string_equal(a, b)
     if type(a) ~= "string" then a = tostring(a) end
     if type(b) ~= "string" then b = tostring(b) end
     if a ~= b then error(pre .. "'" .. a .. "'" .. " ~= " .. "'" .. b .. "'") end
+end
+
+function test_util.assert_string_not_equal(a, b)
+    test_util.assert_not_nil(a)
+    test_util.assert_not_nil(b)
+    if type(a) ~= "string" then a = tostring(a) end
+    if type(b) ~= "string" then b = tostring(b) end
+    if a == b then error(pre .. "'" .. a .. "'" .. " == " .. "'" .. b .. "'") end
 end
 
 ---@param entity LuaEntity?

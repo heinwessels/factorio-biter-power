@@ -6,6 +6,6 @@ handler.add_libraries({
     require("scripts.nests"),
     require("scripts.technology"),
     require("scripts.compatibility"),
-
-    require("tests.tests"),
 })
+
+require("tests.tests").initialize(handler)

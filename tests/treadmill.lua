@@ -19,7 +19,7 @@ test_suite.create_test(suite, "treadmil-can-burn-lower-tier", {
 
         local surface = test_util.reset_surface()
         local generator = surface.create_entity{
-            name = "bp-generator",  -- Derivative already to prevent it being changed
+            name = "bp-generator",
             position = {0, 0},
             force = "player",
             raise_built = false, -- To disable the escape mechanism
@@ -63,7 +63,7 @@ test_suite.create_test(suite, "reinforced-treadmil-can-burn-all", {
 
         local surface = test_util.reset_surface()
         local generator = surface.create_entity{
-            name = "bp-generator-reinforced",  -- Derivative already to prevent it being changed
+            name = "bp-generator-reinforced",
             position = {0, 0},
             force = "player",
             raise_built = false, -- To disable the escape mechanism
