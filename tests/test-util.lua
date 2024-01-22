@@ -89,9 +89,10 @@ end
 --- Assert if the function called with given arguments
 --- do not error with a message that matches the pattern
 ---@param fn fun(...) to call
----@param args table of arguments to pass to function
+---@param args table? of arguments to pass to function
 ---@param pattern string? to match error message to
 function test_util.assert_death(fn, args, pattern)
+    if not args then args = { } end
     local no_crash, message = pcall(fn, table.unpack(args))
     if no_crash then error(pre .. "Function didn't error!") end
     if pattern then if string.match(message, pattern) == nil then

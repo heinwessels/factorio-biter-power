@@ -15,6 +15,8 @@ local data = {
     current_suite_name = nil,
     suites_executed = 0,
     tests_executed = 0,
+
+    tick_started = nil
 }
 
 ---@type SuiteData[]
@@ -26,6 +28,7 @@ local function add_suite(required_suite)
 end
 
 add_suite(require("tests.escapables"))
+add_suite(require("tests.treadmill"))
 -- add_suite(require("tests.escapables-period")) -- This test takes a loooong time
 
 module.events = {
@@ -45,7 +48,11 @@ module.events = {
                 -- DONE! All tests passed successfully.
                 data.status = STATUS.DONE
 
-                game.print("[TESTS] Success! Executed "..data.tests_executed.." tests across "..data.suites_executed.." suites.")
+                -- Calculate duration
+                local seconds = (game.tick - data.tick_started) / 60
+                seconds = tonumber(string.format("%.2f", seconds))
+
+                game.print("[TESTS] Success! Executed "..data.tests_executed.." tests across "..data.suites_executed.." suites in " .. seconds .. " seconds.")
 
                 return
             end
@@ -65,6 +72,7 @@ function module.add_commands()
         data.status = STATUS.ACTIVE
         data.suites_executed = 0
         data.tests_executed = 0
+        data.tick_started = game.tick
 
         -- Find the first test suite to execute
         data.current_suite_name = next(suites)

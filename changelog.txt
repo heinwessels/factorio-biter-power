@@ -2,7 +2,7 @@
 Version: 0.5.3
 Date: ??.01.2024
   Bugfixes:
-    - Fixed that a biter waiting to be taken out of a generator couldn't escape.
+    - Fixed that a biter waiting to be taken out of a treadmil couldn't escape.
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.2
 Date: 26.12.2023
