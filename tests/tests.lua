@@ -1,7 +1,3 @@
-if not script.active_mods["debugadapter"] then return { } end
-
-local util = require("util")
-local test_util = require("tests.test-util")
 local test_suite = require("tests.test-suite")
 
 local STATUS = test_suite.STATUS

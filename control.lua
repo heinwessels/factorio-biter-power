@@ -8,4 +8,6 @@ handler.add_libraries({
     require("scripts.compatibility"),
 })
 
-require("tests.tests").initialize(handler)
+if script.active_mods["debugadapter"] then
+    require("tests.tests").initialize(handler)
+end
