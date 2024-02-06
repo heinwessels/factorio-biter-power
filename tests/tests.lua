@@ -11,6 +11,7 @@ local data = {
     current_suite_name = nil,
     suites_executed = 0,
     tests_executed = 0,
+    profiler = nil,
 
     tick_started = nil
 }
@@ -44,12 +45,14 @@ module.events = {
             if not data.current_suite_name then
                 -- DONE! All tests passed successfully.
                 data.status = STATUS.DONE
+                data.profiler.stop()
 
-                -- Calculate duration
-                local seconds = (game.tick - data.tick_started) / 60
-                seconds = tonumber(string.format("%.2f", seconds))
-
-                game.print("[TESTS] Success! Executed "..data.tests_executed.." tests across "..data.suites_executed.." suites in " .. seconds .. " seconds.")
+                game.print({"",
+                    "[TESTS] Success! ",
+                    "Executed "..data.tests_executed.." tests across "..data.suites_executed.." suites. ",
+                    data.profiler,
+                    "."
+                })
 
                 return
             end
@@ -70,6 +73,7 @@ function module.add_commands()
         data.suites_executed = 0
         data.tests_executed = 0
         data.tick_started = game.tick
+        data.profiler  = game.create_profiler(false)
 
         -- Find the first test suite to execute
         data.current_suite_name = next(suites)

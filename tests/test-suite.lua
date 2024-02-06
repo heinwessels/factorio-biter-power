@@ -120,8 +120,8 @@ end
 ---@param test_name string
 local function start_test(suite, test_name)
     local test = suite.tests[test_name]
-    if not test then error("Harness '"..suite.name.."' has no test '"..test_name.."'") end
-    if test.status ~= STATUS.WAITING then error("Test '"..test_name.."' (Harness '"..suite.name.."') already started!") end
+    if not test then error("Suite '"..suite.name.."' has no test '"..test_name.."'") end
+    if test.status ~= STATUS.WAITING then error("Test '"..test_name.."' (Suite '"..suite.name.."') already started!") end
 
     -- Prepare the test
     test.tick_started = game.tick
@@ -152,7 +152,7 @@ function module.tick(suite)
     end
 
     local test = suite.tests[suite.current_test_name]
-    if test.status == STATUS.WAITING then error("Test '"..test.name.."' (Harness '"..suite.name.."') has not been started!") end
+    if test.status == STATUS.WAITING then error("Test '"..test.name.."' (Suite '"..suite.name.."') has not been started!") end
     if test.status == STATUS.ACTIVE then
         -- Still busy
 

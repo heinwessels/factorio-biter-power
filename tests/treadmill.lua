@@ -7,7 +7,7 @@ local module = {
 }
 local suite = module.suite
 
-test_suite.create_test(suite, "treadmil-can-burn-lower-tier", {
+test_suite.create_test(suite, "treadmil-can-only-burn-lower-tier", {
     setup = function (test)
         --[[
             So to test this we have to be a little smart. We can set the fuel in a burner by
@@ -46,6 +46,9 @@ test_suite.create_test(suite, "treadmil-can-burn-lower-tier", {
             if biter_config.tier <= max_tier then
                 test_util.assert_true(fuel_is_a_valid_input("bp-caged-"..biter_name))
                 test_util.assert_true(fuel_is_a_valid_input("bp-tired-caged-"..biter_name))
+            else
+                test_util.assert_false(fuel_is_a_valid_input("bp-caged-"..biter_name))
+                test_util.assert_false(fuel_is_a_valid_input("bp-tired-caged-"..biter_name))
             end
         end
     end,
