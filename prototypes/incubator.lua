@@ -28,6 +28,7 @@ data:extend({
             {"stone-brick", 6},
             {"copper-plate", 4}
         },
+        enabled = false,
         result = "bp-incubator"
     },
     {

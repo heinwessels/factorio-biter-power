@@ -17,6 +17,7 @@ data:extend({
             {"steel-plate", 20},
             {"copper-cable", 20},
         },
+        enabled = false,
         result = "bp-cage"
     },
 })

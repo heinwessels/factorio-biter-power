@@ -170,6 +170,7 @@ data:extend({
             {"electronic-circuit", 10},
             {"copper-plate", 5},
         },
+        enabled = false,
         result = "bp-revitalizer"
     },
     {

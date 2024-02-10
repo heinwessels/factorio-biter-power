@@ -27,6 +27,7 @@ data:extend {
             {"stone-brick", 5},
             {"iron-gear-wheel", 10},
         },
+        enabled = false,
         result = "bp-cage-cannon",
     },
     {
