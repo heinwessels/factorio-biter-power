@@ -13,7 +13,7 @@ end
 -------------------------------------------------------------------------
 
 compatibility.add_remote_interface = function()
-    remote.add_interface("PipeVisualizer", {
+    remote.add_interface("biter-power", {
         -- This mod will prevent placement of "enemy" biters close
         -- to "player" structures. Add all biters to the whitelist
         ["aai_programmable_vehicles_non_combat_whitelist"] = function() return compatibility.supported_biters end,
