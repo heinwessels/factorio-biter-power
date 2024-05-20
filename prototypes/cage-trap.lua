@@ -16,7 +16,7 @@ data:extend{
         type = "recipe",
         name = "bp-cage-trap",
         enabled = false,
-        energy_required = 5,
+        energy_required = 10,
         ingredients =
         {
           {"bp-cage", 1},

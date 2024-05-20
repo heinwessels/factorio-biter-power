@@ -13,6 +13,7 @@ data:extend({
         name = "bp-cage",
         icon = "__biter-power__/graphics/cage/icon.png",
         icon_size = 64,
+        energy_required = 5,
         ingredients = {
             {"steel-plate", 20},
             {"copper-cable", 20},
