@@ -15,6 +15,7 @@ require("prototypes.buried-biter-nest")
 require("prototypes.egg-extractor")
 require("prototypes.cage-trap")
 require("prototypes.cage-cannon")
+require("prototypes.pulper")
 require("prototypes.technology")
 
 

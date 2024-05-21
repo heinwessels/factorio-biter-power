@@ -33,6 +33,7 @@ local bp_tech_advanced = {
   icon = "__biter-power__/graphics/technology/bp-tech-2.png",
   effects = {
     { type = "unlock-recipe", recipe = "bp-generator-reinforced" },
+    { type = "unlock-recipe", recipe = "bp-pulper" },
     { type = "unlock-recipe", recipe = "bp-cage-projectile" },
     { type = "unlock-recipe", recipe = "bp-cage-cannon" },
   },
@@ -91,6 +92,8 @@ local function generate_tech_tier(tier)
     if biter_config.tier == tier then
       table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-incubate-egg-"..biter_name})
       table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-revitalization-"..biter_name})
+      table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-pulping-caged-"..biter_name})
+      table.insert(tech.effects, {type = "unlock-recipe", recipe = "bp-pulping-tired-caged-"..biter_name})
 
       -- Only add the icon if we haven't already handled this tier.
       if #tech.icons == 1 then

@@ -1,6 +1,7 @@
 local config = require("config")
 local lib = require("lib.lib")
 local debug = require("scripts.debug")
+local util = require("util")
 
 --- @class Escapable
 --- @field entity LuaEntity
@@ -41,6 +42,7 @@ for biter_name, biter_config in pairs(config.biter.types) do
 end
 escapables.machine_base["bp-generator"] = "bp-generator"
 escapables.machine_base["bp-generator-reinforced"] = "bp-generator-reinforced"
+escapables.biter_fuel_categories = util.list_to_map{"bp-biter-power", "bp-biter-power-advanced"}
 -------------------------------------------------------------------------
 
 ---@param entity LuaEntity
@@ -63,7 +65,7 @@ end
 local function get_biters_in_inventory(inventory, biters_found)
     if not inventory then return 0 end
     for i = 1, #inventory do
-        if inventory[i].valid_for_read and inventory[i].prototype.fuel_category == "bp-biter-power" then
+        if inventory[i].valid_for_read and escapables.biter_fuel_categories[inventory[i].prototype.fuel_category] then
             table.insert(biters_found, escapables.fuel_to_biter_name[inventory[i].name])
         end
     end
@@ -93,12 +95,12 @@ local function get_biters_in_machine(entity)
     -- If this is an assembler
     if entity.type == "assembling-machine" or entity.type == "furnace" then
         -- Then it's an assembler, or crafting machine at least
-        if entity.crafting_progress > 0 then 
+        if entity.crafting_progress > 0 then
             -- assume the not-tired-biter is the first product of the current recipe
             table.insert(biters_found, escapables.fuel_to_biter_name[entity.get_recipe().products[1].name])
         end
-        get_biters_in_inventory(entity.get_output_inventory(), biters_found)
         get_biters_in_inventory(entity.get_inventory(defines.inventory.assembling_machine_input), biters_found)
+        get_biters_in_inventory(entity.get_output_inventory(), biters_found)
     end
 
     return biters_found

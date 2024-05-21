@@ -1,9 +1,13 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.6.0
 Date: ??.??.2024
+  Features:
+    - Add Pulper to repurpose biters into organic materials, such as Heavy Oil. Use with caution.
   Changes:
     - Change Biter Cage crafting time to 5 seconds, and Cage Trap to 10 seconds.
-
+    - Biters now have a chance of avoiding being trapped if it has enough health. Chance depends on biter tier.
+    - Reduced Cage Trap's damage from 100 to 40.
+    - Reduced Cage Cannon's damage from 100 to 70.
 ---------------------------------------------------------------------------------------------------
 Version: 0.5.4
 Date: 30.03.2024

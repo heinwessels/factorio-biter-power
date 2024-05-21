@@ -124,6 +124,14 @@ config.egg_extractor.emissions_per_minute =
            * config.generator.emissions_per_minute)
 
 
+config.pulper = { }
+config.pulper.power_usage = 1.2e6
+
+config.trapping = { }
+config.trapping.chance_per_tier = function(tier)
+    return 1 - tier * 0.1
+end
+
 config.escapes = { }
 config.escapes.escapable_machine = {
     -- The 'value' is a multiplier for biters' escape_period
@@ -131,6 +139,7 @@ config.escapes.escapable_machine = {
     ["bp-generator"] = 1,
     ["bp-generator-reinforced"] = 2,
     ["bp-revitalizer"] = 1,
+    ["bp-pulper"] = 0.25,
 }
 
 
@@ -431,5 +440,9 @@ for _, biter_config in pairs(config.biter.types) do
 end
 if config.biter.max_tier == 0 then error("No tiers found! This should never happen") end
 if not config.biter.tiers[config.biter.max_tier] then error("We do not support "..config.biter.max_tier.." tiers yet") end
+
+for _, biter_config in pairs(config.biter.types) do
+    biter_config.trapping_chance = config.trapping.chance_per_tier(biter_config.tier)
+end
 
 return config

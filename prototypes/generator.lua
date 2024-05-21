@@ -32,7 +32,7 @@ local function belt_sprite_at(shift, section)
     sprite.hr_version.scale = (sprite.hr_version.scale or 1) * scale
     return sprite
   end
-  
+
 local idle_animation = {
   layers = {
     {

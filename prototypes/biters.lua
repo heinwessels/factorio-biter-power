@@ -92,8 +92,9 @@ for biter_name, biter_config in pairs(config.biter.types) do
     })
 
     -- Add some description to the biter units
-    unit.localised_description = {"", 
+    unit.localised_description = {"",
         {"bp-text.energy-capacity", data.raw.item["bp-caged-"..biter_name].fuel_value},
         {"bp-text.escape-chance", lib.formattime(biter_config.escape_period)},
+        {"bp-text.trapping-chance", config.trapping.chance_per_tier(biter_config.tier) * 100},
     }
 end

@@ -123,7 +123,7 @@ data:extend {
                     },
                     {
                         type = "damage",
-                        damage = { amount = 100, type = "physical"}
+                        damage = { amount = 70, type = "physical"}
                     }
                 }
             }
